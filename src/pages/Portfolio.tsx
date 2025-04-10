@@ -64,16 +64,18 @@ const Portfolio = () => {
           </motion.div>
 
           <Tabs defaultValue="all" className="mb-12">
-            {/* Fix: Improved TabsList centering */}
+            {/* Tab navigation with horizontal scroll for mobile */}
             <div className="flex justify-center mb-8">
-              <div className="w-full flex justify-center">
-                <TabsList className="bg-dts-blue-dark/40 border border-foreground/10 p-1 mx-auto">
-                  <TabsTrigger value="all" onClick={() => setCurrentCategory("all")}>All Projects</TabsTrigger>
-                  <TabsTrigger value="web" onClick={() => setCurrentCategory("web")}>Web Dev</TabsTrigger>
-                  <TabsTrigger value="mobile" onClick={() => setCurrentCategory("mobile")}>Mobile Apps</TabsTrigger>
-                  <TabsTrigger value="ai" onClick={() => setCurrentCategory("ai")}>AI Solutions</TabsTrigger>
-                  <TabsTrigger value="security" onClick={() => setCurrentCategory("security")}>Security</TabsTrigger>
-                </TabsList>
+              <div className="w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="min-w-max flex justify-center pb-2">
+                  <TabsList className="bg-dts-blue-dark/40 border border-foreground/10 p-1 flex-nowrap whitespace-nowrap">
+                    <TabsTrigger value="all" onClick={() => setCurrentCategory("all")}>All Projects</TabsTrigger>
+                    <TabsTrigger value="web" onClick={() => setCurrentCategory("web")}>Web Dev</TabsTrigger>
+                    <TabsTrigger value="mobile" onClick={() => setCurrentCategory("mobile")}>Mobile Apps</TabsTrigger>
+                    <TabsTrigger value="ai" onClick={() => setCurrentCategory("ai")}>AI Solutions</TabsTrigger>
+                    <TabsTrigger value="security" onClick={() => setCurrentCategory("security")}>Security</TabsTrigger>
+                  </TabsList>
+                </div>
               </div>
             </div>
 
