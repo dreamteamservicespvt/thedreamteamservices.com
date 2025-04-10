@@ -74,6 +74,7 @@ const Navbar = () => {
               className="text-foreground hover:text-accent transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
+              
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>

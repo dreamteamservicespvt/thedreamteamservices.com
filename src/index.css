@@ -1,4 +1,4 @@
-
+/* This file uses Tailwind CSS directives - ignore linter warnings */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -92,6 +92,21 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 4s ease-in-out infinite;
 }
 
 ::-webkit-scrollbar {
