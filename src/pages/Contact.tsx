@@ -126,10 +126,11 @@ const Contact = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-5 gap-8 lg:gap-12">
+          {/* Updated grid container for mobile responsiveness */}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-6 lg:gap-12">
             {/* Contact Form */}
             <motion.div
-              className="md:col-span-3 p-8 rounded-2xl border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
+              className="md:col-span-3 p-4 sm:p-8 rounded-2xl border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm" // changed p-8 to p-4 sm:p-8 for mobile
               variants={containerVariants}
               initial="hidden"
               animate="visible"
@@ -142,7 +143,7 @@ const Contact = () => {
                     <Input 
                       id="name" 
                       placeholder="John Doe" 
-                      className="bg-background/10 border-foreground/10"
+                      className="bg-background/10 border-foreground/10 w-full" // added w-full for responsiveness
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -154,7 +155,7 @@ const Contact = () => {
                       id="email" 
                       type="email" 
                       placeholder="john@example.com" 
-                      className="bg-background/10 border-foreground/10"
+                      className="bg-background/10 border-foreground/10 w-full" // added w-full for responsiveness
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -227,13 +228,13 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-medium mb-1">{item.title}</h3>
-                      <p className="text-dts-purple font-medium mb-1">
+                      <p className="text-dts-purple font-medium mb-1 break-all">
                         {item.detailsLink ? (
-                          <a href={item.detailsLink} className="hover:underline transition-colors">
+                          <a href={item.detailsLink} className="hover:underline transition-colors break-all">
                             {item.details}
                           </a>
                         ) : (
-                          item.details
+                          <span className="break-all">{item.details}</span>
                         )}
                       </p>
                       <p className="text-sm text-foreground/70">{item.description}</p>
