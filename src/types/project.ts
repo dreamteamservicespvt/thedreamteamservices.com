@@ -1,14 +1,16 @@
 export interface Project {
-  id?: string;
-  name: string;
-  url: string;
-  sector: string;
+  id: string;
+  title: string;
+  description: string;
+  category: string;
   image: string;
-  stack: string[];
-  description?: string;
-  createdAt?: Date | string | number;
-  updatedAt?: Date | string | number;
+  tags: string[];
+  projectUrl?: string;
+  createdAt?: any;
+  updatedAt?: any;
 }
+
+export type ProjectFormData = Omit<Project, 'id' | 'createdAt' | 'updatedAt'>;
 
 export const PROJECT_SECTORS = [
   "Web Development",

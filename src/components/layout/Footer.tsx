@@ -1,4 +1,3 @@
-
 import { Github, Mail, Phone, Instagram, Linkedin, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -40,13 +39,25 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-4">Contact</h4>
             <ul className="space-y-4">
-              <li className="flex items-center">
-                <Mail size={16} className="mr-2 text-dts-purple" />
-                <span className="text-foreground/70">contact@dreamteamservices.com</span>
+              <li className="flex flex-wrap items-center">
+                <div className="flex items-center mr-2 mb-1">
+                  <Mail size={16} className="text-dts-purple flex-shrink-0" />
+                </div>
+                <a 
+                  href="mailto:thedreamteamservicespvt@gmail.com" 
+                  className="text-foreground/70 hover:text-foreground hover:underline break-all transition-colors"
+                >
+                  thedreamteamservicespvt@gmail.com
+                </a>
               </li>
               <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-dts-purple" />
-                <span className="text-foreground/70">+1 (123) 456-7890</span>
+                <a 
+                  href="tel:+919849834102" 
+                  className="text-foreground/70 hover:text-foreground hover:underline transition-colors"
+                >
+                  +91 9849834102
+                </a>
               </li>
             </ul>
           </div>

@@ -14,93 +14,147 @@ import {
 import { db } from "@/lib/firebase";
 import { Inquiry } from "@/types/inquiry";
 
-const INQUIRIES_COLLECTION = "inquiries";
+const COLLECTION_NAME = "inquiries";
 
-export const createInquiry = async (inquiryData: Omit<Inquiry, "id" | "status">) => {
-  try {
-    const docRef = await addDoc(collection(db, INQUIRIES_COLLECTION), {
-      ...inquiryData,
-      status: 'new',
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp()
-    });
-    return { id: docRef.id, ...inquiryData, status: 'new' };
-  } catch (error) {
-    console.error("Error adding inquiry:", error);
-    throw error;
+// Create a new inquiry from contact form
+export async function createInquiry(inquiry: Omit<Inquiry, "id" | "status" | "createdAt">): Promise<Inquiry> {
+  const docRef = await addDoc(collection(db, COLLECTION_NAME), {
+    ...inquiry,
+    status: "new",
+    createdAt: new Date()
+  });
+  
+  return {
+    id: docRef.id,
+    ...inquiry,
+    status: "new",
+    createdAt: new Date()
+  } as Inquiry;
+}
+
+// Helper function to safely convert Firestore timestamps
+const convertTimestamp = (timestamp: any): Date | null => {
+  if (!timestamp) return null;
+  
+  // Handle Firestore Timestamp objects
+  if (timestamp && typeof timestamp.toDate === 'function') {
+    return timestamp.toDate();
   }
-};
-
-export const getInquiries = async (): Promise<Inquiry[]> => {
-  try {
-    const q = query(collection(db, INQUIRIES_COLLECTION), orderBy("createdAt", "desc"));
-    const querySnapshot = await getDocs(q);
-    
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as Inquiry[];
-  } catch (error) {
-    console.error("Error getting inquiries:", error);
-    throw error;
-  }
-};
-
-export const getInquiry = async (id: string): Promise<Inquiry> => {
-  try {
-    const docRef = doc(db, INQUIRIES_COLLECTION, id);
-    const docSnap = await getDoc(docRef);
-    
-    if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() } as Inquiry;
-    } else {
-      throw new Error("Inquiry not found");
+  
+  // Handle serialized timestamps or Date objects
+  if (timestamp instanceof Date || (typeof timestamp === 'object' && 'seconds' in timestamp)) {
+    try {
+      // Try to construct a date from seconds and nanoseconds if available
+      if ('seconds' in timestamp && 'nanoseconds' in timestamp) {
+        return new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000);
+      }
+      // Otherwise treat as Date
+      return new Date(timestamp);
+    } catch (e) {
+      console.error('Error converting timestamp:', e);
+      return null;
     }
-  } catch (error) {
-    console.error("Error getting inquiry:", error);
-    throw error;
   }
+  
+  // Handle string dates
+  if (typeof timestamp === 'string') {
+    const date = new Date(timestamp);
+    return isNaN(date.getTime()) ? null : date;
+  }
+  
+  return null;
 };
 
-export const updateInquiry = async (id: string, inquiryData: Partial<Inquiry>): Promise<Inquiry> => {
-  try {
-    const docRef = doc(db, INQUIRIES_COLLECTION, id);
-    await updateDoc(docRef, {
-      ...inquiryData,
-      updatedAt: serverTimestamp()
-    });
-    return { id, ...inquiryData } as Inquiry;
-  } catch (error) {
-    console.error("Error updating inquiry:", error);
-    throw error;
-  }
-};
-
-export const deleteInquiry = async (id: string): Promise<void> => {
-  try {
-    const docRef = doc(db, INQUIRIES_COLLECTION, id);
-    await deleteDoc(docRef);
-  } catch (error) {
-    console.error("Error deleting inquiry:", error);
-    throw error;
-  }
-};
-
-export const getInquiriesByStatus = async (status: string): Promise<Inquiry[]> => {
-  try {
-    const q = query(
-      collection(db, INQUIRIES_COLLECTION),
+// Get all inquiries with optional filtering
+export async function getInquiries(status?: string): Promise<Inquiry[]> {
+  let inquiriesQuery;
+  
+  if (status && status !== "all") {
+    inquiriesQuery = query(
+      collection(db, COLLECTION_NAME),
       where("status", "==", status),
       orderBy("createdAt", "desc")
     );
-    const querySnapshot = await getDocs(q);
+  } else {
+    inquiriesQuery = query(
+      collection(db, COLLECTION_NAME),
+      orderBy("createdAt", "desc")
+    );
+  }
+  
+  const snapshot = await getDocs(inquiriesQuery);
+  return snapshot.docs.map(doc => {
+    // Type assertion to solve the TypeScript errors
+    const data = doc.data() as Record<string, any>;
+    const createdAtDate = convertTimestamp(data.createdAt);
+    const updatedAtDate = convertTimestamp(data.updatedAt);
     
-    return querySnapshot.docs.map(doc => ({
+    return {
       id: doc.id,
-      ...doc.data()
-    })) as Inquiry[];
+      name: data.name || '',
+      email: data.email || '',
+      subject: data.subject || '',
+      message: data.message || '',
+      status: data.status || 'new',
+      createdAt: createdAtDate || new Date(),
+      updatedAt: updatedAtDate || null,
+    } as Inquiry;
+  });
+}
+
+// Get a single inquiry by ID
+export async function getInquiry(id: string): Promise<Inquiry | null> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  const docSnap = await getDoc(docRef);
+  
+  if (docSnap.exists()) {
+    // Type assertion to solve the TypeScript errors
+    const data = docSnap.data() as Record<string, any>;
+    const createdAtDate = convertTimestamp(data.createdAt);
+    const updatedAtDate = convertTimestamp(data.updatedAt);
+    
+    return {
+      id: docSnap.id,
+      name: data.name || '',
+      email: data.email || '',
+      subject: data.subject || '',
+      message: data.message || '',
+      status: data.status || 'new',
+      createdAt: createdAtDate || new Date(),
+      updatedAt: updatedAtDate || null,
+    } as Inquiry;
+  }
+  
+  return null;
+}
+
+// Update inquiry status
+export async function updateInquiryStatus(id: string, status: string): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  await updateDoc(docRef, {
+    status,
+    updatedAt: new Date()
+  });
+}
+
+// Add this function to match the import in Inquiries.tsx
+export async function updateInquiry(id: string, updates: { status?: string, response?: string }): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  
+  const updateData = {
+    ...updates,
+    updatedAt: new Date()
+  };
+  
+  await updateDoc(docRef, updateData);
+}
+
+export const deleteInquiry = async (id: string): Promise<void> => {
+  try {
+    const docRef = doc(db, COLLECTION_NAME, id);
+    await deleteDoc(docRef);
   } catch (error) {
-    console.error(`Error getting inquiries with status ${status}:`, error);
+    console.error("Error deleting inquiry:", error);
     throw error;
   }
 };

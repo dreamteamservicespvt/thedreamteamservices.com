@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import GradientButton from "../ui/GradientButton";
+import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
@@ -194,10 +195,15 @@ const Hero = () => {
             whileHover={{ scale: 1.05 }} 
             whileTap={{ scale: 0.98 }}
           >
-            <GradientButton size="lg" variant="outline" onClick={scrollToMission} className="group">
+            <Button 
+              size="lg" 
+              variant="outline" 
+              onClick={scrollToMission} 
+              className="group border-[rgb(126,34,206)] hover:border-purple-500"
+            >
               Learn More
               <ChevronDown size={16} className="ml-2 inline-block transition-transform group-hover:translate-y-1" />
-            </GradientButton>
+            </Button>
           </motion.div>
         </motion.div>
       </motion.div>

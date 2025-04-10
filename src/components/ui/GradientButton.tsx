@@ -1,35 +1,31 @@
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ButtonHTMLAttributes, forwardRef } from "react";
 
 interface GradientButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: "default" | "sm" | "lg" | "icon";
+  variant?: "default" | "outline" | "ghost";
   children: React.ReactNode;
   className?: string;
-  variant?: "default" | "outline" | "ghost";
-  size?: "default" | "sm" | "lg" | "icon";
 }
 
 const GradientButton = forwardRef<HTMLButtonElement, GradientButtonProps>(
-  ({ children, className, variant = "default", size = "default", ...props }, ref) => {
+  ({ className, size = "default", variant = "default", children, ...props }, ref) => {
     return (
       <Button
-        ref={ref}
         className={cn(
-          "relative group overflow-hidden transition-all duration-300",
-          variant === "default" && "bg-button-gradient hover:shadow-lg hover:shadow-dts-purple/20",
-          variant === "outline" && "border border-dts-purple hover:border-dts-cyan",
-          variant === "ghost" && "hover:bg-muted",
+          "bg-gradient-to-r from-purple-600 to-cyan-500",
+          "hover:from-purple-700 hover:to-cyan-600",
+          "text-white border-0 transition-all duration-300",
+          "hover:shadow-lg hover:shadow-purple-600/30",
           className
         )}
-        variant={variant === "default" ? "default" : variant}
         size={size}
+        variant={variant}
+        ref={ref}
         {...props}
       >
-        <span className="relative z-10">{children}</span>
-        {variant === "default" && (
-          <span className="absolute inset-0 bg-button-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-gradient-x" />
-        )}
+        {children}
       </Button>
     );
   }

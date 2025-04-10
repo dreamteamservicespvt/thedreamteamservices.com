@@ -1,12 +1,13 @@
 export interface Inquiry {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   subject: string;
   message: string;
-  status: 'new' | 'in-progress' | 'resolved';
-  createdAt?: Date | string | number;
-  updatedAt?: Date | string | number;
+  status: "new" | "in-progress" | "resolved";
+  createdAt: Date | null;
+  updatedAt?: Date | null;
+  response?: string;
 }
 
 export const INQUIRY_STATUS = [

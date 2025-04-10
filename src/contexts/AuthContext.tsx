@@ -32,37 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const isDevelopment = import.meta.env.DEV;
 
   async function signIn(email: string, password: string): Promise<User> {
-    // In development mode, use a mock authentication
-    if (isDevelopment && email === "admin@example.com" && password === "password") {
-      const mockUser = {
-        uid: "dev-user-123",
-        email: "admin@example.com",
-        displayName: "Admin User",
-        emailVerified: true,
-        isAnonymous: false,
-        metadata: {},
-        providerData: [],
-        refreshToken: "mock-refresh-token",
-        tenantId: null,
-        delete: async () => {},
-        getIdToken: async () => "mock-id-token",
-        getIdTokenResult: async () => ({
-          token: "mock-id-token",
-          signInProvider: "password",
-          expirationTime: new Date(Date.now() + 3600000).toISOString(),
-          issuedAtTime: new Date().toISOString(),
-          authTime: new Date().toISOString(),
-          claims: {}
-        }),
-        reload: async () => {},
-        toJSON: () => ({})
-      } as unknown as User;
-      
-      setCurrentUser(mockUser);
-      return mockUser;
-    }
-    
-    // Otherwise, use Firebase authentication
+    // Use Firebase authentication
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;
@@ -73,10 +43,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   function signOut() {
-    if (isDevelopment) {
-      setCurrentUser(null);
-      return Promise.resolve();
-    }
     return firebaseSignOut(auth);
   }
 

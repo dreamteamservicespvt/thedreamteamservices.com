@@ -89,19 +89,21 @@ const Contact = () => {
     {
       icon: <Mail size={24} />,
       title: "Email Us",
-      details: "contact@dreamteamservices.com",
+      details: "thedreamteamservicespvt@gmail.com",
+      detailsLink: "mailto:thedreamteamservicespvt@gmail.com",
       description: "For general inquiries and information"
     },
     {
       icon: <Phone size={24} />,
       title: "Call Us",
-      details: "+1 (123) 456-7890",
-      description: "Mon-Fri from 9am to 6pm EST"
+      details: "+91 9849834102",
+      detailsLink: "tel:+919849834102",
+      description: "Mon-Fri from 9am to 6pm IST"
     },
     {
       icon: <MapPin size={24} />,
       title: "Visit Us",
-      details: "123 Innovation Drive, Tech City",
+      details: "Kakinada, India",
       description: "Schedule an appointment first"
     }
   ];
@@ -225,7 +227,15 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-medium mb-1">{item.title}</h3>
-                      <p className="text-dts-purple font-medium mb-1">{item.details}</p>
+                      <p className="text-dts-purple font-medium mb-1">
+                        {item.detailsLink ? (
+                          <a href={item.detailsLink} className="hover:underline transition-colors">
+                            {item.details}
+                          </a>
+                        ) : (
+                          item.details
+                        )}
+                      </p>
                       <p className="text-sm text-foreground/70">{item.description}</p>
                     </div>
                   </div>

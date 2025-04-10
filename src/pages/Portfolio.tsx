@@ -1,97 +1,49 @@
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import { ExternalLink, Filter, ChevronRight } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import FloatingAnimation from "@/components/ui/FloatingAnimation";
-import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getProjects } from "@/services/projectService";
+import { Project } from "@/types/project";
+import GradientButton from "@/components/ui/GradientButton";
 
 const Portfolio = () => {
-  const isMobile = useIsMobile();
-  
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentCategory, setCurrentCategory] = useState("all");
+
   useEffect(() => {
     // Add grid pattern to body
     document.body.classList.add("bg-grid-pattern");
+    
+    // Fetch projects from Firebase
+    const fetchProjects = async () => {
+      try {
+        setIsLoading(true);
+        const projectData = await getProjects();
+        setProjects(projectData);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+        setError("Unable to load projects. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
     
     return () => {
       document.body.classList.remove("bg-grid-pattern");
     };
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 300, damping: 24 }
-    }
-  };
-
-  // Portfolio projects data with real images
-  const projects = [
-    {
-      id: 1,
-      title: "TechFusion E-Commerce Platform",
-      category: "web",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["React", "Node.js", "Stripe", "MongoDB"],
-      description: "A comprehensive e-commerce solution with advanced product filtering, user authentication, and payment processing."
-    },
-    {
-      id: 2,
-      title: "HealthTrack Mobile App",
-      category: "mobile",
-      image: "https://images.unsplash.com/photo-1526406915894-7bcd65f60845?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["React Native", "Firebase", "Health API"],
-      description: "A fitness and health tracking mobile application with personalized workout plans and nutrition guidance."
-    },
-    {
-      id: 3,
-      title: "SmartHome IoT Dashboard",
-      category: "software",
-      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["Angular", "Python", "IoT", "WebSockets"],
-      description: "An intelligent dashboard for managing smart home devices with real-time monitoring and automation capabilities."
-    },
-    {
-      id: 4,
-      title: "AI-Powered Content Generator",
-      category: "ai",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["Python", "TensorFlow", "NLP", "React"],
-      description: "An AI tool that generates high-quality marketing content based on brand guidelines and target audience profiles."
-    },
-    {
-      id: 5,
-      title: "SecureVault Enterprise Security",
-      category: "security",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["Go", "Blockchain", "Encryption", "Vue.js"],
-      description: "A comprehensive cybersecurity solution for enterprises with advanced threat detection and data protection."
-    },
-    {
-      id: 6,
-      title: "Global Marketing Campaign",
-      category: "marketing",
-      image: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80",
-      tags: ["SEO", "Social Media", "Content Strategy"],
-      description: "A multi-channel digital marketing campaign that increased client conversion rates by 45% within three months."
-    },
-  ];
+  // Filter projects by category
+  const filteredProjects = currentCategory === "all" 
+    ? projects 
+    : projects.filter(project => project.category === currentCategory);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -112,65 +64,106 @@ const Portfolio = () => {
           </motion.div>
 
           <Tabs defaultValue="all" className="mb-12">
-            <div className="flex justify-center mb-8 overflow-x-auto pb-2">
-              <TabsList className="bg-dts-blue-dark/40 border border-foreground/10 p-1">
-                <TabsTrigger value="all">All Projects</TabsTrigger>
-                <TabsTrigger value="web">Web Dev</TabsTrigger>
-                <TabsTrigger value="mobile">Mobile Apps</TabsTrigger>
-                <TabsTrigger value="ai">AI Solutions</TabsTrigger>
-                <TabsTrigger value="security">Security</TabsTrigger>
-              </TabsList>
+            {/* Fix: Improved TabsList centering */}
+            <div className="flex justify-center mb-8">
+              <div className="w-full flex justify-center">
+                <TabsList className="bg-dts-blue-dark/40 border border-foreground/10 p-1 mx-auto">
+                  <TabsTrigger value="all" onClick={() => setCurrentCategory("all")}>All Projects</TabsTrigger>
+                  <TabsTrigger value="web" onClick={() => setCurrentCategory("web")}>Web Dev</TabsTrigger>
+                  <TabsTrigger value="mobile" onClick={() => setCurrentCategory("mobile")}>Mobile Apps</TabsTrigger>
+                  <TabsTrigger value="ai" onClick={() => setCurrentCategory("ai")}>AI Solutions</TabsTrigger>
+                  <TabsTrigger value="security" onClick={() => setCurrentCategory("security")}>Security</TabsTrigger>
+                </TabsList>
+              </div>
             </div>
 
-            {/* All Projects Tab */}
-            <TabsContent value="all">
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {projects.map((project) => (
-                  <ProjectCard key={project.id} project={project} variants={itemVariants} />
-                ))}
-              </motion.div>
+            <TabsContent value="all" className="mt-0">
+              {isLoading ? (
+                <div className="text-center py-16">
+                  <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-foreground/70">Loading projects...</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-16">
+                  <p className="text-destructive">{error}</p>
+                </div>
+              ) : filteredProjects.length === 0 ? (
+                <div className="text-center py-16">
+                  <p className="text-foreground/70">No projects available in this category.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredProjects.map((project) => (
+                    <ProjectCard key={project.id} project={project} />
+                  ))}
+                </div>
+              )}
             </TabsContent>
 
-            {/* Category Tabs */}
-            {["web", "mobile", "ai", "security"].map((category) => (
-              <TabsContent key={category} value={category}>
-                <motion.div 
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {projects
-                    .filter(project => project.category === category)
-                    .map((project) => (
-                      <ProjectCard key={project.id} project={project} variants={itemVariants} />
-                    ))}
-                </motion.div>
-              </TabsContent>
-            ))}
+            <TabsContent value="web" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="mobile" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="ai" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="security" className="mt-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProjects.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
+        </section>
 
-          <motion.div 
-            className="text-center mt-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <p className="mb-6 text-foreground/70">
-              Want to see more of our work or discuss a specific project in detail?
-            </p>
-            <Link to="/contact">
-              <Button variant="outline" className="group">
+        {/* Add Contact CTA Section */}
+        <section className="py-12 bg-dts-blue-dark/50 backdrop-blur-sm mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-3xl mx-auto"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+                Want to see more of our work or discuss a specific project in detail?
+              </h2>
+              <p className="text-xl mb-8 text-foreground/80">
                 Contact Our Team
-                <ChevronRight className="ml-2 transition-transform group-hover:translate-x-1" size={16} />
-              </Button>
-            </Link>
-          </motion.div>
+              </p>
+              <Link to="/contact">
+                {/* Replace Button with styled motion + GradientButton to match Hero.tsx */}
+                <motion.div 
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(123, 31, 162, 0.5)" }} 
+                  whileTap={{ scale: 0.98 }}
+                  className="relative group inline-block"
+                >
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg blur-md opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                  <GradientButton size="lg" className="relative">
+                    Get in Touch
+                  </GradientButton>
+                </motion.div>
+              </Link>
+            </motion.div>
+          </div>
         </section>
       </main>
       <Footer />
@@ -178,23 +171,21 @@ const Portfolio = () => {
   );
 };
 
-// Project Card Component with enhanced hover effects
-const ProjectCard = ({ project, variants }) => {
+// Project Card component
+const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <motion.div 
-      variants={variants}
-      className="rounded-xl overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-dts-purple/20 group"
-      whileHover={{ 
-        y: -5,
-        transition: { duration: 0.2 }
-      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      // Changed: Added shadow on hover instead of border change
+      className="group rounded-xl overflow-hidden border border-foreground/10 transition-all duration-300 bg-card/50 backdrop-blur-sm hover:shadow-xl hover:shadow-dts-purple/20"
     >
-      <div className="relative overflow-hidden h-48 sm:h-56">
+      <div className="relative aspect-video overflow-hidden">
         <motion.img 
           src={project.image} 
           alt={project.title} 
-          className="w-full h-full object-cover"
-          initial={{ scale: 1 }}
+          className="w-full h-full object-cover transition-transform duration-400"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.4 }}
         />
@@ -216,10 +207,34 @@ const ProjectCard = ({ project, variants }) => {
           ))}
         </div>
         
-        <Button variant="ghost" className="w-full justify-start px-0 text-dts-purple group">
-          View Project Details
-          <ExternalLink size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
-        </Button>
+        {project.projectUrl && (
+          // Enhanced View Project Details button with better hover effect
+          <div className="mt-2">
+            <a 
+              href={project.projectUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center text-dts-purple hover:text-cyan-400 font-medium transition-all duration-300 group/link"
+            >
+              <span className="border-b-2 border-transparent group-hover/link:border-cyan-400 pb-1">View Project Details</span>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="ml-2 h-4 w-4 transition-transform group-hover/link:translate-x-2"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </motion.div>
   );

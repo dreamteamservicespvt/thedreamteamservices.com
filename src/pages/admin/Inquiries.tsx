@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { format } from "date-fns";
-import { Check, ChevronDown, ExternalLink, Search, Mail, X, Filter, Send } from "lucide-react";
+import { 
+  Check, ChevronDown, ExternalLink, Search, Mail, 
+  X, Filter, Send, Pencil, Trash2 
+} from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
 import {
   DropdownMenu,
@@ -30,9 +33,42 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getInquiries, updateInquiry, deleteInquiry } from "@/services/inquiryService";
-import { Inquiry, INQUIRY_STATUS } from "@/types/inquiry";
+import { Inquiry } from "@/types/inquiry";
+
+// Helper function to safely format dates
+const formatDate = (date: Date | null | undefined): string => {
+  if (!date) return 'N/A';
+  
+  try {
+    return format(date, 'MMM d, yyyy h:mm a');
+  } catch (error) {
+    console.error('Error formatting date:', error, date);
+    return 'Invalid date';
+  }
+};
+
+// Status options and display names
+const INQUIRY_STATUS = ["new", "in-progress", "resolved"];
+const statusDisplayNames = {
+  'new': 'New',
+  'in-progress': 'In Progress',
+  'resolved': 'Resolved'
+};
+
+// Get status badge variant based on status
+const getStatusBadgeVariant = (status: string) => {
+  switch (status) {
+    case 'new':
+      return "destructive";
+    case 'in-progress':
+      return "secondary"; 
+    case 'resolved':
+      return "outline"; 
+    default:
+      return "secondary";
+  }
+};
 
 const AdminInquiries = () => {
   const { toast } = useToast();
@@ -44,89 +80,56 @@ const AdminInquiries = () => {
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const [isReplyDialogOpen, setIsReplyDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [replyMessage, setReplyMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  // React Query
-  const inquiriesQuery = useQuery({
-    queryKey: ['inquiries'],
-    queryFn: getInquiries
+  const [editFormData, setEditFormData] = useState<{
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    status: string;
+  }>({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    status: "new"
   });
 
+  // React Query - Fetch inquiries
+  const { data: inquiries = [], isLoading } = useQuery({
+    queryKey: ['inquiries'],
+    queryFn: () => getInquiries()
+  });
+
+  // Update inquiry mutation
   const updateInquiryMutation = useMutation({
-    mutationFn: ({ id, data }: { id: string, data: Partial<Inquiry> }) =>
-      updateInquiry(id, data),
+    mutationFn: (params: {id: string, data: any}) => 
+      updateInquiry(params.id, params.data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inquiries'] });
       toast({
-        title: "Status Updated",
-        description: "The inquiry status has been successfully updated.",
-      });
-    },
-    onError: (error) => {
-      console.error("Error updating inquiry status:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to update inquiry status. Please try again.",
+        title: "Success",
+        description: "Inquiry has been updated successfully.",
       });
     }
   });
 
+  // Delete inquiry mutation
   const deleteInquiryMutation = useMutation({
     mutationFn: deleteInquiry,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['inquiries'] });
       toast({
-        title: "Inquiry Deleted",
-        description: "The inquiry has been successfully deleted.",
-      });
-    },
-    onError: (error) => {
-      console.error("Error deleting inquiry:", error);
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Failed to delete inquiry. Please try again.",
+        title: "Success",
+        description: "Inquiry has been deleted successfully.",
       });
     }
   });
 
-  // Handle status change
-  const handleStatusChange = (inquiry: Inquiry, status: string) => {
-    if (inquiry.id) {
-      updateInquiryMutation.mutate({
-        id: inquiry.id,
-        data: { status: status as any }
-      });
-    }
-  };
-
-  // Handle send reply
-  const handleSendReply = async () => {
-    if (!selectedInquiry || !replyMessage) return;
-
-    // In a real app, you would send the email here using EmailJS or similar
-    // For now, we'll just show a success toast and update the status
-
-    toast({
-      title: "Reply Sent",
-      description: `Your reply to ${selectedInquiry.name} has been sent successfully.`,
-    });
-
-    if (selectedInquiry.id && selectedInquiry.status === 'new') {
-      updateInquiryMutation.mutate({
-        id: selectedInquiry.id,
-        data: { status: 'in-progress' }
-      });
-    }
-
-    setReplyMessage("");
-    setIsReplyDialogOpen(false);
-  };
-
-  // Filter and search inquiries
-  const filteredInquiries = inquiriesQuery.data?.filter(inquiry => {
+  // Filter inquiries based on search term and status
+  const filteredInquiries = inquiries.filter((inquiry) => {
     // Apply status filter
     if (statusFilter && inquiry.status !== statusFilter) return false;
     
@@ -136,92 +139,195 @@ const AdminInquiries = () => {
       return (
         inquiry.name.toLowerCase().includes(searchLower) ||
         inquiry.email.toLowerCase().includes(searchLower) ||
-        inquiry.subject.toLowerCase().includes(searchLower)
+        inquiry.subject.toLowerCase().includes(searchLower) ||
+        inquiry.message.toLowerCase().includes(searchLower)
       );
     }
     
     return true;
-  }) || [];
+  });
 
-  // Get status badge variant
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'new':
-        return "destructive";
-      case 'in-progress':
-        return "secondary"; 
-      case 'resolved':
-        return "secondary"; 
-      default:
-        return "secondary";
-    }
+  // Handle opening the view dialog
+  const handleViewInquiry = (inquiry: Inquiry) => {
+    setSelectedInquiry(inquiry);
+    setIsViewDialogOpen(true);
   };
 
-  const statusDisplayNames = {
-    'new': 'New',
-    'in-progress': 'In Progress',
-    'resolved': 'Resolved'
+  // Handle opening the edit dialog
+  const handleOpenEditDialog = (inquiry: Inquiry) => {
+    setSelectedInquiry(inquiry);
+    setEditFormData({
+      name: inquiry.name,
+      email: inquiry.email,
+      subject: inquiry.subject,
+      message: inquiry.message,
+      status: inquiry.status
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  // Handle opening the delete confirmation dialog
+  const handleOpenDeleteDialog = (inquiry: Inquiry) => {
+    setSelectedInquiry(inquiry);
+    setIsDeleteDialogOpen(true);
+  };
+
+  // Handle opening the reply dialog
+  const handleOpenReplyDialog = (inquiry: Inquiry) => {
+    setSelectedInquiry(inquiry);
+    setIsReplyDialogOpen(true);
+  };
+
+  // Handle status change
+  const handleStatusChange = (inquiry: Inquiry, status: string) => {
+    updateInquiryMutation.mutate({
+      id: inquiry.id,
+      data: { status }
+    });
+  };
+
+  // Handle sending reply
+  const handleSendReply = async () => {
+    if (!selectedInquiry || !replyMessage) return;
+
+    // In a real app, you would send the email here using EmailJS or similar
+    toast({
+      title: "Reply Sent",
+      description: `Your reply to ${selectedInquiry.name} has been sent successfully.`,
+    });
+
+    if (selectedInquiry.id) {
+      updateInquiryMutation.mutate({
+        id: selectedInquiry.id,
+        data: { status: 'in-progress', response: replyMessage }
+      });
+    }
+
+    setReplyMessage("");
+    setIsReplyDialogOpen(false);
+  };
+
+  // Handle edit form changes
+  const handleEditFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEditFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle edit form submission
+  const handleEditSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedInquiry?.id) return;
+    
+    updateInquiryMutation.mutate({
+      id: selectedInquiry.id,
+      data: editFormData
+    });
+    
+    setIsEditDialogOpen(false);
+  };
+
+  // Handle delete inquiry
+  const handleDeleteInquiry = () => {
+    if (!selectedInquiry?.id) return;
+    
+    deleteInquiryMutation.mutate(selectedInquiry.id);
+    setIsDeleteDialogOpen(false);
   };
 
   return (
     <AdminLayout title="Contact Inquiries">
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <h2 className="text-3xl font-bold">Contact Inquiries</h2>
           
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                {statusFilter ? `Status: ${statusDisplayNames[statusFilter as keyof typeof statusDisplayNames]}` : "All Statuses"}
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setStatusFilter(null)}>
-                All Statuses
-              </DropdownMenuItem>
-              {INQUIRY_STATUS.map(status => (
-                <DropdownMenuItem key={status} onClick={() => setStatusFilter(status)}>
-                  {statusDisplayNames[status as keyof typeof statusDisplayNames]}
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            {/* Search */}
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search inquiries..."
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3"
+                  onClick={() => setSearchTerm("")}
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            
+            {/* Filter */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="flex items-center gap-2">
+                  <Filter size={16} />
+                  <span>
+                    {statusFilter === null
+                      ? 'All Status' 
+                      : statusDisplayNames[statusFilter as keyof typeof statusDisplayNames]}
+                  </span>
+                  <ChevronDown size={16} className="ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => setStatusFilter(null)}>
+                  All Status
                 </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                {INQUIRY_STATUS.map(status => (
+                  <DropdownMenuItem 
+                    key={status} 
+                    onClick={() => setStatusFilter(status)}
+                  >
+                    {statusDisplayNames[status as keyof typeof statusDisplayNames]}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
         
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by name, email, or subject..."
-              className="pl-8"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {searchTerm && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3"
-                onClick={() => setSearchTerm("")}
+        {isLoading ? (
+          <div className="text-center py-10">
+            <div className="inline-block animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mb-4"></div>
+            <p>Loading inquiries...</p>
+          </div>
+        ) : filteredInquiries.length === 0 ? (
+          <div className="text-center py-16 border-2 border-dashed rounded-lg">
+            <Mail size={48} className="mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No Inquiries Found</h3>
+            <p className="text-muted-foreground">
+              {searchTerm || statusFilter
+                ? 'No inquiries match your search criteria.' 
+                : 'No contact inquiries have been received yet.'}
+            </p>
+            {(searchTerm || statusFilter) && (
+              <Button 
+                variant="outline"
+                onClick={() => {
+                  setSearchTerm("");
+                  setStatusFilter(null);
+                }}
+                className="mt-4"
               >
-                <X className="h-4 w-4" />
+                Clear Filters
               </Button>
             )}
           </div>
-        </div>
-
-        <div className="rounded-md border bg-card">
-          {loading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
-            </div>
-          ) : filteredInquiries.length > 0 ? (
+        ) : (
+          <div className="border rounded-md overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
+                  <TableHead>From</TableHead>
                   <TableHead>Subject</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Status</TableHead>
@@ -230,60 +336,60 @@ const AdminInquiries = () => {
               </TableHeader>
               <TableBody>
                 {filteredInquiries.map((inquiry) => {
-                  const createdAtDate = inquiry.createdAt 
-                    ? typeof inquiry.createdAt === 'string' 
-                      ? new Date(inquiry.createdAt) 
-                      : new Date((inquiry.createdAt as any).seconds * 1000)
-                    : new Date();
-                  
                   return (
                     <TableRow key={inquiry.id}>
-                      <TableCell className="font-medium">{inquiry.name}</TableCell>
-                      <TableCell>{inquiry.email}</TableCell>
+                      <TableCell className="font-medium">
+                        <div>
+                          <div>{inquiry.name}</div>
+                          <div className="text-sm text-muted-foreground">{inquiry.email}</div>
+                        </div>
+                      </TableCell>
                       <TableCell className="max-w-[200px] truncate">{inquiry.subject}</TableCell>
-                      <TableCell>{format(createdAtDate, 'MMM d, yyyy')}</TableCell>
+                      <TableCell>{formatDate(inquiry.createdAt)}</TableCell>
                       <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm" className="h-8 gap-1">
-                              <Badge variant={getStatusBadgeVariant(inquiry.status)}>
-                                {statusDisplayNames[inquiry.status as keyof typeof statusDisplayNames]}
-                              </Badge>
-                              <ChevronDown className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            {INQUIRY_STATUS.map(status => (
-                              <DropdownMenuItem 
-                                key={status} 
-                                onClick={() => handleStatusChange(inquiry, status)}
-                                disabled={inquiry.status === status}
-                              >
-                                {statusDisplayNames[status as keyof typeof statusDisplayNames]}
-                              </DropdownMenuItem>
-                            ))}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Badge variant={getStatusBadgeVariant(inquiry.status)}>
+                          {statusDisplayNames[inquiry.status as keyof typeof statusDisplayNames]}
+                        </Badge>
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
+                          {/* View button */}
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => {
-                              setSelectedInquiry(inquiry);
-                              setIsViewDialogOpen(true);
-                            }}
+                            onClick={() => handleViewInquiry(inquiry)}
+                            title="View Details"
                           >
                             <ExternalLink className="h-4 w-4" />
                           </Button>
+                          
+                          {/* Edit button */}
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             size="icon"
-                            onClick={() => {
-                              setSelectedInquiry(inquiry);
-                              setIsReplyDialogOpen(true);
-                            }}
+                            onClick={() => handleOpenEditDialog(inquiry)}
+                            title="Edit Inquiry"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          
+                          {/* Delete button */}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="hover:text-destructive"
+                            onClick={() => handleOpenDeleteDialog(inquiry)}
+                            title="Delete Inquiry"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          
+                          {/* Reply button */}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => handleOpenReplyDialog(inquiry)}
+                            title="Reply to Inquiry"
                           >
                             <Mail className="h-4 w-4" />
                           </Button>
@@ -294,23 +400,8 @@ const AdminInquiries = () => {
                 })}
               </TableBody>
             </Table>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12">
-              <p className="text-muted-foreground mb-4">No inquiries found</p>
-              {searchTerm || statusFilter ? (
-                <Button 
-                  variant="outline"
-                  onClick={() => {
-                    setSearchTerm("");
-                    setStatusFilter(null);
-                  }}
-                >
-                  Clear Filters
-                </Button>
-              ) : null}
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* View Inquiry Dialog */}
@@ -320,29 +411,27 @@ const AdminInquiries = () => {
             <DialogHeader>
               <DialogTitle>Inquiry Details</DialogTitle>
               <DialogDescription>
-                Submitted on {selectedInquiry.createdAt 
-                  ? format(new Date((selectedInquiry.createdAt as any).seconds * 1000 || selectedInquiry.createdAt as any), 'MMMM d, yyyy')
-                  : 'Unknown date'}
+                Submitted on {formatDate(selectedInquiry.createdAt)}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-sm font-semibold mb-1">Name</h4>
-                  <p className="text-md">{selectedInquiry.name}</p>
+                  <p>{selectedInquiry.name}</p>
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold mb-1">Email</h4>
-                  <p className="text-md">{selectedInquiry.email}</p>
+                  <p>{selectedInquiry.email}</p>
                 </div>
                 <div className="col-span-2">
                   <h4 className="text-sm font-semibold mb-1">Subject</h4>
-                  <p className="text-md">{selectedInquiry.subject}</p>
+                  <p>{selectedInquiry.subject}</p>
                 </div>
                 <div className="col-span-2">
                   <h4 className="text-sm font-semibold mb-1">Message</h4>
                   <div className="p-4 bg-muted rounded-md">
-                    <p className="text-md whitespace-pre-wrap">{selectedInquiry.message}</p>
+                    <p className="whitespace-pre-wrap">{selectedInquiry.message}</p>
                   </div>
                 </div>
               </div>
@@ -368,6 +457,125 @@ const AdminInquiries = () => {
         </Dialog>
       )}
 
+      {/* Edit Inquiry Dialog */}
+      {selectedInquiry && (
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle>Edit Inquiry</DialogTitle>
+              <DialogDescription>
+                Make changes to this inquiry
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleEditSubmit}>
+              <div className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium">Name</label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={editFormData.name}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium">Email</label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={editFormData.email}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="subject" className="text-sm font-medium">Subject</label>
+                  <Input
+                    id="subject"
+                    name="subject"
+                    value={editFormData.subject}
+                    onChange={handleEditFormChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-sm font-medium">Message</label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={editFormData.message}
+                    onChange={handleEditFormChange}
+                    rows={5}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="status" className="text-sm font-medium">Status</label>
+                  <select
+                    id="status"
+                    name="status"
+                    value={editFormData.status}
+                    onChange={handleEditFormChange}
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                  >
+                    {INQUIRY_STATUS.map(status => (
+                      <option key={status} value={status}>
+                        {statusDisplayNames[status as keyof typeof statusDisplayNames]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit">
+                  Save Changes
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {selectedInquiry && (
+        <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Confirm Deletion</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete this inquiry? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="p-4 border rounded-md bg-muted/50">
+              <p><strong>From:</strong> {selectedInquiry.name}</p>
+              <p><strong>Subject:</strong> {selectedInquiry.subject}</p>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button 
+                variant="destructive" 
+                onClick={handleDeleteInquiry}
+                disabled={deleteInquiryMutation.isPending}
+              >
+                {deleteInquiryMutation.isPending ? (
+                  <>
+                    <span className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2"></span>
+                    Deleting...
+                  </>
+                ) : (
+                  "Delete"
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
       {/* Reply Dialog */}
       {selectedInquiry && (
         <Dialog open={isReplyDialogOpen} onOpenChange={setIsReplyDialogOpen}>
@@ -375,17 +583,17 @@ const AdminInquiries = () => {
             <DialogHeader>
               <DialogTitle>Reply to {selectedInquiry.name}</DialogTitle>
               <DialogDescription>
-                Send an email response to this inquiry.
+                Send an email response to this inquiry
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-6">
               <div>
                 <h4 className="text-sm font-semibold mb-1">To</h4>
-                <p className="text-md">{selectedInquiry.email}</p>
+                <p>{selectedInquiry.email}</p>
               </div>
               <div>
                 <h4 className="text-sm font-semibold mb-1">Subject</h4>
-                <p className="text-md">Re: {selectedInquiry.subject}</p>
+                <p>Re: {selectedInquiry.subject}</p>
               </div>
               <div>
                 <h4 className="text-sm font-semibold mb-1">Message</h4>
