@@ -6,7 +6,9 @@ import {
   MessageSquare, 
   Settings, 
   Menu,
-  LogOut
+  LogOut,
+  Users,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -38,8 +40,23 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       name: "Settings", 
       path: "/admin/settings", 
       icon: <Settings className="w-5 h-5 mr-2" /> 
+    },
+    { 
+      name: "Team", 
+      path: "/admin/team", 
+      icon: <Users className="w-5 h-5 mr-2" /> 
     }
   ];
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(prev => !prev);
+  };
+  
+  // Close mobile menu when clicking a navigation item
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
   
   return (
     <div className="min-h-screen bg-background flex">
@@ -76,11 +93,64 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
         </div>
       </div>
       
-      {/* Mobile Header */}
+      {/* Mobile Sidebar - Show when isMobileMenuOpen is true */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          {/* Overlay */}
+          <div 
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Sidebar */}
+          <div className="relative flex flex-col w-full max-w-xs bg-card p-4">
+            <div className="flex items-center justify-between mb-4">
+              <Link to="/" className="flex items-center" onClick={handleNavClick}>
+                <span className="text-2xl font-bold gradient-text">DTS</span>
+                <span className="ml-2 font-semibold">Admin</span>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            
+            <nav className="flex-1 space-y-1">
+              {navItems.map((item) => (
+                <Link 
+                  key={item.path} 
+                  to={item.path}
+                  className="flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-muted transition-colors"
+                  onClick={handleNavClick}
+                >
+                  {item.icon}
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            
+            <div className="pt-4 border-t mt-4">
+              <Button 
+                variant="ghost" 
+                className="w-full justify-start text-destructive"
+              >
+                <LogOut className="w-5 h-5 mr-2" />
+                Sign Out
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Main Content Area */}
       <div className="lg:pl-64 w-full">
         <header className="bg-card border-b p-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Button variant="ghost" size="icon" className="lg:hidden">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="lg:hidden"
+              onClick={toggleMobileMenu}
+            >
               <Menu className="h-5 w-5" />
             </Button>
             

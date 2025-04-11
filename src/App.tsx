@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProjects from "./pages/admin/Projects";
 import AdminInquiries from "./pages/admin/Inquiries";
 import AdminSettings from "./pages/admin/Settings";
+import AdminTeam from "@/pages/admin/Team"; // Add this import
 
 // ScrollToTop component to ensure pages load at the top
 const ScrollToTop = () => {
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/admin/projects" element={<AuthGuard><AdminProjects /></AuthGuard>} />
             <Route path="/admin/inquiries" element={<AuthGuard><AdminInquiries /></AuthGuard>} />
             <Route path="/admin/settings" element={<AuthGuard><AdminSettings /></AuthGuard>} />
+            <Route path="/admin/team" element={<AuthGuard><AdminTeam /></AuthGuard>} /> {/* Add this route */}
             
             {/* 404 page */}
             <Route path="*" element={<NotFound />} />

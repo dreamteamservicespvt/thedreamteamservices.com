@@ -120,8 +120,8 @@ const Hero = () => {
         ))}
       </motion.div>
       
-      {/* Grid overlay with cosmic effect */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-10 z-10"></div>
+      {/* Grid overlay with cosmic effect - hide on mobile and disable interactions */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-10 -z-10 hidden md:block pointer-events-none select-none"></div>
 
       {/* Content */}
       <motion.div 

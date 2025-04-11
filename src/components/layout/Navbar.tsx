@@ -63,7 +63,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button on right */}
-          <div className="md:hidden flex items-center relative" style={{ position: "relative", inset: "unset" }}>
+          <div className="md:hidden flex items-center">
             <button
               type="button"
               className="text-foreground hover:text-accent transition-colors p-1"

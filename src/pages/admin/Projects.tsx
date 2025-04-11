@@ -375,160 +375,197 @@ const AdminProjects = () => {
 
       {/* Project Dialog */}
       <Dialog open={projectDialogOpen} onOpenChange={setProjectDialogOpen}>
-        <DialogContent className="sm:max-w-xl">
+        <DialogContent className="sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="text-xl sm:text-2xl">
               {isEditing ? "Edit Project" : "Add New Project"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-base">
               {isEditing
                 ? "Update your project information below."
                 : "Fill in the details to add a new project to your portfolio."}
             </DialogDescription>
           </DialogHeader>
 
-          <form onSubmit={handleSubmit}>
-            <div className="grid gap-6 py-4">
-              <div>
-                <label htmlFor="title" className="block text-sm font-medium mb-2">
-                  Title*
-                </label>
-                <Input
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  placeholder="Project Title"
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium mb-2">
-                  Description*
-                </label>
-                <Textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  placeholder="Describe your project"
-                  rows={4}
-                  required
-                />
-              </div>
-
-              <div>
-                <label htmlFor="category" className="block text-sm font-medium mb-2">
-                  Category*
-                </label>
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  required
-                >
-                  {categories.map((category) => (
-                    <option key={category.value} value={category.value}>
-                      {category.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="image" className="block text-sm font-medium mb-2">
-                  Project Image*
-                </label>
-                <div className="grid grid-cols-1 gap-4">
+          <form onSubmit={handleSubmit} className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+              <div className="space-y-6">
+                <div>
+                  <label htmlFor="title" className="block text-sm font-medium mb-2">
+                    Title*
+                  </label>
                   <Input
-                    id="image"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
+                    id="title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleInputChange}
+                    placeholder="Project Title"
+                    required
+                    className="w-full"
                   />
-                  {imagePreview && (
-                    <div className="relative aspect-[16/9] bg-muted overflow-hidden rounded-md">
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="w-full h-full object-cover"
+                </div>
+
+                <div>
+                  <label htmlFor="description" className="block text-sm font-medium mb-2">
+                    Description*
+                  </label>
+                  <Textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    placeholder="Describe your project"
+                    rows={4}
+                    required
+                    className="w-full resize-none"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="category" className="block text-sm font-medium mb-2">
+                    Category*
+                  </label>
+                  <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleInputChange}
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    required
+                  >
+                    {categories.map((category) => (
+                      <option key={category.value} value={category.value}>
+                        {category.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <label htmlFor="image" className="block text-sm font-medium mb-2">
+                    Project Image*
+                  </label>
+                  <div className="flex flex-col gap-4">
+                    <Input
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="w-full"
+                    />
+                    {imagePreview && (
+                      <div className="relative aspect-video bg-muted overflow-hidden rounded-md">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="projectUrl" className="block text-sm font-medium mb-2">
+                    Project URL
+                  </label>
+                  <Input
+                    id="projectUrl"
+                    name="projectUrl"
+                    value={formData.projectUrl}
+                    onChange={handleInputChange}
+                    placeholder="https://yourproject.com"
+                    type="url"
+                    className="w-full"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="tags" className="block text-sm font-medium mb-2">
+                    Tags
+                  </label>
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Input
+                        id="tags"
+                        value={tagInput}
+                        onChange={(e) => setTagInput(e.target.value)}
+                        placeholder="Add tag and press Enter"
+                        className="flex-1"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            if (tagInput.trim()) {
+                              setFormData({
+                                ...formData,
+                                tags: [...formData.tags, tagInput.trim()]
+                              });
+                              setTagInput("");
+                            }
+                          }
+                        }}
                       />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="projectUrl" className="block text-sm font-medium mb-2">
-                  Project URL
-                </label>
-                <Input
-                  id="projectUrl"
-                  name="projectUrl"
-                  value={formData.projectUrl}
-                  onChange={handleInputChange}
-                  placeholder="https://yourproject.com"
-                  type="url"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="tags" className="block text-sm font-medium mb-2">
-                  Tags
-                </label>
-                <div className="flex gap-2">
-                  <Input
-                    id="tags"
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    placeholder="Add a tag (e.g., React, Python)"
-                    className="flex-1"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleAddTag();
-                      }
-                    }}
-                  />
-                  <Button type="button" onClick={handleAddTag}>
-                    Add
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {formData.tags.map((tag) => (
-                    <div
-                      key={tag}
-                      className="flex items-center gap-1 bg-primary/10 text-primary rounded-full px-3 py-1 text-sm"
-                    >
-                      <span>{tag}</span>
-                      <button
+                      <Button
                         type="button"
-                        onClick={() => handleRemoveTag(tag)}
-                        className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-primary/20"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          if (tagInput.trim()) {
+                            setFormData({
+                              ...formData,
+                              tags: [...formData.tags, tagInput.trim()]
+                            });
+                            setTagInput("");
+                          }
+                        }}
                       >
-                        <X size={12} />
-                        <span className="sr-only">Remove tag</span>
-                      </button>
+                        Add
+                      </Button>
                     </div>
-                  ))}
+
+                    <div className="flex flex-wrap gap-2">
+                      {formData.tags.map((tag, index) => (
+                        <div 
+                          key={index}
+                          className="bg-primary/10 text-primary px-2 py-1 rounded-full text-sm flex items-center gap-1"
+                        >
+                          {tag}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData({
+                                ...formData,
+                                tags: formData.tags.filter((_, i) => i !== index)
+                              });
+                            }}
+                            className="w-4 h-4 rounded-full flex items-center justify-center hover:bg-primary/20"
+                          >
+                            <X size={12} />
+                            <span className="sr-only">Remove tag</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <DialogFooter>
+            <DialogFooter className="mt-6 flex-col sm:flex-row gap-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setProjectDialogOpen(false)}
+                className="w-full sm:w-auto"
               >
                 Cancel
               </Button>
               <Button 
                 type="submit" 
                 disabled={createMutation.isPending || updateMutation.isPending}
+                className="w-full sm:w-auto"
               >
                 {createMutation.isPending || updateMutation.isPending ? (
                   <>
