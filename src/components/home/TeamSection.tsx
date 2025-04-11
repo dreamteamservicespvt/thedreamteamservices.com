@@ -15,7 +15,11 @@ const TeamSection = () => {
     const fetchTeamMembers = async () => {
       try {
         const members = await getTeamMembers();
-        setTeamMembers(members);
+        // Sort by the order property - ensure members are of type TeamMember[]
+        const sortedMembers = [...members].sort((a, b) => 
+          (a.order || 0) - (b.order || 0)
+        );
+        setTeamMembers(sortedMembers);
       } catch (error) {
         console.error("Error fetching team members:", error);
       } finally {
@@ -51,7 +55,7 @@ const TeamSection = () => {
   };
 
   // Fallback team members if no data is loaded from Firebase
-  const fallbackTeamMembers = [
+  const fallbackTeamMembers: TeamMember[] = [
     {
       id: "1",
       name: "David Johnson",
@@ -62,7 +66,8 @@ const TeamSection = () => {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
         github: "https://github.com"
-      }
+      },
+      order: 1
     },
     {
       id: "2",
@@ -74,7 +79,8 @@ const TeamSection = () => {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
         github: "https://github.com"
-      }
+      },
+      order: 2
     },
     {
       id: "3",
@@ -86,7 +92,8 @@ const TeamSection = () => {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
         github: "https://github.com"
-      }
+      },
+      order: 3
     },
     {
       id: "4",
@@ -98,7 +105,8 @@ const TeamSection = () => {
         linkedin: "https://linkedin.com",
         twitter: "https://twitter.com",
         github: "https://github.com"
-      }
+      },
+      order: 4
     }
   ];
 

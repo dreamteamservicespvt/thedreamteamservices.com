@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Plus, Pencil, Trash2, X, Check, Github, Twitter, Linkedin, FileImage } from "lucide-react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Plus, Pencil, Trash2, X, Check, Github, Twitter, Linkedin, FileImage, GripVertical } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,7 @@ const AdminTeam = () => {
   // Dialog state
   const [teamMemberDialogOpen, setTeamMemberDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [orderMode, setOrderMode] = useState(false);
   
   // Form state
   const [isEditing, setIsEditing] = useState(false);
@@ -136,6 +138,32 @@ const AdminTeam = () => {
         description: "Failed to delete team member. Please try again.",
       });
       console.error("Error deleting team member:", error);
+    }
+  });
+
+  // Update team members order mutation
+  const updateOrderMutation = useMutation({
+    mutationFn: (orderedTeamMembers: TeamMember[]) => {
+      const updates = orderedTeamMembers.map((member, index) => 
+        updateTeamMember(member.id, { order: index })
+      );
+      return Promise.all(updates);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["teamMembers"] });
+      setOrderMode(false);
+      toast({
+        title: "Order Updated",
+        description: "Team members order has been successfully updated.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update team members order. Please try again.",
+      });
+      console.error("Error updating team members order:", error);
     }
   });
 
@@ -251,16 +279,91 @@ const AdminTeam = () => {
     }
   };
 
+  // Handle drag and drop reordering
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+    
+    const items = Array.from(teamMembers);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    
+    // Update the order values as items are dragged
+    const itemsWithUpdatedOrder = items.map((item, index) => ({
+      ...item,
+      order: index
+    }));
+    
+    queryClient.setQueryData(["teamMembers"], itemsWithUpdatedOrder);
+  };
+
+  // Save the new order
+  const saveOrder = () => {
+    // Get the current order from the state
+    const orderedTeamMembers = teamMembers.map((member, index) => ({
+      ...member,
+      order: index
+    }));
+    
+    updateOrderMutation.mutate(orderedTeamMembers as TeamMember[]);
+  };
+
+  // Toggle order mode
+  const toggleOrderMode = () => {
+    if (!orderMode) {
+      // When entering order mode, ensure we use sorted members
+      const sortedMembers = [...teamMembers].sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+      queryClient.setQueryData(["teamMembers"], sortedMembers);
+    } else {
+      // If we're exiting order mode without saving, reset to original order
+      queryClient.invalidateQueries({ queryKey: ["teamMembers"] });
+    }
+    setOrderMode(!orderMode);
+  };
+
   return (
     <AdminLayout title="Team">
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold">Team Members</h2>
-          <Button onClick={handleNewTeamMember}>
-            <Plus size={16} className="mr-2" />
-            Add Team Member
-          </Button>
+          <div className="flex gap-3">
+            {teamMembers.length > 1 && (
+              <Button 
+                variant={orderMode ? "default" : "outline"} 
+                onClick={toggleOrderMode}
+              >
+                {orderMode ? "Exit Order Mode" : "Arrange Order"}
+              </Button>
+            )}
+            <Button onClick={handleNewTeamMember} disabled={orderMode}>
+              <Plus size={16} className="mr-2" />
+              Add Team Member
+            </Button>
+          </div>
         </div>
+
+        {orderMode && teamMembers.length > 0 && (
+          <div className="bg-muted/50 p-4 rounded-md flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-medium">Order Mode</h3>
+              <p className="text-sm text-muted-foreground">
+                Drag and drop team members to reorder them. Click Save Order when finished.
+              </p>
+            </div>
+            <Button 
+              onClick={saveOrder} 
+              disabled={updateOrderMutation.isPending}
+            >
+              {updateOrderMutation.isPending ? (
+                <>
+                  <span className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2"></span>
+                  Saving...
+                </>
+              ) : (
+                "Save Order"
+              )}
+            </Button>
+          </div>
+        )}
 
         {isLoading ? (
           <div className="text-center py-10">
@@ -283,9 +386,61 @@ const AdminTeam = () => {
               Create Team Member
             </Button>
           </div>
+        ) : orderMode ? (
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="team-members">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="space-y-2"
+                >
+                  {teamMembers.map((member, index) => (
+                    <Draggable key={member.id} draggableId={member.id} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="flex items-center p-3 bg-card border rounded-lg"
+                        >
+                          <div 
+                            {...provided.dragHandleProps}
+                            className="mr-3 p-2 cursor-move text-muted-foreground hover:text-foreground"
+                          >
+                            <GripVertical size={20} />
+                          </div>
+                          {member.image ? (
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="w-12 h-12 rounded-full object-cover mr-4"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center mr-4">
+                              <FileImage size={20} className="text-muted-foreground" />
+                            </div>
+                          )}
+                          <div>
+                            <h3 className="font-medium">{member.name}</h3>
+                            <p className="text-sm text-muted-foreground">{member.role}</p>
+                          </div>
+                          <div className="ml-auto text-sm text-muted-foreground">
+                            Position: {index + 1} {member.order !== undefined && member.order !== index ? `(was ${member.order + 1})` : ''}
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((teamMember) => (
+            {[...teamMembers]
+              .sort((a, b) => (a.order ?? 999) - (b.order ?? 999))
+              .map((teamMember) => (
               <motion.div
                 key={teamMember.id}
                 initial={{ opacity: 0, y: 20 }}

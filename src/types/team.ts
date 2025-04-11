@@ -4,13 +4,23 @@ export interface TeamMember {
   role: string;
   image: string;
   bio: string;
+  order?: number;
   socialLinks: {
     linkedin?: string;
     twitter?: string;
     github?: string;
   };
-  createdAt?: any;
-  updatedAt?: any;
 }
 
-export type TeamMemberFormData = Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>;
+export interface TeamMemberFormData {
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+  order?: number;
+  socialLinks: {
+    linkedin: string;
+    twitter: string;
+    github: string;
+  };
+}
