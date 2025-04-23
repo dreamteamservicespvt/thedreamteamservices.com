@@ -1,8 +1,8 @@
-
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 interface Testimonial {
   id: number;
@@ -124,10 +124,13 @@ const Testimonials = () => {
                   <div className="shrink-0 mb-6 md:mb-0 md:mr-6">
                     <div className="relative">
                       <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-dts-purple/50">
-                        <img 
+                        <OptimizedImage 
                           src={testimonials[currentIndex].image} 
                           alt={testimonials[currentIndex].name} 
-                          className="w-full h-full object-cover"
+                          className="w-full h-full"
+                          width={80}
+                          height={80}
+                          fallbackSrc="/images/placeholder-avatar.jpg"
                         />
                       </div>
                       <div className="absolute -bottom-2 -right-2 bg-dts-purple text-white p-1 rounded-full">

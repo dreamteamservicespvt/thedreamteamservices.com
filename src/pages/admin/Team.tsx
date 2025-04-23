@@ -33,6 +33,7 @@ import {
   deleteTeamMember 
 } from "@/services/teamService";
 import { TeamMember, TeamMemberFormData } from "@/types/team";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 const AdminTeam = () => {
   const { toast } = useToast();
@@ -449,10 +450,13 @@ const AdminTeam = () => {
               >
                 <div className="aspect-[4/3] bg-muted relative overflow-hidden">
                   {teamMember.image ? (
-                    <img
+                    <OptimizedImage
                       src={teamMember.image}
                       alt={teamMember.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full"
+                      width={400}
+                      height={300}
+                      fallbackSrc="/images/placeholder-person.jpg"
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-muted">

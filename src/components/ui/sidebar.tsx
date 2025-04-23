@@ -759,3 +759,7 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+
+// This file re-exports all components from the sidebar directory for backward compatibility
+// Import and re-export everything from the sidebar components
+export * from './sidebar/index'

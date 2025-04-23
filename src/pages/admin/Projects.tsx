@@ -32,6 +32,7 @@ import {
   deleteProject 
 } from "@/services/projectService";
 import { Project, ProjectFormData } from "@/types/project";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 
 const categories = [
   { value: "web", label: "Web Development" },
@@ -306,10 +307,13 @@ const AdminProjects = () => {
               >
                 <div className="aspect-[16/9] bg-muted relative overflow-hidden">
                   {project.image ? (
-                    <img
+                    <OptimizedImage
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full"
+                      width={640}
+                      height={360}
+                      fallbackSrc="/images/placeholder-project.jpg"
                     />
                   ) : (
                     <div className="flex items-center justify-center w-full h-full bg-muted">
