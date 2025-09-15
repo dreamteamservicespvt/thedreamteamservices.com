@@ -14,14 +14,14 @@ import { Link } from "react-router-dom";
  
 const Pricing = () => {
   useEffect(() => {
-    // Add grid pattern to body
+    // Add grid pattern to 
     document.body.classList.add("bg-grid-pattern");
     
     return () => {
       document.body.classList.remove("bg-grid-pattern");
     };
   }, []);
-
+ 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

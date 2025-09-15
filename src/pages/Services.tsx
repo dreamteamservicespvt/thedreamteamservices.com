@@ -14,7 +14,7 @@ const Services = () => {
     return () => {
       document.body.classList.remove("bg-grid-pattern");
     };
-  }, []);
+  }, []); 
 
   const containerVariants = {
     hidden: { opacity: 0 },
