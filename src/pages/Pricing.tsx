@@ -11,7 +11,7 @@ import {
 import GradientButton from "@/components/ui/GradientButton";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-
+ 
 const Pricing = () => {
   useEffect(() => {
     // Add grid pattern to body
