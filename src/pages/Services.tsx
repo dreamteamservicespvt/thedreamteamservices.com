@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import { Code, Smartphone, Shield, Rocket, Megaphone, Database } from "lucide-react";
+import { Code, Smartphone, Shield, Rocket, Megaphone, Database, Users, Video } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 
 const Services = () => {
@@ -48,6 +48,28 @@ const Services = () => {
       color: "from-blue-500 to-cyan-400"
     },
     {
+      id: "social-media-management",
+      level: "Level One Plus",
+      title: "Social Media Management",
+      description: "Complete social media management across Instagram, YouTube, Facebook, Threads, LinkedIn, and X. Professional content creation with SEO optimization and strategic posting.",
+      services: [
+        { icon: <Users size={24} />, name: "Multi-Platform Management", description: "Handle 6 major social media platforms simultaneously" },
+        { icon: <Video size={24} />, name: "Content Creation", description: "Weekly videos, posters, and festival-themed content" }
+      ],
+      color: "from-pink-500 to-purple-500"
+    },
+    {
+      id: "commercial-ads",
+      level: "Level One Pro",
+      title: "Commercial Ads Creation",
+      description: "AI-generated professional video advertisements from 8 seconds to 1 minute. Complete production including concept, voiceover, visuals, and editing with real footage integration.",
+      services: [
+        { icon: <Video size={24} />, name: "AI Video Production", description: "Professional AI-generated commercials with custom concepts" },
+        { icon: <Megaphone size={24} />, name: "Complete Ad Package", description: "Concept, voiceover, visuals, editing, and quality assurance" }
+      ],
+      color: "from-red-500 to-orange-500"
+    },
+    {
       id: "level-two",
       level: "Level Two",
       title: "Software & Mobile App Development",
@@ -62,7 +84,7 @@ const Services = () => {
       id: "level-three",
       level: "Level Three",
       title: "AI Solutions & Cybersecurity Services",
-      description: "Integrating Levels One and Two with AI and Cybersecurity specialists, we offer innovative AI-driven solutions and advanced security measures.",
+      description: "Integrating all previous levels with AI and Cybersecurity specialists, we offer innovative AI-driven solutions and advanced security measures.",
       services: [
         { icon: <Rocket size={24} />, name: "AI Solutions", description: "Innovative AI-driven websites, software, and digital marketing" },
         { icon: <Shield size={24} />, name: "Cybersecurity", description: "Advanced, tailored security solutions against cyber threats" }

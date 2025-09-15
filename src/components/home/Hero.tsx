@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import TypewriterEffect from "../ui/TypewriterEffect";
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -13,6 +14,20 @@ const Hero = () => {
     target: heroRef,
     offset: ["start start", "end start"]
   });
+  
+  // Typewriter effect lines
+  const typewriterLines = [
+    "We build your brand from zero to unforgettable.",
+    "We turn your ideas into powerful websites.",
+    "We create designs that make people stop and stare.",
+    "We help students become digital creators.",
+    "We automate businesses with software that works.",
+    "We grow your social media, while you focus on your passion.",
+    "We help startups launch like pros.",
+    "We design logos your customers remember.",
+    "We make your business look premium online.",
+    "We turn clicks into real customers."
+  ];
   
   // Parallax effect for stars
   const starsY = useTransform(scrollYProgress, [0, 1], [0, 300]);
@@ -52,8 +67,8 @@ const Hero = () => {
   }, []);
 
   const scrollToMission = () => {
-    const missionSection = document.getElementById("mission");
-    missionSection?.scrollIntoView({ behavior: "smooth" });
+    const approachSection = document.getElementById("approach");
+    approachSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -163,14 +178,22 @@ const Hero = () => {
           </motion.span>
         </motion.h1>
 
-        <motion.p 
-          className="text-xl sm:text-2xl max-w-3xl mx-auto text-foreground/80 mb-10"
+        <motion.div 
+          className="w-full mx-auto mb-12 px-4 sm:px-6 lg:px-8"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, delay: 0.9 }}
+          style={{ minHeight: "100px" }}
         >
-          Unlock the magic of innovation – turn your boldest ideas into reality.
-        </motion.p>
+          <TypewriterEffect
+            words={typewriterLines}
+            typeSpeed={45}
+            deleteSpeed={30}
+            delayBetweenWords={2800}
+            startDelay={1800}
+            className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-medium leading-relaxed"
+          />
+        </motion.div>
 
         <motion.div 
           className="flex flex-col sm:flex-row gap-4 sm:gap-6"
@@ -233,30 +256,6 @@ const Hero = () => {
           />
         ))}
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="cursor-pointer flex flex-col items-center"
-          onClick={scrollToMission}
-        >
-          <span className="text-sm font-medium text-foreground/70 mb-2">Discover More</span>
-          <div className="w-6 h-9 border-2 border-foreground/30 rounded-full flex justify-center pt-1">
-            <motion.div 
-              className="w-1 h-1 bg-foreground/70 rounded-full"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            />
-          </div>
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

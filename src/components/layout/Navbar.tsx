@@ -20,7 +20,9 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
     { name: "Services", href: "/services" },
+    { name: "Pricing", href: "/pricing" },
     { name: "Portfolio", href: "/portfolio" },
     { name: "Contact", href: "/contact" },
   ];
@@ -57,7 +59,12 @@ const Navbar = () => {
                 </Link>
               ))}
               <Link to="/contact">
-                <GradientButton>Get Started</GradientButton>
+                <GradientButton 
+                  gradientDirection="horizontal"
+                  highContrast={true}
+                >
+                  Get Started
+                </GradientButton>
               </Link>
             </div>
           </div>

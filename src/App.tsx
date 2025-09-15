@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
+import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Portfolio from "./pages/Portfolio";
@@ -17,6 +18,7 @@ import AdminProjects from "./pages/admin/Projects";
 import AdminInquiries from "./pages/admin/Inquiries";
 import AdminSettings from "./pages/admin/Settings";
 import AdminTeam from "@/pages/admin/Team"; // Add this import
+import Pricing from "@/pages/Pricing"; // Import the Pricing page
 
 // ScrollToTop component to ensure pages load at the top
 const ScrollToTop = () => {
@@ -42,9 +44,11 @@ const App = () => (
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/pricing" element={<Pricing />} /> {/* Add this line for the Pricing page */}
             
             {/* Admin routes */}
             <Route path="/admin/login" element={<AdminLogin />} />

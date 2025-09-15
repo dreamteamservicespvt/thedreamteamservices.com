@@ -453,7 +453,7 @@ const AdminTeam = () => {
                     <OptimizedImage
                       src={teamMember.image}
                       alt={teamMember.name}
-                      className="w-full h-full"
+                      className="w-full h-full object-contain"
                       width={400}
                       height={300}
                       fallbackSrc="/images/placeholder-person.jpg"

@@ -92,6 +92,17 @@
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
   }
+
+  /* Team member image container utilities */
+  .team-image-container {
+    @apply relative overflow-hidden bg-dts-blue-dark/40 flex items-center justify-center;
+    min-height: 250px;
+    max-height: 350px;
+  }
+  
+  .team-image {
+    @apply w-full h-auto object-contain max-h-full transition-transform duration-300;
+  }
 }
 
 @keyframes pulse-gentle {

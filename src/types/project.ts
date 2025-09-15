@@ -6,11 +6,19 @@ export interface Project {
   image: string;
   tags: string[];
   projectUrl?: string;
-  createdAt?: any;
-  updatedAt?: any;
+  createdAt: number;
+  order?: number; // Added order property
 }
 
-export type ProjectFormData = Omit<Project, 'id' | 'createdAt' | 'updatedAt'>;
+export interface ProjectFormData {
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  tags: string[];
+  projectUrl?: string;
+  order?: number; // Added order property
+}
 
 export const PROJECT_SECTORS = [
   "Web Development",

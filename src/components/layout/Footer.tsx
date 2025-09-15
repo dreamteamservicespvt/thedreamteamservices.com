@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="section-container relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1 md:col-span-1">
             <h3 className="text-2xl font-bold gradient-text mb-4">Dream Team Services</h3>
             <p className="text-foreground/70 max-w-md">
               Providing cutting-edge digital solutions across web development, software, mobile apps, 
@@ -20,6 +20,19 @@ const Footer = () => {
               <SocialIcon icon={<Instagram size={20} />} href="#" />
               <SocialIcon icon={<Github size={20} />} href="#" />
             </div>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="text-lg font-bold mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <FooterLink href="/">Home</FooterLink>
+              <FooterLink href="/about">About Us</FooterLink>
+              <FooterLink href="/services">Services</FooterLink>
+              <FooterLink href="/portfolio">Portfolio</FooterLink>
+              <FooterLink href="/pricing">Pricing</FooterLink>
+              <FooterLink href="/contact">Contact</FooterLink>
+            </ul>
           </div>
 
           {/* Services */}

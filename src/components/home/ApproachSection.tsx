@@ -30,8 +30,8 @@ const ApproachSection = () => {
   const serviceLevels = [
     {
       level: "Level 1",
-      title: "Web Presence",
-      description: "Websites & Digital Marketing",
+      title: "Digital Presence",
+      description: "Websites, Social Media & Ads",
       icon: <Target className="h-6 w-6" />,
       color: "from-dts-purple to-pink-500"
     },

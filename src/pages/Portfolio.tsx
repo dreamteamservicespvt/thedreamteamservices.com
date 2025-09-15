@@ -185,11 +185,11 @@ const ProjectCard = ({ project }: { project: Project }) => {
       transition={{ duration: 0.5 }}
       className="group rounded-xl overflow-hidden border border-foreground/10 transition-all duration-300 bg-card/50 backdrop-blur-sm hover:shadow-xl hover:shadow-dts-purple/20 h-full flex flex-col"
     >
-      <div className="relative aspect-video overflow-hidden">
+      <div className="relative overflow-hidden">
         <OptimizedImage 
           src={project.image} 
           alt={project.title}
-          className="w-full h-full"
+          className="w-full h-auto max-h-64 rounded-t-xl"
           width={640}
           height={360}
           fallbackSrc="/images/placeholder-project.jpg"

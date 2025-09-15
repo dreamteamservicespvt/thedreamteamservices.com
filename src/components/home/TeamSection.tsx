@@ -141,19 +141,15 @@ const TeamSection = () => {
               <motion.div
                 key={member.id}
                 variants={itemVariants}
-                whileHover={shouldReduceMotion ? {} : { 
-                  y: -8,
-                  transition: { duration: 0.3 }
-                }}
                 className="bg-card/50 backdrop-blur-sm rounded-xl overflow-hidden border border-border/50 hover:border-dts-cyan/50 hover:shadow-lg hover:shadow-dts-cyan/10 transition-all duration-300 flex flex-col h-full"
               >
-                <div className="aspect-[4/3] relative overflow-hidden bg-dts-blue-dark/40">
+                <div className="relative overflow-hidden bg-dts-blue-dark/40 flex items-center justify-center min-h-[250px] max-h-[350px]">
                   <OptimizedImage
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full"
+                    className="w-full h-auto object-contain max-h-full"
                     width={400}
-                    height={300}
+                    height={400}
                     fallbackSrc="/images/placeholder-person.jpg"
                     onError={handleMemberImageError(member)}
                   />
@@ -227,3 +223,4 @@ const TeamSection = () => {
 };
 
 export default TeamSection;
+  

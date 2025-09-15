@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { Plus, Pencil, Trash2, X, Check, ExternalLink, FileImage } from "lucide-react";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Plus, Pencil, Trash2, X, Check, ExternalLink, FileImage, GripVertical } from "lucide-react";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,6 +50,7 @@ const AdminProjects = () => {
   // Dialog state
   const [projectDialogOpen, setProjectDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [orderMode, setOrderMode] = useState(false);
   
   // Form state
   const [isEditing, setIsEditing] = useState(false);
@@ -144,6 +146,32 @@ const AdminProjects = () => {
         description: "Failed to delete project. Please try again.",
       });
       console.error("Delete project error:", error);
+    }
+  });
+
+  // Update projects order mutation
+  const updateOrderMutation = useMutation({
+    mutationFn: (orderedProjects: Project[]) => {
+      const updates = orderedProjects.map((project, index) => 
+        updateProject(project.id, { order: index })
+      );
+      return Promise.all(updates);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      setOrderMode(false);
+      toast({
+        title: "Order Updated",
+        description: "Projects order has been successfully updated.",
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update projects order. Please try again.",
+      });
+      console.error("Update projects order error:", error);
     }
   });
 
@@ -264,16 +292,91 @@ const AdminProjects = () => {
     }
   };
 
+  // Handle drag and drop reordering
+  const handleDragEnd = (result: any) => {
+    if (!result.destination) return;
+    
+    const items = Array.from(projects);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    
+    // Update the order values as items are dragged
+    const itemsWithUpdatedOrder = items.map((item, index) => ({
+      ...item,
+      order: index
+    }));
+    
+    queryClient.setQueryData(["projects"], itemsWithUpdatedOrder);
+  };
+
+  // Save the new order
+  const saveOrder = () => {
+    // Get the current order from the state
+    const orderedProjects = projects.map((project, index) => ({
+      ...project,
+      order: index
+    }));
+    
+    updateOrderMutation.mutate(orderedProjects as Project[]);
+  };
+
+  // Toggle order mode
+  const toggleOrderMode = () => {
+    if (!orderMode) {
+      // When entering order mode, ensure we use sorted projects
+      const sortedProjects = [...projects].sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+      queryClient.setQueryData(["projects"], sortedProjects);
+    } else {
+      // If we're exiting order mode without saving, reset to original order
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+    }
+    setOrderMode(!orderMode);
+  };
+
   return (
     <AdminLayout title="Projects">
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-bold">Projects</h2>
-          <Button onClick={handleNewProject}>
-            <Plus size={16} className="mr-2" />
-            Add Project
-          </Button>
+          <div className="flex gap-3">
+            {projects.length > 1 && (
+              <Button 
+                variant={orderMode ? "default" : "outline"} 
+                onClick={toggleOrderMode}
+              >
+                {orderMode ? "Exit Order Mode" : "Arrange Order"}
+              </Button>
+            )}
+            <Button onClick={handleNewProject} disabled={orderMode}>
+              <Plus size={16} className="mr-2" />
+              Add Project
+            </Button>
+          </div>
         </div>
+
+        {orderMode && projects.length > 0 && (
+          <div className="bg-muted/50 p-4 rounded-md flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-medium">Order Mode</h3>
+              <p className="text-sm text-muted-foreground">
+                Drag and drop projects to reorder them. Click Save Order when finished.
+              </p>
+            </div>
+            <Button 
+              onClick={saveOrder} 
+              disabled={updateOrderMutation.isPending}
+            >
+              {updateOrderMutation.isPending ? (
+                <>
+                  <span className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full mr-2"></span>
+                  Saving...
+                </>
+              ) : (
+                "Save Order"
+              )}
+            </Button>
+          </div>
+        )}
 
         {isLoading ? (
           <div className="text-center py-10">
@@ -296,9 +399,63 @@ const AdminProjects = () => {
               Create Project
             </Button>
           </div>
+        ) : orderMode ? (
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="projects">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="space-y-2"
+                >
+                  {projects.map((project, index) => (
+                    <Draggable key={project.id} draggableId={project.id} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          className="flex items-center p-3 bg-card border rounded-lg"
+                        >
+                          <div 
+                            {...provided.dragHandleProps}
+                            className="mr-3 p-2 cursor-move text-muted-foreground hover:text-foreground"
+                          >
+                            <GripVertical size={20} />
+                          </div>
+                          {project.image ? (
+                            <div className="w-20 h-12 bg-muted overflow-hidden rounded mr-4">
+                              <img
+                                src={project.image}
+                                alt={project.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-20 h-12 rounded bg-muted flex items-center justify-center mr-4">
+                              <FileImage size={20} className="text-muted-foreground" />
+                            </div>
+                          )}
+                          <div>
+                            <h3 className="font-medium">{project.title}</h3>
+                            <p className="text-sm text-muted-foreground">{project.category}</p>
+                          </div>
+                          <div className="ml-auto text-sm text-muted-foreground">
+                            Position: {index + 1} {project.order !== undefined && project.order !== index ? `(was ${project.order + 1})` : ''}
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
+            {[...projects]
+              .sort((a, b) => (a.order ?? 999) - (b.order ?? 999)) // Sort by order property
+              .map((project) => (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 20 }}
