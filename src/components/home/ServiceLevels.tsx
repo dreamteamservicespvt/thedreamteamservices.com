@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Code, Monitor, BarChart3, Globe, Smartphone, Cpu, Shield, Rocket, ChevronDown, ChevronUp } from "lucide-react";
+import { 
+  Code, Monitor, BarChart3, Globe, Smartphone, Cpu, Shield, Rocket, 
+  ChevronDown, ChevronUp, Palette, Database, ArrowRight, Check
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import GradientButton from "../ui/GradientButton";
 import { Link } from "react-router-dom";
+import "./service-levels-optimizations.css";
 
 interface ServiceCardProps {
   level: number;
   title: string;
   description: string;
   features: string[];
+  services: string[];
   icon: React.ReactNode;
-  secondaryIcon?: React.ReactNode;
   colorClass: string;
+  gradient: string;
   isExpanded: boolean;
   onToggle: () => void;
   id: string;
@@ -23,9 +28,10 @@ const ServiceCard = ({
   title,
   description,
   features,
+  services,
   icon,
-  secondaryIcon,
   colorClass,
+  gradient,
   isExpanded,
   onToggle,
   id
@@ -33,46 +39,77 @@ const ServiceCard = ({
   return (
     <motion.div
       className={cn(
-        "glass-card rounded-xl overflow-hidden transition-all duration-500",
-        isExpanded ? "col-span-full md:col-span-2 p-8" : "p-6 cursor-pointer hover:shadow-lg hover:shadow-dts-purple/10"
+        "service-card group relative rounded-xl border border-foreground/10 backdrop-blur-sm overflow-hidden transition-all duration-300",
+        "hover:border-foreground/20 hover:shadow-lg hover:shadow-dts-purple/5",
+        isExpanded ? "bg-dts-blue-dark/60" : "bg-dts-blue-dark/40 cursor-pointer"
       )}
       onClick={() => !isExpanded && onToggle()}
       layout
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       id={id}
     >
-      <motion.div layout className="flex flex-col h-full">
-        <motion.div layout className="flex items-center mb-4">
-          <div className={cn("p-3 rounded-lg mr-4", colorClass)}>
-            {icon}
-          </div>
-          <div>
-            <motion.span layout className="text-sm font-medium text-foreground/60">
-              Level {level}
-            </motion.span>
-            <motion.h3 layout className="text-xl font-bold">
-              {title}
-            </motion.h3>
+      {/* Gradient accent line */}
+      <div className={cn("gradient-accent absolute top-0 left-0 h-full w-1", gradient)}></div>
+      
+      <motion.div layout className="p-3 sm:p-6 mobile-card-header">
+        {/* Header */}
+        <motion.div layout className="flex items-start justify-between mb-2 sm:mb-3">
+          <div className="flex items-center space-x-2 sm:space-x-3 flex-1">
+            <div className={cn("mobile-icon-container p-2 sm:p-2.5 rounded-lg shrink-0", colorClass)}>
+              {icon}
+            </div>
+            <div className="min-w-0 flex-1">
+              <motion.span layout className="mobile-level-badge text-xs font-medium text-foreground/60 block">
+                Level {level}
+              </motion.span>
+              <motion.h3 layout className="service-card-title text-sm sm:text-lg font-bold leading-tight">
+                {title}
+              </motion.h3>
+            </div>
           </div>
           <motion.button 
             layout 
-            className="ml-auto p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 transition-colors"
+            className="p-1 sm:p-1.5 rounded-full bg-foreground/5 hover:bg-foreground/10 transition-colors shrink-0 ml-1 sm:ml-2"
             onClick={(e) => {
               e.stopPropagation();
               onToggle();
             }}
           >
             {isExpanded ? 
-              <ChevronUp size={18} className="text-foreground/60" /> : 
-              <ChevronDown size={18} className="text-foreground/60" />
+              <ChevronUp size={14} className="text-foreground/60 sm:w-4 sm:h-4" /> : 
+              <ChevronDown size={14} className="text-foreground/60 sm:w-4 sm:h-4" />
             }
           </motion.button>
         </motion.div>
 
-        <motion.p layout className="text-foreground/80 mb-4">
+        {/* Description */}
+        <motion.p layout className="service-card-description text-xs sm:text-sm text-foreground/80 mb-2 sm:mb-4 leading-relaxed">
           {description}
         </motion.p>
 
+        {/* Compact feature list when collapsed */}
+        {!isExpanded && (
+          <motion.div layout className="space-y-1 sm:space-y-2 mb-2 sm:mb-4">
+            <div className="flex flex-wrap gap-0.5 sm:gap-1">
+              {features.slice(0, 3).map((feature, index) => (
+                <span 
+                  key={index}
+                  className="feature-tag inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-foreground/5 text-xs text-foreground/70"
+                >
+                  <Check size={10} className="mr-0.5 sm:mr-1 text-dts-cyan sm:w-3 sm:h-3" />
+                  {feature}
+                </span>
+              ))}
+              {features.length > 3 && (
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-foreground/5 text-xs text-foreground/60">
+                  +{features.length - 3} more
+                </span>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Expanded content */}
         <AnimatePresence>
           {isExpanded && (
             <motion.div
@@ -80,34 +117,47 @@ const ServiceCard = ({
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="overflow-hidden"
+              className="expanded-content overflow-hidden"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-8">
-                <div className="flex flex-col space-y-4">
-                  <h4 className="text-lg font-semibold">Key Features</h4>
-                  <ul className="space-y-2">
+              <div className="space-y-2 sm:space-y-4 mt-2 sm:mt-4">
+                {/* Features */}
+                <div className="mobile-expanded-section">
+                  <h4 className="mobile-expanded-title text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-foreground">Key Features</h4>
+                  <div className="grid grid-cols-1 gap-0.5 sm:gap-1.5">
                     {features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <Rocket size={16} className="mr-2 text-dts-purple mt-1" />
-                        <span>{feature}</span>
-                      </li>
+                      <div key={index} className="mobile-expanded-item flex items-start">
+                        <Check size={10} className="mr-1 sm:mr-2 text-dts-cyan mt-0.5 shrink-0 sm:w-3.5 sm:h-3.5" />
+                        <span className="text-xs sm:text-sm text-foreground/80">{feature}</span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-                <div className="flex flex-col space-y-4">
-                  <h4 className="text-lg font-semibold">Services Include</h4>
-                  <div className="p-4 rounded-lg bg-muted/50 flex items-center">
-                    {secondaryIcon && <div className="mr-4">{secondaryIcon}</div>}
-                    <div>
-                      <p className="text-foreground/80">
-                        {level === 1 && "Full web development & digital marketing integration"}
-                        {level === 2 && "Custom software & mobile app development"}
-                        {level === 3 && "AI-powered solutions & comprehensive cybersecurity"}
-                      </p>
-                    </div>
                   </div>
-                  <Link to={`/services#level-${level}`}>
-                    <GradientButton className="w-full mt-4">View Full Details</GradientButton>
+                </div>
+
+                {/* Services */}
+                <div className="mobile-expanded-section">
+                  <h4 className="mobile-expanded-title text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-foreground">Services Include</h4>
+                  <div className="grid grid-cols-1 gap-0.5 sm:gap-1.5">
+                    {services.map((service, index) => (
+                      <div key={index} className="mobile-expanded-item flex items-start">
+                        <Rocket size={10} className="mr-1 sm:mr-2 text-dts-purple mt-0.5 shrink-0 sm:w-3.5 sm:h-3.5" />
+                        <span className="text-xs sm:text-sm text-foreground/80">{service}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <div className="pt-1 sm:pt-2">
+                  <Link to={`/pricing#level-${level}`}>
+                    <GradientButton 
+                      className="w-full text-xs sm:text-sm px-3 py-1.5" 
+                      size="sm"
+                      gradientDirection="horizontal"
+                      highContrast={true}
+                    >
+                      View Pricing & Details
+                      <ArrowRight size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
+                    </GradientButton>
                   </Link>
                 </div>
               </div>
@@ -115,8 +165,9 @@ const ServiceCard = ({
           )}
         </AnimatePresence>
 
+        {/* Action button when collapsed */}
         {!isExpanded && (
-          <motion.div layout className="mt-auto pt-2">
+          <motion.div layout className="pt-1 sm:pt-2">
             <GradientButton 
               variant="ghost" 
               size="sm" 
@@ -124,13 +175,10 @@ const ServiceCard = ({
                 e.stopPropagation();
                 onToggle();
               }}
-              className="flex items-center"
+              className="mobile-learn-more w-full flex items-center justify-center text-xs sm:text-sm px-3 py-1.5"
             >
-              <span>{isExpanded ? "Show Less" : "Learn More"}</span>
-              <ChevronDown size={16} className={cn(
-                "ml-1 transition-transform",
-                isExpanded ? "rotate-180" : ""
-              )} />
+              <span>Learn More</span>
+              <ChevronDown size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
             </GradientButton>
           </motion.div>
         )}
@@ -149,64 +197,130 @@ const ServiceLevels = () => {
   const services = [
     {
       level: 1,
-      id: "level-one",
-      title: "Web Development & Digital Marketing",
-      description: "We design and develop stunning websites and implement digital marketing strategies to boost online sales and drive traffic for our clients.",
+      id: "branding-design",
+      title: "Branding & Design",
+      description: "Professional design services to establish your visual identity and marketing materials.",
       features: [
-        "Responsive website design",
-        "E-commerce solutions",
-        "SEO optimization",
-        "Social media marketing",
-        "Content strategy"
+        "Logo with Tagline",
+        "Visiting Card Design", 
+        "Banner & Poster Design",
+        "Brochure Design",
+        "Complete Brand Identity"
       ],
-      icon: <Monitor size={24} className="text-dts-cyan" />,
-      secondaryIcon: <Globe size={40} className="text-dts-cyan" />,
-      colorClass: "bg-dts-cyan/20"
+      services: [
+        "Professional Logo Design with Tagline",
+        "Business Card Design & Print-Ready Files",
+        "Marketing Banners & Promotional Posters",
+        "Company Brochures & Catalogs"
+      ],
+      icon: <Palette size={20} className="text-pink-400" />,
+      colorClass: "bg-pink-500/20",
+      gradient: "bg-gradient-to-b from-pink-500 to-orange-400"
     },
     {
       level: 2,
-      id: "level-two",
-      title: "Software & Mobile App Development",
-      description: "Building on Level One, we develop and maintain custom software and mobile applications for organizations seeking high-quality solutions at affordable prices.",
+      id: "website-marketing", 
+      title: "Website & Digital Marketing",
+      description: "Establish your online presence with professional websites and strategic digital marketing.",
       features: [
-        "Custom software development",
-        "Mobile app creation",
-        "System integration",
-        "Testing & deployment",
-        "Maintenance & support"
+        "Basic Website Package",
+        "Standard Website Package",
+        "Advanced E-commerce Website",
+        "SEO Content Creation",
+        "Digital Marketing Campaigns"
       ],
-      icon: <Code size={24} className="text-dts-purple" />,
-      secondaryIcon: <Smartphone size={40} className="text-dts-purple" />,
-      colorClass: "bg-dts-purple/20"
+      services: [
+        "Responsive Website Development",
+        "Search Engine Optimization (SEO)",
+        "Social Media Content & Video Reels",
+        "Comprehensive Digital Marketing Campaigns"
+      ],
+      icon: <Globe size={20} className="text-dts-cyan" />,
+      colorClass: "bg-dts-cyan/20",
+      gradient: "bg-gradient-to-b from-dts-cyan to-blue-500"
     },
     {
       level: 3,
-      id: "level-three",
-      title: "AI Solutions & Cybersecurity",
-      description: "Integrating Levels One and Two with AI and Cybersecurity specialists, we offer innovative AI-driven solutions and advanced security systems to safeguard your digital assets.",
+      id: "software-apps",
+      title: "Software & App Development",
+      description: "Custom software solutions and mobile applications tailored to your business needs.",
       features: [
-        "AI integration",
-        "Machine learning solutions",
-        "Cybersecurity assessment",
-        "Threat protection",
-        "Security monitoring"
+        "Custom Software Solutions",
+        "Mobile App Development",
+        "Cross-platform Applications",
+        "System Integration",
+        "Ongoing Support"
       ],
-      icon: <BarChart3 size={24} className="text-dts-cyan" />,
-      secondaryIcon: <Shield size={40} className="text-dts-cyan" />,
-      colorClass: "bg-gradient-to-r from-dts-purple/20 to-dts-cyan/20"
+      services: [
+        "Custom Business Software Development",
+        "Android & iOS Mobile Applications",
+        "API Development & System Integration",
+        "Cloud-based Solutions & Deployment"
+      ],
+      icon: <Code size={20} className="text-dts-purple" />,
+      colorClass: "bg-dts-purple/20",
+      gradient: "bg-gradient-to-b from-dts-purple to-indigo-600"
+    },
+    {
+      level: 4,
+      id: "data-cybersecurity",
+      title: "Data Science & Cybersecurity",
+      description: "Advanced data analysis and security solutions to protect and leverage your digital assets.",
+      features: [
+        "Data Analysis & Insights",
+        "Predictive Modeling",
+        "Cybersecurity Assessment",
+        "Threat Protection",
+        "Security Monitoring"
+      ],
+      services: [
+        "Business Intelligence & Data Analytics",
+        "Machine Learning & Predictive Models",
+        "Comprehensive Security Assessments",
+        "Cybersecurity Implementation & Monitoring"
+      ],
+      icon: <Database size={20} className="text-emerald-400" />,
+      colorClass: "bg-emerald-500/20",
+      gradient: "bg-gradient-to-b from-emerald-500 to-green-600"
+    },
+    {
+      level: 5,
+      id: "ai-automation",
+      title: "AI Automation & Chatbots",
+      description: "Cutting-edge AI solutions to automate processes and enhance customer interactions.",
+      features: [
+        "AI Process Automation",
+        "Intelligent Chatbots",
+        "AI Agent Development",
+        "Machine Learning Solutions",
+        "Workflow Automation"
+      ],
+      services: [
+        "Intelligent Process Automation Systems",
+        "Advanced AI Agent Development",
+        "Smart Chatbot Integration & Development",
+        "Custom AI Solutions for Business"
+      ],
+      icon: <Cpu size={20} className="text-violet-400" />,
+      colorClass: "bg-violet-600/20",
+      gradient: "bg-gradient-to-b from-violet-600 to-fuchsia-500"
     }
   ];
 
   return (
-    <section id="services" className="section-container py-16 sm:py-24">
-      <div className="text-center mb-12 md:mb-16">
-        <h2 className="mb-4">Our <span className="gradient-text">Service Levels</span></h2>
-        <p className="text-xl text-foreground/80 max-w-2xl mx-auto px-4">
-          Discover our three-tiered approach to digital transformation, from web presence to advanced AI solutions.
+    <section id="services" className="section-container service-levels-container py-8 sm:py-20">
+      <div className="text-center mb-4 sm:mb-12 mobile-section-header">
+        <h2 className="mobile-section-title text-3xl sm:text-4xl font-bold mb-2 sm:mb-4 service-card-text">
+          Our <span className="gradient-text">Service Levels</span>
+        </h2>
+        <p className="mobile-section-description text-base sm:text-lg text-foreground/80 max-w-2xl mx-auto px-2 sm:px-4 leading-relaxed service-card-text">
+          Discover our comprehensive five-tier approach to digital transformation, 
+          from creative design to advanced AI solutions.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 sm:px-6">
+      {/* Mobile: Stack all cards */}
+      <div className="block sm:hidden px-2 space-y-3">
         {services.map((service, index) => (
           <ServiceCard
             key={index}
@@ -215,6 +329,51 @@ const ServiceLevels = () => {
             onToggle={() => handleToggle(index)}
           />
         ))}
+      </div>
+
+      {/* Tablet & Desktop: Responsive grid */}
+      <div className="hidden sm:block px-4 sm:px-6">
+        {/* Top row: 3 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {services.slice(0, 3).map((service, index) => (
+            <ServiceCard
+              key={index}
+              {...service}
+              isExpanded={expandedIndex === index}
+              onToggle={() => handleToggle(index)}
+            />
+          ))}
+        </div>
+        
+        {/* Bottom row: 2 cards centered */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          {services.slice(3, 5).map((service, index) => (
+            <ServiceCard
+              key={index + 3}
+              {...service}
+              isExpanded={expandedIndex === index + 3}
+              onToggle={() => handleToggle(index + 3)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Call to action */}
+      <div className="text-center mt-4 sm:mt-12 px-2 sm:px-4 mobile-cta-section">
+        <p className="mobile-cta-text text-foreground/70 mb-2 sm:mb-4 text-xs sm:text-base">
+          Need a custom solution combining multiple levels?
+        </p>
+        <Link to="/pricing">
+          <GradientButton 
+            className="text-xs sm:text-base px-4 py-2"
+            size="sm"
+            gradientDirection="horizontal"
+            highContrast={true}
+          >
+            View All Pricing
+            <ArrowRight size={14} className="ml-1 sm:ml-2" />
+          </GradientButton>
+        </Link>
       </div>
     </section>
   );

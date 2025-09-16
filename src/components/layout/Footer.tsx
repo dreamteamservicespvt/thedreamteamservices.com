@@ -1,5 +1,6 @@
 import { Github, Mail, Phone, Instagram, Linkedin, Twitter } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Logo from "../ui/Logo";
 
 const Footer = () => {
   return (
@@ -9,7 +10,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-2xl font-bold gradient-text mb-4">Dream Team Services</h3>
+            <div className="mb-4">
+              <Logo />
+            </div>
             <p className="text-foreground/70 max-w-md">
               Providing cutting-edge digital solutions across web development, software, mobile apps, 
               AI solutions, and cybersecurity services.

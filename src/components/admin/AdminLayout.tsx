@@ -11,6 +11,7 @@ import {
   X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/ui/Logo";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -64,7 +65,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
       <div className="hidden lg:flex w-64 flex-col bg-card border-r h-screen fixed">
         <div className="p-4 border-b">
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold gradient-text">DTS</span>
+            <Logo size="sm" />
             <span className="ml-2 font-semibold">Admin</span>
           </Link>
         </div>
@@ -106,7 +107,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
           <div className="relative flex flex-col w-full max-w-xs bg-card p-4">
             <div className="flex items-center justify-between mb-4">
               <Link to="/" className="flex items-center" onClick={handleNavClick}>
-                <span className="text-2xl font-bold gradient-text">DTS</span>
+                <Logo size="sm" />
                 <span className="ml-2 font-semibold">Admin</span>
               </Link>
               <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>

@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 import { 
   Users, Target, Award, Lightbulb, Rocket, Globe,
   Code, Smartphone, Shield, Database, Megaphone, Cpu,
-  ArrowRight, CheckCircle, Zap, Heart, Star
+  ArrowRight, CheckCircle, Zap, Heart, Star, Palette
 } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { Link } from "react-router-dom";
+import Logo from "@/components/ui/Logo";
 import SectionHeading from "@/components/ui/section-heading";
 
 const About = () => {
@@ -64,36 +65,52 @@ const About = () => {
   ];
 
   const achievements = [
-    { number: "50+", label: "Projects Completed" },
+    { number: "50+", label: "Successful Projects" },
     { number: "25+", label: "Happy Clients" },
-    { number: "3", label: "Service Levels" },
+    { number: "5", label: "Service Levels" },
     { number: "24/7", label: "Support Available" }
   ];
 
   const services = [
     {
       level: "Level 1",
-      title: "Web Development & Digital Marketing",
-      description: "Creating stunning websites and implementing powerful digital marketing strategies",
-      services: ["Custom Web Development", "Responsive Design", "SEO Optimization", "Social Media Marketing", "Content Strategy"],
-      icon: <Globe size={24} />,
-      color: "from-blue-500 to-cyan-400"
+      title: "Branding & Design",
+      description: "Professional visual identity and marketing materials that make your brand memorable and trustworthy",
+      services: ["Logo with Tagline", "Visiting Card Design", "Banner & Poster Design", "Brochure Design", "Brand Guidelines"],
+      icon: <Palette size={24} />,
+      color: "from-pink-500 to-orange-400"
     },
     {
       level: "Level 2", 
-      title: "Software & Mobile App Development",
-      description: "Building robust software solutions and mobile applications for modern businesses",
-      services: ["Custom Software Development", "Mobile App Development", "API Integration", "Database Design", "Cloud Solutions"],
-      icon: <Smartphone size={24} />,
-      color: "from-purple-500 to-pink-500"
+      title: "Website & Digital Marketing",
+      description: "Complete online presence with professional websites and strategic marketing to attract and convert customers",
+      services: ["Responsive Website Development", "SEO Content Creation", "Social Media Marketing", "Digital Ad Campaigns", "Analytics & Reporting"],
+      icon: <Globe size={24} />,
+      color: "from-dts-cyan to-blue-500"
     },
     {
       level: "Level 3",
-      title: "AI Solutions & Cybersecurity",
-      description: "Advanced AI-driven solutions and comprehensive security measures for enterprise-level protection",
-      services: ["AI & Machine Learning", "Cybersecurity Solutions", "Data Analytics", "Automation Systems", "Security Audits"],
-      icon: <Shield size={24} />,
+      title: "Software & App Development",
+      description: "Custom software solutions and mobile applications that streamline your business operations and enhance customer experience",
+      services: ["Custom Software Development", "Mobile App Creation", "System Integration", "Database Design", "Cloud Solutions"],
+      icon: <Code size={24} />,
       color: "from-dts-purple to-indigo-600"
+    },
+    {
+      level: "Level 4",
+      title: "Data Science & Cybersecurity",
+      description: "Advanced data insights and comprehensive security measures to protect your business and make data-driven decisions",
+      services: ["Data Analysis & Insights", "Predictive Modeling", "Cybersecurity Assessment", "Threat Protection", "Compliance Solutions"],
+      icon: <Database size={24} />,
+      color: "from-emerald-500 to-green-600"
+    },
+    {
+      level: "Level 5",
+      title: "AI Automation & Chatbots",
+      description: "Cutting-edge AI solutions that automate processes and provide 24/7 intelligent customer support",
+      services: ["AI Process Automation", "Intelligent Chatbots", "Machine Learning Models", "Natural Language Processing", "Automated Workflows"],
+      icon: <Cpu size={24} />,
+      color: "from-violet-600 to-fuchsia-500"
     }
   ];
 
@@ -132,9 +149,14 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About <span className="gradient-text">Dream Team Services</span>
-            </h1>
+            <div className="text-center mb-6">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                About
+              </h1>
+              <div className="flex justify-center mb-6">
+                <Logo size="xl" className="sm:h-20 md:h-24" />
+              </div>
+            </div>
             <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
               We are a dedicated team of digital innovators, committed to transforming businesses 
               through cutting-edge technology solutions. From web development to AI integration, 
@@ -155,24 +177,29 @@ const About = () => {
             <motion.div variants={itemVariants}>
               <SectionHeading 
                 title="Our Story"
-                subtitle="Journey of Innovation"
+                subtitle="From Vision to Reality"
                 className="text-left"
               />
               <div className="space-y-6 text-foreground/80">
                 <p className="text-lg leading-relaxed">
-                  Dream Team Services was founded with a simple yet powerful vision: to bridge the gap 
-                  between cutting-edge technology and practical business solutions. We recognized that 
-                  many businesses struggle to keep pace with rapidly evolving digital landscapes.
+                  <strong>Dream Team Services</strong> was born from a simple observation: small businesses and startups 
+                  often struggle to access high-quality digital services that fit their budget. We saw talented entrepreneurs 
+                  with amazing ideas who couldn't afford the expensive agencies, while having great concepts that deserved 
+                  professional execution.
                 </p>
                 <p className="text-lg leading-relaxed">
-                  Our journey began with a small team of passionate developers and designers who shared 
-                  a common goal - to make advanced technology accessible and affordable for businesses 
-                  of all sizes. Today, we've grown into a comprehensive digital solutions provider.
+                  Our founders, experienced in technology and business, decided to bridge this gap. We created a unique 
+                  <strong> five-level service structure</strong> that allows any business - from a local shop needing a logo 
+                  to a growing company requiring AI integration - to find exactly what they need with transparent, 
+                  accessible solutions.
                 </p>
                 <p className="text-lg leading-relaxed">
-                  What sets us apart is our unique three-level service approach, allowing us to scale 
-                  our solutions according to each client's specific needs and budget, ensuring everyone 
-                  gets the perfect fit for their requirements.
+                  Today, we're proud to have helped <strong>50+ businesses</strong> transform their digital presence. 
+                  From simple logo designs to complex AI-powered applications, we've proven that quality digital services 
+                  should be accessible to everyone, not just big corporations.
+                </p>
+                <p className="text-lg leading-relaxed">
+                  <em>We don't just provide services - we become your technology partner, growing with you as your business expands.</em>
                 </p>
               </div>
             </motion.div>
@@ -213,10 +240,11 @@ const About = () => {
                   <h3 className="text-2xl font-bold">Our Mission</h3>
                 </div>
                 <p className="text-foreground/80 leading-relaxed">
-                  To empower businesses with innovative digital solutions that drive growth, 
-                  enhance efficiency, and create lasting competitive advantages. We strive to 
-                  make advanced technology accessible and affordable for organizations of all sizes, 
-                  fostering digital transformation that delivers measurable results.
+                  <strong>To make professional digital services accessible to everyone.</strong> We believe that every 
+                  business, regardless of size or budget, deserves access to high-quality technology solutions. 
+                  Our mission is to democratize digital transformation by offering world-class services at transparent, 
+                  affordable prices. We're committed to helping businesses grow by providing them with the same level 
+                  of digital excellence that was once only available to large corporations.
                 </p>
               </div>
             </motion.div>
@@ -232,10 +260,11 @@ const About = () => {
                   <h3 className="text-2xl font-bold">Our Vision</h3>
                 </div>
                 <p className="text-foreground/80 leading-relaxed">
-                  To become the leading digital transformation partner, recognized for our 
-                  innovative solutions, exceptional service, and commitment to client success. 
-                  We envision a future where every business, regardless of size, has access to 
-                  world-class technology solutions that propel them toward unprecedented growth.
+                  <strong>To become India's most trusted digital transformation partner.</strong> We envision a future 
+                  where geographical location and business size never limit access to cutting-edge technology. Our goal 
+                  is to create a network of successful businesses that have grown with our support, from local startups 
+                  in Kakinada to enterprises across India. We want to be known as the team that turns digital dreams 
+                  into profitable realities.
                 </p>
               </div>
             </motion.div>

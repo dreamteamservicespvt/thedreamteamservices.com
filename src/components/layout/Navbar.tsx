@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import GradientButton from "../ui/GradientButton";
+import Logo from "../ui/Logo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,7 +40,7 @@ const Navbar = () => {
           {/* Logo on left */}
           <div className="flex-shrink-0 relative">
             <Link to="/" className="flex items-center">
-              <span className="text-2xl font-bold gradient-text">DREAM TEAM SERVICES</span>
+              <Logo className="sm:h-12 md:h-14" />
             </Link>
           </div>
 

@@ -75,35 +75,6 @@ const Pricing = () => {
       color: "from-dts-cyan to-blue-500"
     },
     {
-      id: "social-media-management",
-      level: "Level 2.5",
-      title: "Social Media Management",
-      description: "Professional social media management across Instagram, YouTube, Facebook, Threads, LinkedIn, and X (Twitter). Complete content creation, SEO optimization, and posting services.",
-      services: [
-        { name: "Starter Package", price: "₹25,000 per month" },
-        { name: "Professional Package", price: "₹30,000 per month" }
-      ],
-      icon: <Users size={24} />,
-      color: "from-pink-500 to-purple-500"
-    },
-    {
-      id: "commercial-ads",
-      level: "Level 2.7",
-      title: "Commercial Ads Creation",
-      description: "Professional AI-generated video advertisements tailored for your business. Real store footage can be integrated at no extra cost.",
-      services: [
-        { name: "8 Second Ad", price: "Up to ₹3,000" },
-        { name: "16 Second Ad", price: "Up to ₹5,000" },
-        { name: "24 Second Ad", price: "Up to ₹8,000" },
-        { name: "32 Second Ad", price: "Up to ₹10,000" },
-        { name: "40 Second Ad", price: "Up to ₹13,000" },
-        { name: "48 Second Ad", price: "Up to ₹15,000" },
-        { name: "1 Minute Ad", price: "Up to ₹20,000" }
-      ],
-      icon: <Video size={24} />,
-      color: "from-red-500 to-orange-500"
-    },
-    {
       id: "software-apps",
       level: "Level 3",
       title: "Software & App Development",
@@ -205,58 +176,225 @@ const Pricing = () => {
             </p>
           </motion.div>
 
-          {/* Service Level Pricing - Mobile Optimized */}
-          <motion.div
-            className="space-y-6 sm:space-y-20"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {serviceLevels.map((serviceLevel) => (
-              <motion.div 
-                key={serviceLevel.id} 
-                id={serviceLevel.id}
-                variants={itemVariants}
-                className="p-4 sm:p-8 rounded-xl sm:rounded-2xl relative overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
-              >
-                <div className={`absolute top-0 left-0 h-full w-1 sm:w-2 bg-gradient-to-b ${serviceLevel.color}`}></div>
-                
-                <div className="mb-4 sm:mb-8">
-                  <span className="text-xs sm:text-sm font-medium text-foreground/60">{serviceLevel.level}</span>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{serviceLevel.title}</h2>
-                  <p className="text-sm sm:text-base text-foreground/70">{serviceLevel.description}</p>
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  {serviceLevel.services.map((service, index) => (
-                    <div 
-                      key={index} 
-                      className="p-3 sm:p-5 rounded-lg bg-background/10 border border-foreground/5 hover:border-foreground/10 transition-colors"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
-                        <h3 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service.name}</h3>
-                        <div className="bg-dts-blue-light p-1.5 sm:p-2 rounded-lg w-fit">
-                          {serviceLevel.icon}
-                        </div>
+          {/* 1. Commercial Ads Creation Section - Professional Design */}
+          <section className="relative mb-20">
+            {/* Section Header - Mobile Optimized */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-center mb-8 sm:mb-12"
+            >
+              <div className="inline-flex items-center gap-2 mb-4 sm:mb-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-dts-cyan/10 border border-dts-cyan/20">
+                <Video className="w-3 h-3 sm:w-4 sm:h-4 text-dts-cyan" />
+                <span className="text-xs sm:text-sm font-medium text-dts-cyan">Commercial Video Ads</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6">
+                Professional <span className="gradient-text">Video Advertisements</span>
+              </h2>
+              <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-foreground/70 max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
+                Transform your business with AI-powered video advertisements. Professional production, 
+                custom voiceovers, and real store footage integration.
+              </p>
+            </motion.div>
+
+            {/* Premium Ad Cards Grid - Mobile Optimized */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 sm:gap-4 lg:gap-6 mb-16">
+              {[
+                { duration: "8s", price: "3,000", popular: false, recommended: false, description: "Quick social media ads" },
+                { duration: "16s", price: "5,000", popular: false, recommended: false, description: "Instagram stories & reels" },
+                { duration: "24s", price: "8,000", popular: true, recommended: false, description: "Most popular for brands" },
+                { duration: "32s", price: "10,000", popular: false, recommended: true, description: "Extended storytelling" },
+                { duration: "40s", price: "13,000", popular: false, recommended: false, description: "Product showcases" },
+                { duration: "48s", price: "15,000", popular: false, recommended: false, description: "Brand story format" },
+                { duration: "60s", price: "20,000", popular: false, recommended: false, description: "Full commercial" }
+              ].map((ad, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.2 + index * 0.05 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                  className={cn(
+                    "group relative rounded-lg sm:rounded-xl overflow-visible backdrop-blur-sm border transition-all duration-300",
+                    // Add top margin to accommodate badges
+                    ad.popular || ad.recommended ? "mt-4 sm:mt-5" : "mt-4 sm:mt-5",
+                    ad.popular 
+                      ? "border-dts-cyan/30 bg-dts-blue-dark/60 shadow-lg shadow-dts-cyan/10" 
+                      : ad.recommended
+                      ? "border-dts-purple/30 bg-dts-blue-dark/60 shadow-lg shadow-dts-purple/10"
+                      : "border-foreground/10 bg-dts-blue-dark/40 hover:border-foreground/20 hover:shadow-lg hover:shadow-background/20"
+                  )}
+                >
+                  {/* Badge - Fixed Positioning */}
+                  {ad.popular && (
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="bg-dts-cyan text-white text-xs sm:text-sm font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                        ⭐ POPULAR
                       </div>
-                      <p className="text-dts-cyan font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{service.price}</p>
-                      <GradientButton 
-                        size="sm" 
-                        gradientDirection="horizontal" 
-                        className="w-full text-xs sm:text-sm"
-                        highContrast={true}
-                      >
-                        Get Started
-                      </GradientButton>
                     </div>
-                  ))}
+                  )}
+                  {ad.recommended && (
+                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
+                      <div className="bg-dts-purple text-white text-xs sm:text-sm font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                        💎 BEST VALUE
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 opacity-5">
+                    <div className={cn(
+                      "absolute inset-0",
+                      ad.popular 
+                        ? "bg-gradient-to-br from-dts-cyan to-blue-500" 
+                        : ad.recommended
+                        ? "bg-gradient-to-br from-dts-purple to-purple-600"
+                        : "bg-gradient-to-br from-foreground/10 to-foreground/5"
+                    )}></div>
+                  </div>
+                  
+                  <div className="relative p-3 sm:p-4 lg:p-6">
+                    {/* Video Icon - Compact */}
+                    <div className="flex justify-center mb-3 sm:mb-4">
+                      <div className={cn(
+                        "p-2 sm:p-2.5 lg:p-3 rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-110",
+                        ad.popular 
+                          ? "bg-gradient-to-br from-dts-cyan to-blue-500" 
+                          : ad.recommended
+                          ? "bg-gradient-to-br from-dts-purple to-purple-600"
+                          : "bg-dts-blue-light"
+                      )}>
+                        <Play className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-white" />
+                      </div>
+                    </div>
+
+                    {/* Duration - Compact */}
+                    <div className="text-center mb-2 sm:mb-3">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{ad.duration}</div>
+                      <div className="text-[10px] sm:text-xs text-foreground/60 hidden sm:block">{ad.description}</div>
+                    </div>
+                    
+                    {/* Price - Compact */}
+                    <div className="text-center mb-3 sm:mb-4 lg:mb-5">
+                      <div className="text-[10px] sm:text-xs text-foreground/50 mb-0.5">Up to</div>
+                      <div className={cn(
+                        "text-sm sm:text-base lg:text-xl font-bold",
+                        ad.popular 
+                          ? "text-dts-cyan" 
+                          : ad.recommended
+                          ? "text-dts-purple"
+                          : "text-foreground"
+                      )}>
+                        ₹{ad.price}
+                      </div>
+                    </div>
+
+                    {/* CTA Button - Mobile Optimized */}
+                    <GradientButton 
+                      className="w-full font-semibold text-[10px] sm:text-xs lg:text-sm py-1.5 sm:py-2" 
+                      size="sm"
+                      gradientDirection={ad.popular || ad.recommended ? "diagonal" : "horizontal"}
+                      intensity={ad.popular || ad.recommended ? "strong" : "default"}
+                      highContrast={true}
+                    >
+                      <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1 sm:mr-2" />
+                      Order
+                    </GradientButton>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* What's Included - Professional Theme */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="rounded-xl border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm p-6 sm:p-8"
+            >
+              <div className="text-center mb-8">
+                <h3 className="text-xl sm:text-2xl font-bold mb-3">What's Included in Every Ad</h3>
+                <p className="text-foreground/70">Complete production pipeline for professional video advertisements</p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {[
+                  { 
+                    icon: <Code className="w-5 h-5" />, 
+                    title: "Script Development", 
+                    desc: "Custom storyline tailored to your brand"
+                  },
+                  { 
+                    icon: <Users className="w-5 h-5" />, 
+                    title: "Professional Voiceover", 
+                    desc: "High-quality voice recording"
+                  },
+                  { 
+                    icon: <Palette className="w-5 h-5" />, 
+                    title: "AI Visual Creation", 
+                    desc: "Stunning AI-generated visuals"
+                  },
+                  { 
+                    icon: <Video className="w-5 h-5" />, 
+                    title: "Video Production", 
+                    desc: "Professional editing & assembly"
+                  },
+                  { 
+                    icon: <Globe className="w-5 h-5" />, 
+                    title: "Post-Production", 
+                    desc: "Color grading & final polish"
+                  },
+                  { 
+                    icon: <Check className="w-5 h-5" />, 
+                    title: "Quality Assurance", 
+                    desc: "Thorough review & approval"
+                  }
+                ].map((feature, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.7 + idx * 0.1 }}
+                    className="flex items-start space-x-3"
+                  >
+                    <div className="flex-shrink-0 p-2.5 bg-dts-blue-light rounded-lg">
+                      <div className="text-dts-cyan">
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-1">{feature.title}</h4>
+                      <p className="text-sm text-foreground/70">{feature.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Special Bonus */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 1.3 }}
+                className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20"
+              >
+                <div className="flex items-center justify-center mb-2">
+                  <div className="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    🎁 Special Bonus
+                  </div>
                 </div>
+                <p className="text-center text-sm font-semibold text-green-400">
+                  Real Store Footage Integration - Absolutely FREE!
+                </p>
+                <p className="text-center text-xs text-foreground/70 mt-1">
+                  We'll integrate your actual store footage at no additional cost
+                </p>
               </motion.div>
-            ))}
-          </motion.div>
+            </motion.div>
+          </section>
         </section>
 
-        {/* Social Media Management Detailed Packages */}
+        {/* 2. Social Media Management Detailed Packages */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
           <motion.div 
             className="text-center mb-8 sm:mb-12"
@@ -428,111 +566,66 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Commercial Ads Creation Detailed Pricing */}
-        <section className="bg-dts-blue py-12 sm:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
-              className="text-center mb-8 sm:mb-16"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Commercial <span className="gradient-text">Ads Creation</span></h2>
-              <p className="text-base sm:text-lg text-foreground/70 max-w-3xl mx-auto px-2">
-                Professional AI-generated video advertisements with complete production. 
-                Real store footage integration at no extra cost.
+        {/* 3. Service Levels */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+          <motion.div
+            className="space-y-6 sm:space-y-20 py-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Service <span className="gradient-text">Levels</span></h2>
+              <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
+                Comprehensive digital solutions organized by expertise levels to match your business needs
               </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-              {[
-                { duration: "8 seconds", price: "₹3,000", popular: false },
-                { duration: "16 seconds", price: "₹5,000", popular: false },
-                { duration: "24 seconds", price: "₹8,000", popular: true },
-                { duration: "32 seconds", price: "₹10,000", popular: false },
-                { duration: "40 seconds", price: "₹13,000", popular: false },
-                { duration: "48 seconds", price: "₹15,000", popular: false },
-                { duration: "1 minute", price: "₹20,000", popular: false }
-              ].map((ad, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.05 }}
-                  className={cn(
-                    "rounded-xl sm:rounded-2xl overflow-hidden border backdrop-blur-sm relative",
-                    ad.popular 
-                      ? "border-orange-500/50 bg-dts-blue-dark/60" 
-                      : "border-foreground/10 bg-dts-blue-dark/40"
-                  )}
-                >
-                  {ad.popular && (
-                    <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-center py-1 font-medium text-xs sm:text-sm">
-                      Most Popular
-                    </div>
-                  )}
-                  
-                  <div className="p-3 sm:p-6">
-                    <div className="text-center mb-3 sm:mb-4">
-                      <div className="bg-red-500/20 p-2 sm:p-3 rounded-lg w-fit mx-auto mb-2 sm:mb-3">
-                        <Play size={20} className="text-red-500 sm:w-6 sm:h-6" />
-                      </div>
-                      <h3 className="text-base sm:text-lg font-bold mb-1">{ad.duration}</h3>
-                      <div className="text-lg sm:text-2xl font-bold text-dts-cyan">Up to {ad.price}</div>
-                    </div>
-                    
-                    <GradientButton 
-                      className="w-full text-xs sm:text-sm" 
-                      size="sm"
-                      gradientDirection={ad.popular ? "diagonal" : "horizontal"}
-                      intensity={ad.popular ? "strong" : "default"}
-                      highContrast={true}
-                    >
-                      Order Now
-                    </GradientButton>
-                  </div>
-                </motion.div>
-              ))}
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="mt-8 sm:mt-12 p-4 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
-            >
-              <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">What's Included in Every Ad</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-                {[
-                  { icon: <Code size={16} />, title: "Concept Creation", desc: "Custom script development" },
-                  { icon: <Users size={16} />, title: "Voiceover", desc: "Professional voice recording" },
-                  { icon: <Image size={16} />, title: "Visual Generation", desc: "AI-powered design" },
-                  { icon: <Video size={16} />, title: "Video Production", desc: "Complete assembly" },
-                  { icon: <Globe size={16} />, title: "Editing", desc: "Professional post-production" },
-                  { icon: <Check size={16} />, title: "Quality Check", desc: "Final QA & QC" }
-                ].map((feature, idx) => (
-                  <div key={idx} className="flex items-start">
-                    <div className="bg-red-500/20 p-1.5 sm:p-2 rounded-lg mr-2 sm:mr-3">
-                      {feature.icon}
+            
+            {serviceLevels.map((serviceLevel) => (
+              <motion.div 
+                key={serviceLevel.id} 
+                id={serviceLevel.id}
+                variants={itemVariants}
+                className="p-4 sm:p-8 rounded-xl sm:rounded-2xl relative overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
+              >
+                <div className={`absolute top-0 left-0 h-full w-1 sm:w-2 bg-gradient-to-b ${serviceLevel.color}`}></div>
+                
+                <div className="mb-4 sm:mb-8">
+                  <span className="text-xs sm:text-sm font-medium text-foreground/60">{serviceLevel.level}</span>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{serviceLevel.title}</h3>
+                  <p className="text-sm sm:text-base text-foreground/70">{serviceLevel.description}</p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {serviceLevel.services.map((service, index) => (
+                    <div 
+                      key={index} 
+                      className="p-3 sm:p-5 rounded-lg bg-background/10 border border-foreground/5 hover:border-foreground/10 transition-colors"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
+                        <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service.name}</h4>
+                        <div className="bg-dts-blue-light p-1.5 sm:p-2 rounded-lg w-fit">
+                          {serviceLevel.icon}
+                        </div>
+                      </div>
+                      <p className="text-dts-cyan font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{service.price}</p>
+                      <GradientButton 
+                        size="sm" 
+                        gradientDirection="horizontal" 
+                        className="w-full text-xs sm:text-sm"
+                        highContrast={true}
+                      >
+                        Get Started
+                      </GradientButton>
                     </div>
-                    <div>
-                      <h4 className="font-medium mb-1 text-sm sm:text-base">{feature.title}</h4>
-                      <p className="text-xs sm:text-sm text-foreground/70">{feature.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-green-500/10 border border-green-500/20">
-                <p className="text-center text-xs sm:text-sm">
-                  <strong className="text-green-400">Bonus:</strong> Real store footage integration at no additional cost!
-                </p>
-              </div>
-            </motion.div>
-          </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </section>
 
-        {/* Website Package Comparison */}
+        {/* 4. Website Package Comparison */}
         <section className="bg-dts-blue py-12 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
