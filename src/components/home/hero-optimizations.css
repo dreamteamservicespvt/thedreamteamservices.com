@@ -1,0 +1,66 @@
+/* Hero Section Mobile Performance Optimizations */
+
+/* Use hardware acceleration for elements that will be animated */
+.hero-optimized {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize star animations for mobile */
+.star-element {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+}
+
+/* Optimize nebula blur effects */
+.nebula-element {
+  will-change: opacity, transform;
+  transform: translateZ(0);
+}
+
+/* Ensure text doesn't cause reflow */
+.hero-text {
+  font-display: swap;
+  text-rendering: optimizeSpeed;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Reduce complexity on mobile */
+  .hero-optimized {
+    contain: layout style paint;
+  }
+  
+  /* Disable expensive effects on mobile */
+  .mobile-reduced-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  /* Optimize typewriter cursor */
+  .typewriter-cursor {
+    animation-duration: 1.5s;
+  }
+}
+
+/* Performance utilities */
+.performance-optimized {
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
