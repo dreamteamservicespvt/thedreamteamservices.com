@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingReviewButton from "@/components/ui/FloatingReviewButton";
 import { motion } from "framer-motion";
 import { 
   Palette, Globe, Code, Database, Cpu, Users, Video, Play, 
@@ -460,6 +461,7 @@ const Services = () => {
         </section>
       </main>
       <Footer />
+      <FloatingReviewButton />
     </div>
   );
 };

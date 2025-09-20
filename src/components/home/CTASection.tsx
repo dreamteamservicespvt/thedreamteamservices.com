@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import GradientButton from "../ui/GradientButton";
-import { ArrowRight, Code, Smartphone, Shield, Rocket } from "lucide-react";
+import { ArrowRight, Code, Smartphone, Shield, Rocket, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CTASection = () => {
@@ -103,6 +103,12 @@ const CTASection = () => {
           <Link to="/portfolio">
             <Button size="lg" variant="outline" className="w-full sm:w-auto">
               View Our Portfolio
+            </Button>
+          </Link>
+          <Link to="/contact#review-form">
+            <Button size="lg" variant="outline" className="w-full sm:w-auto border-dts-purple text-dts-purple hover:bg-dts-purple hover:text-white">
+              <Star size={16} className="mr-2" />
+              Share Your Experience
             </Button>
           </Link>
         </motion.div>

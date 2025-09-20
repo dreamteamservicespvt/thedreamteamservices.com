@@ -1,0 +1,328 @@
+/* Mobile Overflow Prevention & Responsive Fixes */
+
+/* Global overflow prevention */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* Root container fixes */
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Page wrapper */
+.page-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Container fixes for all screen sizes */
+.container, 
+[class*="container"], 
+.max-w-7xl,
+.max-w-6xl,
+.max-w-5xl,
+.max-w-4xl,
+.max-w-3xl,
+.max-w-2xl,
+.max-w-xl {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Grid and flex container fixes */
+.grid, 
+[class*="grid-"],
+.flex,
+[class*="flex-"] {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Image and media fixes */
+img, 
+video, 
+svg, 
+canvas,
+iframe {
+  max-width: 100% !important;
+  height: auto;
+  box-sizing: border-box;
+}
+
+/* Text content fixes */
+h1, h2, h3, h4, h5, h6, p, span, div {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  
+  /* Ensure no element can exceed viewport width */
+  * {
+    max-width: 100vw !important;
+  }
+  
+  /* Fix potential problematic elements */
+  .absolute,
+  .fixed,
+  .relative {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Navigation fixes */
+  nav, header {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Content section fixes */
+  section, article, main {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* Footer fixes */
+  footer {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  /* Form fixes */
+  form, .form {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  input, textarea, select {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Button fixes */
+  button, .button, a[role="button"] {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Table fixes */
+  table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    overflow-x: auto;
+    display: block;
+    white-space: nowrap;
+  }
+  
+  th, td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 200px;
+  }
+  
+  /* Card component fixes */
+  .card, [class*="card"] {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+  
+  /* Modal and dialog fixes */
+  .modal, .dialog, .popup {
+    max-width: calc(100vw - 2rem);
+    margin: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* Animation container fixes */
+  .motion-div,
+  [class*="motion-"],
+  .animate-in,
+  .animate-out {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+/* Small mobile devices (max-width: 480px) */
+@media (max-width: 480px) {
+  
+  /* Extra small screen fixes */
+  .container, [class*="container"] {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Reduce font sizes if needed to prevent overflow */
+  h1 {
+    font-size: 2rem !important;
+    line-height: 2.25rem !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+    line-height: 2rem !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.75rem !important;
+  }
+  
+  /* Ensure buttons fit on small screens */
+  button, .button {
+    max-width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Extra small devices (max-width: 375px) */
+@media (max-width: 375px) {
+  
+  /* iPhone SE and similar */
+  .container, [class*="container"] {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Further reduce text if needed */
+  .text-4xl, .text-5xl, .text-6xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+  
+  .text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+  
+  .text-2xl {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
+  }
+}
+
+/* Landscape orientation fixes for mobile */
+@media (max-height: 480px) and (orientation: landscape) {
+  
+  /* Adjust for landscape mobile */
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  
+  section, .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* High DPI display fixes */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  
+  /* Ensure crisp rendering on retina displays */
+  img, svg {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Accessibility fixes */
+@media (prefers-reduced-motion: reduce) {
+  
+  /* Disable problematic animations */
+  .transform, .transition {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .animate-spin, .animate-ping, .animate-pulse {
+    animation: none !important;
+  }
+}
+
+/* Force hardware acceleration for smooth scrolling */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea,
+select {
+  font-size: 16px !important;
+}
+
+/* Fix for potentially wide elements */
+pre, code {
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* Utility classes for overflow management */
+.overflow-safe {
+  overflow-x: hidden;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+.content-safe {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.mobile-safe {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Debug helpers (remove in production) */
+.debug-overflow * {
+  outline: 1px solid rgba(255, 0, 0, 0.3) !important;
+}
+
+.debug-width {
+  background: rgba(255, 255, 0, 0.1) !important;
+  border: 1px solid yellow !important;
+}

@@ -566,66 +566,7 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* 3. Service Levels */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
-          <motion.div
-            className="space-y-6 sm:space-y-20 py-16"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Service <span className="gradient-text">Levels</span></h2>
-              <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
-                Comprehensive digital solutions organized by expertise levels to match your business needs
-              </p>
-            </div>
-            
-            {serviceLevels.map((serviceLevel) => (
-              <motion.div 
-                key={serviceLevel.id} 
-                id={serviceLevel.id}
-                variants={itemVariants}
-                className="p-4 sm:p-8 rounded-xl sm:rounded-2xl relative overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
-              >
-                <div className={`absolute top-0 left-0 h-full w-1 sm:w-2 bg-gradient-to-b ${serviceLevel.color}`}></div>
-                
-                <div className="mb-4 sm:mb-8">
-                  <span className="text-xs sm:text-sm font-medium text-foreground/60">{serviceLevel.level}</span>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{serviceLevel.title}</h3>
-                  <p className="text-sm sm:text-base text-foreground/70">{serviceLevel.description}</p>
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  {serviceLevel.services.map((service, index) => (
-                    <div 
-                      key={index} 
-                      className="p-3 sm:p-5 rounded-lg bg-background/10 border border-foreground/5 hover:border-foreground/10 transition-colors"
-                    >
-                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
-                        <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service.name}</h4>
-                        <div className="bg-dts-blue-light p-1.5 sm:p-2 rounded-lg w-fit">
-                          {serviceLevel.icon}
-                        </div>
-                      </div>
-                      <p className="text-dts-cyan font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{service.price}</p>
-                      <GradientButton 
-                        size="sm" 
-                        gradientDirection="horizontal" 
-                        className="w-full text-xs sm:text-sm"
-                        highContrast={true}
-                      >
-                        Get Started
-                      </GradientButton>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
-
-        {/* 4. Website Package Comparison */}
+        {/* 3. Website Package Comparison */}
         <section className="bg-dts-blue py-12 sm:py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
@@ -690,6 +631,65 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* 4. Service Levels */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+          <motion.div
+            className="space-y-6 sm:space-y-20 py-16"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Service <span className="gradient-text">Levels</span></h2>
+              <p className="text-lg text-foreground/70 max-w-3xl mx-auto">
+                Comprehensive digital solutions organized by expertise levels to match your business needs
+              </p>
+            </div>
+            
+            {serviceLevels.map((serviceLevel) => (
+              <motion.div 
+                key={serviceLevel.id} 
+                id={serviceLevel.id}
+                variants={itemVariants}
+                className="p-4 sm:p-8 rounded-xl sm:rounded-2xl relative overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
+              >
+                <div className={`absolute top-0 left-0 h-full w-1 sm:w-2 bg-gradient-to-b ${serviceLevel.color}`}></div>
+                
+                <div className="mb-4 sm:mb-8">
+                  <span className="text-xs sm:text-sm font-medium text-foreground/60">{serviceLevel.level}</span>
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{serviceLevel.title}</h3>
+                  <p className="text-sm sm:text-base text-foreground/70">{serviceLevel.description}</p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {serviceLevel.services.map((service, index) => (
+                    <div 
+                      key={index} 
+                      className="p-3 sm:p-5 rounded-lg bg-background/10 border border-foreground/5 hover:border-foreground/10 transition-colors"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
+                        <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service.name}</h4>
+                        <div className="bg-dts-blue-light p-1.5 sm:p-2 rounded-lg w-fit">
+                          {serviceLevel.icon}
+                        </div>
+                      </div>
+                      <p className="text-dts-cyan font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{service.price}</p>
+                      <GradientButton 
+                        size="sm" 
+                        gradientDirection="horizontal" 
+                        className="w-full text-xs sm:text-sm"
+                        highContrast={true}
+                      >
+                        Get Started
+                      </GradientButton>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </section>
+
         {/* Additional Notes */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
           <motion.div
@@ -744,11 +744,18 @@ const Pricing = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-medium mb-1">Phone</h3>
-                    <p className="text-sm sm:text-base text-dts-purple font-medium">
-                      <a href="tel:+919849834102" className="hover:underline transition-colors">
-                        +91 9849834102
-                      </a>
-                    </p>
+                    <div className="space-y-1">
+                      <p className="text-sm sm:text-base text-dts-purple font-medium">
+                        <a href="tel:+919849834102" className="hover:underline transition-colors">
+                          +91 9849834102
+                        </a>
+                      </p>
+                      <p className="text-sm sm:text-base text-dts-purple font-medium">
+                        <a href="tel:+919390011378" className="hover:underline transition-colors">
+                          +91 9390011378
+                        </a>
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
@@ -772,7 +779,7 @@ const Pricing = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-medium mb-1">Location</h3>
-                    <p className="text-sm sm:text-base text-dts-purple font-medium">Kakinada, Andhra Pradesh</p>
+                    <p className="text-sm sm:text-base text-dts-purple font-medium">50-6-23, vishnalayam street, Jagannaickpur, Kakinada, Andhra Pradesh 533002</p>
                   </div>
                 </div>
               </div>

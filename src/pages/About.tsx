@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingReviewButton from "@/components/ui/FloatingReviewButton";
 import { motion } from "framer-motion";
 import { 
   Users, Target, Award, Lightbulb, Rocket, Globe,
@@ -140,24 +141,24 @@ const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow pt-32">
+      <main className="flex-grow pt-20 sm:pt-24 md:pt-32">
         {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <section className="mobile-container mobile-section">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12 sm:mb-16"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="text-center mb-6">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <div className="text-center mb-4 sm:mb-6">
+              <h1 className="mobile-heading-1 mb-4">
                 About
               </h1>
-              <div className="flex justify-center mb-6">
-                <Logo size="xl" className="sm:h-20 md:h-24" />
+              <div className="flex justify-center mb-4 sm:mb-6">
+                <Logo size="xl" className="h-16 sm:h-20 md:h-24" />
               </div>
             </div>
-            <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
+            <p className="mobile-text-body max-w-4xl mx-auto leading-relaxed">
               We are a dedicated team of digital innovators, committed to transforming businesses 
               through cutting-edge technology solutions. From web development to AI integration, 
               we deliver excellence at every level.
@@ -166,13 +167,13 @@ const About = () => {
         </section>
 
         {/* Our Story Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <section className="mobile-container mobile-section">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid md:grid-cols-2 gap-12 items-center"
+            className="mobile-grid mobile-grid-2 items-center gap-8 lg:gap-12"
           >
             <motion.div variants={itemVariants}>
               <SectionHeading 
@@ -180,8 +181,8 @@ const About = () => {
                 subtitle="From Vision to Reality"
                 className="text-left"
               />
-              <div className="space-y-6 text-foreground/80">
-                <p className="text-lg leading-relaxed">
+              <div className="space-y-4 sm:space-y-6 text-foreground/80">
+                <p className="mobile-text-body leading-relaxed">
                   <strong>Dream Team Services</strong> was born from a simple observation: small businesses and startups 
                   often struggle to access high-quality digital services that fit their budget. We saw talented entrepreneurs 
                   with amazing ideas who couldn't afford the expensive agencies, while having great concepts that deserved 
@@ -443,6 +444,7 @@ const About = () => {
         </section>
       </main>
       <Footer />
+      <FloatingReviewButton />
     </div>
   );
 };

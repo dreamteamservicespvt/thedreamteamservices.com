@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import FloatingReviewButton from "@/components/ui/FloatingReviewButton";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -166,6 +167,7 @@ const Portfolio = () => {
         </section>
       </main>
       <Footer />
+      <FloatingReviewButton />
     </div>
   );
 };

@@ -17,8 +17,9 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProjects from "./pages/admin/Projects";
 import AdminInquiries from "./pages/admin/Inquiries";
 import AdminSettings from "./pages/admin/Settings";
-import AdminTeam from "@/pages/admin/Team"; // Add this import
-import Pricing from "@/pages/Pricing"; // Import the Pricing page
+import AdminTeam from "@/pages/admin/Team";
+import AdminReviews from "@/pages/admin/Reviews";
+import Pricing from "@/pages/Pricing";
 
 // ScrollToTop component to ensure pages load at the top
 const ScrollToTop = () => {
@@ -39,29 +40,32 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            {/* Public routes */}
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/pricing" element={<Pricing />} /> {/* Add this line for the Pricing page */}
-            
-            {/* Admin routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AuthGuard><AdminDashboard /></AuthGuard>} />
-            <Route path="/admin/projects" element={<AuthGuard><AdminProjects /></AuthGuard>} />
-            <Route path="/admin/inquiries" element={<AuthGuard><AdminInquiries /></AuthGuard>} />
-            <Route path="/admin/settings" element={<AuthGuard><AdminSettings /></AuthGuard>} />
-            <Route path="/admin/team" element={<AuthGuard><AdminTeam /></AuthGuard>} /> {/* Add this route */}
-            
-            {/* 404 page */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <div className="page-wrapper">
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/pricing" element={<Pricing />} /> {/* Add this line for the Pricing page */}
+              
+              {/* Admin routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AuthGuard><AdminDashboard /></AuthGuard>} />
+              <Route path="/admin/projects" element={<AuthGuard><AdminProjects /></AuthGuard>} />
+              <Route path="/admin/inquiries" element={<AuthGuard><AdminInquiries /></AuthGuard>} />
+              <Route path="/admin/reviews" element={<AuthGuard><AdminReviews /></AuthGuard>} />
+              <Route path="/admin/team" element={<AuthGuard><AdminTeam /></AuthGuard>} />
+              <Route path="/admin/settings" element={<AuthGuard><AdminSettings /></AuthGuard>} />
+              
+              {/* 404 page */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>

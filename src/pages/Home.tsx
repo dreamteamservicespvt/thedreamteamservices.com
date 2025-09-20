@@ -7,6 +7,7 @@ import MissionVision from "@/components/home/MissionVision";
 import TeamSection from "@/components/home/TeamSection";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
+import FloatingReviewButton from "@/components/ui/FloatingReviewButton";
 
 const Home = () => {
   useEffect(() => {
@@ -30,6 +31,7 @@ const Home = () => {
         <CTASection />
       </main>
       <Footer />
+      <FloatingReviewButton />
     </div>
   );
 };

@@ -98,7 +98,7 @@ const Hero = () => {
     <section 
       ref={heroRef} 
       className={cn(
-        "relative min-h-screen flex items-center justify-center overflow-hidden hero-optimized",
+        "relative min-h-screen flex items-center justify-center w-full overflow-x-hidden hero-optimized",
         isMobile && "performance-optimized",
         prefersReducedMotion && "mobile-reduced-motion"
       )}
@@ -186,7 +186,7 @@ const Hero = () => {
 
       {/* Content */}
       <motion.div 
-        className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center"
+        className="relative z-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center safe-area"
         style={{ y: titleY }}
       >
         <motion.div 

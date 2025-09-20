@@ -270,7 +270,7 @@ const Pricing = () => {
                   {/* Background Pattern */}
                   <div className="absolute inset-0 opacity-5">
                     <div className={`absolute inset-0 bg-gradient-to-br ${ad.color}`}></div>
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="7" cy="7" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+                    <div className="absolute inset-0 bg-dots-white/10"></div>
                   </div>
                   
                   <div className="relative p-6 lg:p-8">
@@ -872,11 +872,18 @@ const Pricing = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-medium mb-1">Phone</h3>
-                    <p className="text-sm sm:text-base text-dts-purple font-medium">
-                      <a href="tel:+919849834102" className="hover:underline transition-colors">
-                        +91 9849834102
-                      </a>
-                    </p>
+                    <div className="space-y-1">
+                      <p className="text-sm sm:text-base text-dts-purple font-medium">
+                        <a href="tel:+919849834102" className="hover:underline transition-colors">
+                          +91 9849834102
+                        </a>
+                      </p>
+                      <p className="text-sm sm:text-base text-dts-purple font-medium">
+                        <a href="tel:+919390011378" className="hover:underline transition-colors">
+                          +91 9390011378
+                        </a>
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
@@ -900,7 +907,7 @@ const Pricing = () => {
                   </div>
                   <div>
                     <h3 className="text-base sm:text-lg font-medium mb-1">Location</h3>
-                    <p className="text-sm sm:text-base text-dts-purple font-medium">Kakinada, Andhra Pradesh</p>
+                    <p className="text-sm sm:text-base text-dts-purple font-medium">50-6-23, vishnalayam street, Jagannaickpur, Kakinada, Andhra Pradesh 533002</p>
                   </div>
                 </div>
               </div>

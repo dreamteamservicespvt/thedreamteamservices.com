@@ -8,7 +8,8 @@ import {
   Menu,
   LogOut,
   Users,
-  X
+  X,
+  Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/ui/Logo";
@@ -25,27 +26,32 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
     { 
       name: "Dashboard", 
       path: "/admin", 
-      icon: <LayoutDashboard className="w-5 h-5 mr-2" /> 
+      icon: <LayoutDashboard className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
     },
     { 
       name: "Projects", 
       path: "/admin/projects", 
-      icon: <FileImage className="w-5 h-5 mr-2" /> 
+      icon: <FileImage className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
     },
     { 
       name: "Inquiries", 
       path: "/admin/inquiries", 
-      icon: <MessageSquare className="w-5 h-5 mr-2" /> 
+      icon: <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
+    },
+    { 
+      name: "Reviews", 
+      path: "/admin/reviews", 
+      icon: <Star className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
+    },
+    { 
+      name: "Team", 
+      path: "/admin/team", 
+      icon: <Users className="w-4 h-4 sm:w-5 sm:h-5 mr-2" /> 
     },
     { 
       name: "Settings", 
       path: "/admin/settings", 
       icon: <Settings className="w-5 h-5 mr-2" /> 
-    },
-    { 
-      name: "Team", 
-      path: "/admin/team", 
-      icon: <Users className="w-5 h-5 mr-2" /> 
     }
   ];
 
