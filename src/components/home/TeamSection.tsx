@@ -83,13 +83,13 @@ const TeamSection = () => {
   };
 
   return (
-    <section id="team" className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
+    <section id="team" className="py-16 sm:py-20 lg:py-24 relative">
       {/* Background decorations */}
-      <div className="absolute inset-0 bg-gradient-to-br from-dts-purple/5 via-transparent to-dts-cyan/5"></div>
-      <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-72 lg:h-72 bg-dts-cyan/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-40 h-40 sm:w-64 sm:h-64 lg:w-96 lg:h-96 bg-dts-purple/10 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-dts-purple/5 via-transparent to-dts-cyan/5 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-32 h-32 sm:w-48 sm:h-48 lg:w-72 lg:h-72 bg-dts-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-40 h-40 sm:w-64 sm:h-64 lg:w-96 lg:h-96 bg-dts-purple/10 rounded-full blur-3xl pointer-events-none"></div>
       
-      <div className="mobile-container relative z-10">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -121,9 +121,9 @@ const TeamSection = () => {
 
         {/* Loading State */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="mobile-card min-h-[360px] sm:min-h-[400px]">
+              <div key={i} className="bg-card/50 backdrop-blur-sm border border-white/10 rounded-2xl flex flex-col min-h-[360px] sm:min-h-[400px]">
                 <div className="h-40 sm:h-48 lg:h-56 bg-muted animate-pulse rounded-t-2xl"></div>
                 <div className="p-4 space-y-3 flex-1 flex flex-col">
                   <div className="h-6 bg-muted animate-pulse rounded"></div>
@@ -142,21 +142,21 @@ const TeamSection = () => {
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             variants={containerVariants}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-full"
           >
             {displayedMembers.map((member) => (
               <motion.div
                 key={member.id}
                 variants={itemVariants}
-                className="group mobile-card hover:border-dts-cyan/40 hover:shadow-xl hover:shadow-dts-cyan/5 transition-all duration-500 hover:scale-[1.02] flex flex-col h-full"
+                className="group bg-card/50 backdrop-blur-sm border border-white/10 rounded-2xl hover:border-dts-cyan/40 hover:shadow-xl hover:shadow-dts-cyan/5 transition-all duration-500 hover:scale-[1.02] flex flex-col w-full"
               >
-                <div className="team-image-container rounded-t-2xl bg-gradient-to-br from-dts-blue-dark/20 to-dts-purple/20">
+                <div className="relative h-48 sm:h-56 lg:h-64 rounded-t-2xl bg-gradient-to-br from-dts-blue-dark/20 to-dts-purple/20 flex items-center justify-center p-3">
                   <OptimizedImage
                     src={member.image}
                     alt={member.name}
-                    className="team-image p-2 sm:p-3 group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                     width={280}
                     height={280}
                     fallbackSrc="/images/placeholder-person.jpg"
@@ -181,7 +181,7 @@ const TeamSection = () => {
                         href={member.socialLinks.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="touch-target-mobile p-2 rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
+                        className="inline-flex items-center justify-center p-2 min-h-[44px] min-w-[44px] rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
                         aria-label={`${member.name}'s LinkedIn profile`}
                       >
                         <Linkedin className="w-4 h-4" />
@@ -193,7 +193,7 @@ const TeamSection = () => {
                         href={member.socialLinks.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="touch-target-mobile p-2 rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
+                        className="inline-flex items-center justify-center p-2 min-h-[44px] min-w-[44px] rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
                         aria-label={`${member.name}'s Twitter profile`}
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -207,7 +207,7 @@ const TeamSection = () => {
                         href={member.socialLinks.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="touch-target-mobile p-2 rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
+                        className="inline-flex items-center justify-center p-2 min-h-[44px] min-w-[44px] rounded-full bg-background/50 hover:bg-dts-cyan/10 hover:text-dts-cyan transition-all duration-300"
                         aria-label={`${member.name}'s GitHub profile`}
                       >
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -235,7 +235,7 @@ const TeamSection = () => {
               onClick={handleShowMore}
               variant="outline"
               size="lg"
-              className="mobile-button bg-card/50 backdrop-blur-sm border-dts-cyan/30 hover:border-dts-cyan/60 hover:bg-dts-cyan/10 transition-all duration-300 w-full sm:w-auto"
+              className="bg-card/50 backdrop-blur-sm border-dts-cyan/30 hover:border-dts-cyan/60 hover:bg-dts-cyan/10 transition-all duration-300 w-full sm:w-auto min-h-[44px]"
             >
               Show More Team Members
             </Button>
