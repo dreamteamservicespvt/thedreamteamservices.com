@@ -101,11 +101,11 @@ const Navbar = () => {
       <div
         className={cn(
           "lg:hidden transition-all duration-300 ease-in-out overflow-hidden relative w-full",
-          mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0" 
+          mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0" 
         )}
         style={{ position: "relative", inset: "unset", left: 0, right: 0 }}
       >
-        <div className="px-3 sm:px-4 pt-3 pb-4 space-y-2 bg-dts-blue/95 backdrop-blur-md border-t border-white/10 w-full overflow-x-hidden">
+        <div className="px-3 sm:px-4 pt-3 pb-6 space-y-2 bg-dts-blue/95 backdrop-blur-md border-t border-white/10 w-full overflow-x-hidden">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -124,7 +124,7 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <div className="px-4 py-2">
+          <div className="px-4 pt-2 pb-2">
             <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
               <GradientButton className="w-full touch-target-mobile text-center justify-center">
                 Get Started
