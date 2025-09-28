@@ -91,10 +91,10 @@ const ApproachSection = () => {
             className="flex justify-center mt-10"
           >
             <Link 
-              to="/pricing" 
+              to="/Services" 
               className="inline-flex items-center text-dts-cyan hover:text-dts-purple transition-colors duration-300 font-medium text-lg group"
             >
-              View Our Pricing Plans
+              View Our Services Plans
               <ArrowRight size={18} className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </motion.div>

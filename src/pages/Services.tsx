@@ -12,7 +12,7 @@ import GradientButton from "@/components/ui/GradientButton";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
  
-const Pricing = () => {
+const Services = () => {
   useEffect(() => {
     // Add grid pattern to 
     document.body.classList.add("bg-grid-pattern");
@@ -777,4 +777,4 @@ const Pricing = () => {
   );
 };
 
-export default Pricing;
+export default Services;

@@ -18,7 +18,7 @@ import AdminInquiries from "./pages/admin/Inquiries";
 import AdminSettings from "./pages/admin/Settings";
 import AdminTeam from "@/pages/admin/Team";
 import AdminReviews from "@/pages/admin/Reviews";
-import Pricing from "@/pages/Pricing";
+import Services from "@/pages/Services";
 
 // ScrollToTop component to ensure pages load at the top
 const ScrollToTop = () => {
@@ -48,8 +48,8 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/services" element={<Pricing />} /> {/* Redirect services to pricing page */}
+              <Route path="/Services" element={<Services />} />
+              <Route path="/services" element={<Services />} /> {/* Redirect services to Services page */}
               
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

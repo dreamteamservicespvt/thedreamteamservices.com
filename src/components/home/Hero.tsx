@@ -247,7 +247,7 @@ const Hero = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: prefersReducedMotion ? 0.3 : 0.7, delay: prefersReducedMotion ? 0.3 : 1.1 }}
         >
-          <Link to="/pricing">
+          <Link to="/Services">
             <motion.div 
               whileHover={!isMobile && !prefersReducedMotion ? { scale: 1.05, boxShadow: "0 0 20px rgba(123, 31, 162, 0.5)" } : {}} 
               whileTap={{ scale: 0.98 }}

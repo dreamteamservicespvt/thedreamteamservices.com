@@ -316,7 +316,7 @@ const ServiceCard = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.4 }}
                 >
-                  <Link to={`/pricing#level-${level}`}>
+                  <Link to={`/Services#level-${level}`}>
                     <GradientButton 
                       className="w-full text-xs sm:text-sm px-3 py-1.5 hover:shadow-lg hover:shadow-dts-cyan/20" 
                       size="sm"
@@ -561,7 +561,7 @@ const ServiceLevels = () => {
         <p className="mobile-cta-text text-foreground/70 mb-2 sm:mb-4 text-xs sm:text-base">
           Need a custom solution combining multiple levels?
         </p>
-        <Link to="/pricing">
+        <Link to="/Services">
           <GradientButton 
             className="text-xs sm:text-base px-4 py-2"
             size="sm"

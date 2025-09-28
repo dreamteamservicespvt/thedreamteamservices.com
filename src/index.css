@@ -214,7 +214,7 @@ html::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
 
-/* Mobile optimizations for pricing page */
+/* Mobile optimizations for Services page */
 @media (max-width: 640px) {
   .mobile-optimized {
     -webkit-overflow-scrolling: touch;
