@@ -323,7 +323,7 @@ const ServiceCard = ({
                       gradientDirection="horizontal"
                       highContrast={true}
                     >
-                      View Pricing & Details
+                      View Service Details
                       <ArrowRight size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
                     </GradientButton>
                   </Link>
@@ -568,7 +568,7 @@ const ServiceLevels = () => {
             gradientDirection="horizontal"
             highContrast={true}
           >
-            View All Pricing
+            View All Services
             <ArrowRight size={14} className="ml-1 sm:ml-2" />
           </GradientButton>
         </Link>

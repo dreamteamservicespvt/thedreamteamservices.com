@@ -27,6 +27,27 @@ const Contact = () => {
     // Add grid pattern to body
     document.body.classList.add("bg-grid-pattern");
     
+    // Handle anchor scrolling
+    const handleAnchorScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          // Add a small delay to ensure the page is fully rendered
+          setTimeout(() => {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 100);
+        }
+      }
+    };
+
+    // Call immediately and also after a short delay for route changes
+    handleAnchorScroll();
+    setTimeout(handleAnchorScroll, 500);
+    
     return () => {
       document.body.classList.remove("bg-grid-pattern");
     };
@@ -397,12 +418,13 @@ const Contact = () => {
               className="group flex flex-col items-center p-6 rounded-xl border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm hover:border-gray-600/30 hover:bg-gray-600/10 transition-all duration-300 social-card-mobile social-card-mobile-xs social-card-tablet touch-target-large-mobile focus-visible-mobile"
             >
               <div className="group-hover:scale-110 transition-transform duration-300 social-icon-mobile social-icon-mobile-xs">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                  <rect width="24" height="24" rx="12" fill="#000"/>
-                  <path d="M12.9 7.9c-1.5 0-2.7.4-3.6 1.1-.9.7-1.4 1.7-1.4 2.9v.2c0 1.2.5 2.2 1.4 2.9.9.7 2.1 1.1 3.6 1.1s2.7-.4 3.6-1.1c.9-.7 1.4-1.7 1.4-2.9v-.2c0-1.2-.5-2.2-1.4-2.9-.9-.7-2.1-1.1-3.6-1.1zm0 1.2c1.1 0 1.9.3 2.5.7.6.4.9 1 .9 1.7v.1c0 .7-.3 1.3-.9 1.7-.6.4-1.4.7-2.5.7s-1.9-.3-2.5-.7c-.6-.4-.9-1-.9-1.7v-.1c0-.7.3-1.3.9-1.7.6-.4 1.4-.7 2.5-.7z" fill="white"/>
-                  <circle cx="12.9" cy="11.9" r="1.8" stroke="#000" strokeWidth="0.8"/>
-                  <circle cx="16.3" cy="8.7" r="0.8" fill="white"/>
-                </svg>
+                <img 
+                  src="/images/image.png" 
+                  alt="Threads"
+                  width="32" 
+                  height="32"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
               <span className="mt-3 text-sm font-medium social-label-mobile">Threads</span>
             </a>

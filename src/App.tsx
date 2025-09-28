@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
@@ -47,10 +46,10 @@ const App = () => (
               {/* Public routes */}
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/pricing" element={<Pricing />} /> {/* Add this line for the Pricing page */}
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/services" element={<Pricing />} /> {/* Redirect services to pricing page */}
               
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

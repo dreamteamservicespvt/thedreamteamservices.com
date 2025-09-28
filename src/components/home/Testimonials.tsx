@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Quote, ChevronLeft, ChevronRight, Star, PenTool } from "lucide-react";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Review } from "@/types/review";
 import { getApprovedReviews } from "@/services/reviewService";
 import { useToast } from "@/hooks/use-toast";
@@ -304,13 +305,14 @@ const Testimonials = () => {
           {/* Write Review CTA */}
           <div className="mt-8 sm:mt-10 text-center px-4">
             <p className="text-sm sm:text-base text-foreground/70 mb-4">Worked with us? Share your experience!</p>
-            <Button 
-              onClick={() => window.location.href = '/contact#review-form'}
-              className="bg-dts-purple hover:bg-dts-purple/90 text-white px-6 py-3 rounded-full text-sm sm:text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
-            >
-              <PenTool size={16} className="mr-2" />
-              Write Your Review
-            </Button>
+            <Link to="/contact#review-form">
+              <Button 
+                className="bg-dts-purple hover:bg-dts-purple/90 text-white px-6 py-3 rounded-full text-sm sm:text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+              >
+                <PenTool size={16} className="mr-2" />
+                Write Your Review
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

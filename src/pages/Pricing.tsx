@@ -41,7 +41,7 @@ const Pricing = () => {
     }
   };
 
-  // Service levels with pricing
+  // Service levels
   const serviceLevels = [
     {
       id: "branding-design",
@@ -49,11 +49,11 @@ const Pricing = () => {
       title: "Branding & Design",
       description: "Professional design services to establish your visual identity and marketing materials.",
       services: [
-        { name: "Logo with Tagline", price: "Starting From ₹500" },
-        { name: "Visiting Card Design", price: "Starting From ₹500" },
-        { name: "Banner Design", price: "Starting From ₹500" },
-        { name: "Poster Design", price: "Starting From ₹500" },
-        { name: "Brochure Design", price: "Starting From ₹1000" }
+        "Logo with Tagline",
+        "Visiting Card Design",
+        "Banner Design",
+        "Poster Design",
+        "Brochure Design"
       ],
       icon: <Palette size={24} />,
       color: "from-pink-500 to-orange-400"
@@ -64,12 +64,11 @@ const Pricing = () => {
       title: "Website & Digital Marketing",
       description: "Establish your online presence with a professional website and strategic digital marketing.",
       services: [
-        { name: "Basic Website", price: "Starting From ₹20,000" },
-        { name: "Standard Website", price: "Starting From ₹30,000" },
-        { name: "Advanced Website", price: "Starting From ₹50,000+" },
-        { name: "SEO Posts", price: "₹500 each" },
-        { name: "SEO Reels", price: "₹5,000 to ₹10,000 each" },
-        { name: "Digital Marketing Campaigns", price: "₹10,000 to ₹15,000 per month" }
+        "Website Development",
+        "SEO Optimization",
+        "Digital Marketing Campaigns",
+        "Content Management Systems",
+        "E-commerce Solutions"
       ],
       icon: <Globe size={24} />,
       color: "from-dts-cyan to-blue-500"
@@ -80,8 +79,10 @@ const Pricing = () => {
       title: "Software & App Development",
       description: "Custom software solutions and mobile applications tailored to your business needs.",
       services: [
-        { name: "Custom Software Development", price: "₹50,000 to ₹1,00,000+" },
-        { name: "Mobile App Development", price: "₹50,000 to ₹1,00,000+" }
+        "Custom Software Development",
+        "Mobile App Development",
+        "Web Applications",
+        "API Integration"
       ],
       icon: <Code size={24} />,
       color: "from-dts-purple to-indigo-600"
@@ -92,9 +93,11 @@ const Pricing = () => {
       title: "Data Science & Cybersecurity",
       description: "Advanced data analysis and security solutions to protect and leverage your digital assets.",
       services: [
-        { name: "Data Analysis", price: "₹10,000 to ₹40,000+" },
-        { name: "Predictive Modeling", price: "₹25,000 to ₹1,00,000+" },
-        { name: "Cybersecurity Assessment", price: "₹15,000 to ₹80,000+" }
+        "Data Analysis",
+        "Predictive Modeling",
+        "Cybersecurity Assessment",
+        "Data Visualization",
+        "Security Audits"
       ],
       icon: <Database size={24} />,
       color: "from-emerald-500 to-green-600"
@@ -105,9 +108,11 @@ const Pricing = () => {
       title: "AI Automation & Chatbots",
       description: "Cutting-edge AI solutions to automate processes and enhance customer interactions.",
       services: [
-        { name: "AI Process Automation", price: "₹50,000 to ₹1,50,000+" },
-        { name: "AI Agent Development", price: "₹1,00,000 to ₹4,00,000+" },
-        { name: "Chatbot Integration", price: "₹20,000 to ₹70,000+" }
+        "AI Process Automation",
+        "AI Agent Development",
+        "Chatbot Integration",
+        "Machine Learning Solutions",
+        "Natural Language Processing"
       ],
       icon: <Cpu size={24} />,
       color: "from-violet-600 to-fuchsia-500"
@@ -116,34 +121,33 @@ const Pricing = () => {
 
   const websitePackages = [
     {
-      name: "Basic",
-      price: "₹20,000",
+      name: "Business Websites",
+      description: "Professional business presence online",
       features: [
-        "5 Pages",
         "Responsive Design",
-        "Basic SEO Optimization",
-        "Contact Form",
-        "Social Media Links"
+        "SEO Optimization", 
+        "Contact Forms",
+        "Social Media Integration",
+        "Mobile-First Approach"
       ],
       recommended: false
     },
     {
-      name: "Standard",
-      price: "₹30,000",
+      name: "Enterprise Solutions",
+      description: "Advanced web applications and CMS",
       features: [
-        "10 Pages",
         "Content Management System",
         "Admin Dashboard",
         "Blog Integration",
         "Advanced SEO",
         "Analytics Integration",
-        "1 Month Free Support"
+        "Ongoing Support"
       ],
       recommended: true
     },
     {
-      name: "Advanced",
-      price: "₹60,000+",
+      name: "E-commerce & Custom",
+      description: "Complex integrations and e-commerce",
       features: [
         "E-commerce Functionality",
         "Custom Integrations",
@@ -151,7 +155,7 @@ const Pricing = () => {
         "User Authentication",
         "Payment Gateway Integration",
         "Advanced Security Features",
-        "3 Months Free Support"
+        "Extended Support"
       ],
       recommended: false
     }
@@ -169,10 +173,10 @@ const Pricing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Our <span className="gradient-text">Pricing Plans</span></h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Our <span className="gradient-text">Services</span></h1>
             <p className="text-lg sm:text-xl text-foreground/70 max-w-3xl mx-auto px-2">
-              Clear, competitive pricing tailored for startups and businesses. 
-              Choose the package that fits your needs.
+              Professional services tailored for startups and businesses. 
+              Explore our comprehensive solutions and get a custom quote.
             </p>
           </motion.div>
 
@@ -198,110 +202,63 @@ const Pricing = () => {
               </p>
             </motion.div>
 
-            {/* Premium Ad Cards Grid - Mobile Optimized */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 sm:gap-4 lg:gap-6 mb-16">
+            {/* Video Ad Service Categories */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16">
               {[
-                { duration: "8s", price: "3,000", popular: false, recommended: false, description: "Quick social media ads" },
-                { duration: "16s", price: "5,000", popular: false, recommended: false, description: "Instagram stories & reels" },
-                { duration: "24s", price: "8,000", popular: true, recommended: false, description: "Most popular for brands" },
-                { duration: "32s", price: "10,000", popular: false, recommended: true, description: "Extended storytelling" },
-                { duration: "40s", price: "13,000", popular: false, recommended: false, description: "Product showcases" },
-                { duration: "48s", price: "15,000", popular: false, recommended: false, description: "Brand story format" },
-                { duration: "60s", price: "20,000", popular: false, recommended: false, description: "Full commercial" }
-              ].map((ad, index) => (
+                {
+                  title: "Short-Form Content",
+                  description: "Quick, engaging videos perfect for social media platforms",
+                  features: ["8-24 second formats", "Social media optimized", "High engagement focus"],
+                  icon: <Play className="w-6 h-6" />
+                },
+                {
+                  title: "Brand Storytelling",
+                  description: "Extended format videos that tell your brand's story",
+                  features: ["32-48 second formats", "Narrative structure", "Brand identity focus"],
+                  icon: <Video className="w-6 h-6" />
+                },
+                {
+                  title: "Full Commercials",
+                  description: "Complete commercial advertisements for comprehensive campaigns",
+                  features: ["60+ second formats", "Professional production", "Multi-platform ready"],
+                  icon: <Users className="w-6 h-6" />
+                }
+              ].map((service, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.05 }}
-                  whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                  className={cn(
-                    "group relative rounded-lg sm:rounded-xl overflow-visible backdrop-blur-sm border transition-all duration-300",
-                    // Add top margin to accommodate badges
-                    ad.popular || ad.recommended ? "mt-4 sm:mt-5" : "mt-4 sm:mt-5",
-                    ad.popular 
-                      ? "border-dts-cyan/30 bg-dts-blue-dark/60 shadow-lg shadow-dts-cyan/10" 
-                      : ad.recommended
-                      ? "border-dts-purple/30 bg-dts-blue-dark/60 shadow-lg shadow-dts-purple/10"
-                      : "border-foreground/10 bg-dts-blue-dark/40 hover:border-foreground/20 hover:shadow-lg hover:shadow-background/20"
-                  )}
+                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                  className="p-6 sm:p-8 rounded-xl bg-dts-blue-dark/40 border border-foreground/10 hover:border-foreground/20 transition-colors"
                 >
-                  {/* Badge - Fixed Positioning */}
-                  {ad.popular && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
-                      <div className="bg-dts-cyan text-white text-xs sm:text-sm font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg whitespace-nowrap">
-                        ⭐ POPULAR
-                      </div>
+                  <div className="flex justify-center mb-4">
+                    <div className="p-3 rounded-lg bg-dts-blue-light">
+                      <div className="text-dts-cyan">{service.icon}</div>
                     </div>
-                  )}
-                  {ad.recommended && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 z-20">
-                      <div className="bg-dts-purple text-white text-xs sm:text-sm font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg whitespace-nowrap">
-                        💎 BEST VALUE
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Gradient Background */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div className={cn(
-                      "absolute inset-0",
-                      ad.popular 
-                        ? "bg-gradient-to-br from-dts-cyan to-blue-500" 
-                        : ad.recommended
-                        ? "bg-gradient-to-br from-dts-purple to-purple-600"
-                        : "bg-gradient-to-br from-foreground/10 to-foreground/5"
-                    )}></div>
                   </div>
                   
-                  <div className="relative p-3 sm:p-4 lg:p-6">
-                    {/* Video Icon - Compact */}
-                    <div className="flex justify-center mb-3 sm:mb-4">
-                      <div className={cn(
-                        "p-2 sm:p-2.5 lg:p-3 rounded-lg shadow-lg transition-transform duration-300 group-hover:scale-110",
-                        ad.popular 
-                          ? "bg-gradient-to-br from-dts-cyan to-blue-500" 
-                          : ad.recommended
-                          ? "bg-gradient-to-br from-dts-purple to-purple-600"
-                          : "bg-dts-blue-light"
-                      )}>
-                        <Play className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 text-white" />
-                      </div>
-                    </div>
-
-                    {/* Duration - Compact */}
-                    <div className="text-center mb-2 sm:mb-3">
-                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">{ad.duration}</div>
-                      <div className="text-[10px] sm:text-xs text-foreground/60 hidden sm:block">{ad.description}</div>
-                    </div>
-                    
-                    {/* Price - Compact */}
-                    <div className="text-center mb-3 sm:mb-4 lg:mb-5">
-                      <div className="text-[10px] sm:text-xs text-foreground/50 mb-0.5">Up to</div>
-                      <div className={cn(
-                        "text-sm sm:text-base lg:text-xl font-bold",
-                        ad.popular 
-                          ? "text-dts-cyan" 
-                          : ad.recommended
-                          ? "text-dts-purple"
-                          : "text-foreground"
-                      )}>
-                        ₹{ad.price}
-                      </div>
-                    </div>
-
-                    {/* CTA Button - Mobile Optimized */}
+                  <h3 className="text-lg sm:text-xl font-bold mb-3 text-center">{service.title}</h3>
+                  <p className="text-sm sm:text-base text-foreground/70 mb-4 text-center">{service.description}</p>
+                  
+                                    <ul className="space-y-2 mb-6">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center text-sm">
+                        <Check className="h-4 w-4 text-dts-cyan mr-2 shrink-0" />
+                        <span className="text-foreground/80">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <Link to="/contact">
                     <GradientButton 
-                      className="w-full font-semibold text-[10px] sm:text-xs lg:text-sm py-1.5 sm:py-2" 
-                      size="sm"
-                      gradientDirection={ad.popular || ad.recommended ? "diagonal" : "horizontal"}
-                      intensity={ad.popular || ad.recommended ? "strong" : "default"}
+                      className="w-full" 
+                      size="lg"
+                      gradientDirection="horizontal"
                       highContrast={true}
                     >
-                      <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-1 sm:mr-2" />
-                      Order
+                      Get Quote
                     </GradientButton>
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
             </div>
@@ -408,8 +365,8 @@ const Pricing = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
-            {/* Starter Package */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {/* Content Creation Services */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -417,32 +374,33 @@ const Pricing = () => {
               className="rounded-xl sm:rounded-2xl overflow-hidden border border-foreground/10 bg-dts-blue-dark/40 backdrop-blur-sm"
             >
               <div className="bg-gradient-to-r from-pink-500 to-purple-500 text-white text-center py-2 sm:py-3 font-medium text-sm sm:text-base">
-                Starter Package
+                Content Creation & Management
               </div>
               
               <div className="p-4 sm:p-6 lg:p-8">
                 <div className="text-center mb-4 sm:mb-6">
-                  <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2 text-dts-cyan">₹25,000</div>
-                  <div className="text-sm sm:text-base text-foreground/60">per month</div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-dts-cyan">Professional Social Media Management</h3>
+                  <p className="text-sm sm:text-base text-foreground/60 mt-2">Complete content creation and platform management</p>
                 </div>
 
                 <div className="space-y-4 sm:space-y-6">
                   <div>
                     <h4 className="font-semibold mb-2 sm:mb-3 flex items-center text-sm sm:text-base">
                       <Video size={14} className="mr-2 text-pink-500 sm:w-4 sm:h-4" />
-                      Content Creation
+                      Content Types
                     </h4>
                     <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-foreground/80 ml-4 sm:ml-6">
-                      <li>• Weekly: 1 Video + 4 Posters</li>
-                      <li>• Monthly: 20 total posts</li>
-                      <li>• All 6 platforms covered</li>
+                      <li>• Professional video content</li>
+                      <li>• Custom poster designs</li>
+                      <li>• Story and reel creation</li>
+                      <li>• Festival & event posts</li>
                     </ul>
                   </div>
 
                   <div>
                     <h4 className="font-semibold mb-2 sm:mb-3 flex items-center text-sm sm:text-base">
                       <Globe size={14} className="mr-2 text-purple-500 sm:w-4 sm:h-4" />
-                      Platforms
+                      Platforms Covered
                     </h4>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-1 sm:gap-2 text-xs">
                       <div className="flex items-center">
@@ -458,7 +416,11 @@ const Pricing = () => {
                         Facebook
                       </div>
                       <div className="flex items-center">
-                        <Twitter size={10} className="mr-1 sm:w-3 sm:h-3" />
+                        <img 
+                          src="/images/image.png" 
+                          alt="Threads"
+                          className="mr-1 w-3 h-3 sm:w-3.5 sm:h-3.5 object-contain"
+                        />
                         Threads
                       </div>
                       <div className="flex items-center">
@@ -473,13 +435,13 @@ const Pricing = () => {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Includes:</h4>
+                    <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Service Features:</h4>
                     <ul className="space-y-1 sm:space-y-2">
                       {[
                         "SEO content preparation",
                         "Professional editing",
                         "Scheduled posting",
-                        "Festival & occasion posts"
+                        "Analytics & reporting"
                       ].map((feature, idx) => (
                         <li key={idx} className="flex items-start">
                           <Check className="h-3 w-3 sm:h-4 sm:w-4 text-pink-500 shrink-0 mr-2 mt-0.5" />
@@ -490,60 +452,63 @@ const Pricing = () => {
                   </div>
                 </div>
                 
-                <GradientButton 
-                  className="w-full mt-6 sm:mt-8 text-sm sm:text-base" 
-                  size="lg"
-                  gradientDirection="horizontal"
-                  highContrast={true}
-                >
-                  Choose Starter
-                  <ArrowRight size={14} className="sm:w-4 sm:h-4" />
-                </GradientButton>
+                <Link to="/contact">
+                  <GradientButton 
+                    className="w-full mt-6 sm:mt-8 text-sm sm:text-base" 
+                    size="lg"
+                    gradientDirection="horizontal"
+                    highContrast={true}
+                  >
+                    Get Quote
+                    <ArrowRight size={14} className="sm:w-4 sm:h-4" />
+                  </GradientButton>
+                </Link>
               </div>
             </motion.div>
 
-            {/* Professional Package */}
+            {/* Strategy & Analytics Services */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="rounded-xl sm:rounded-2xl overflow-hidden border border-purple-500/50 bg-dts-blue-dark/60 backdrop-blur-sm relative"
+              className="rounded-xl sm:rounded-2xl overflow-hidden border border-dts-cyan/20 bg-dts-blue-dark/60 backdrop-blur-sm relative"
             >
-              <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2 sm:py-3 font-medium text-sm sm:text-base">
-                Professional - Most Popular
+              <div className="bg-gradient-to-r from-dts-cyan to-blue-500 text-white text-center py-2 sm:py-3 font-medium text-sm sm:text-base">
+                Strategy & Growth Management
               </div>
               
               <div className="p-4 sm:p-6 lg:p-8">
                 <div className="text-center mb-4 sm:mb-6">
-                  <div className="text-3xl sm:text-4xl font-bold mb-1 sm:mb-2 text-dts-cyan">₹30,000</div>
-                  <div className="text-sm sm:text-base text-foreground/60">per month</div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-dts-cyan">Advanced Social Media Strategy</h3>
+                  <p className="text-sm sm:text-base text-foreground/60 mt-2">Complete strategy development and growth optimization</p>
                 </div>
 
                 <div className="space-y-4 sm:space-y-6">
                   <div>
                     <h4 className="font-semibold mb-2 sm:mb-3 flex items-center text-sm sm:text-base">
-                      <Video size={14} className="mr-2 text-purple-500 sm:w-4 sm:h-4" />
-                      Enhanced Content
+                      <Video size={14} className="mr-2 text-dts-cyan sm:w-4 sm:h-4" />
+                      Advanced Services
                     </h4>
                     <ul className="space-y-1 sm:space-y-2 text-xs sm:text-sm text-foreground/80 ml-4 sm:ml-6">
-                      <li>• Weekly: 2 Videos + 4 Posters</li>
-                      <li>• Monthly: 24 total posts</li>
-                      <li>• Premium features included</li>
+                      <li>• Enhanced content volumes</li>
+                      <li>• Advanced SEO optimization</li>
+                      <li>• Growth strategy development</li>
+                      <li>• Performance optimization</li>
                     </ul>
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Everything in Starter, Plus:</h4>
+                    <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base">Premium Features:</h4>
                     <ul className="space-y-1 sm:space-y-2">
                       {[
-                        "Double video content",
-                        "Advanced SEO optimization",
                         "Priority support",
-                        "Detailed analytics",
-                        "Monthly strategy calls"
+                        "Detailed analytics & insights",
+                        "Monthly strategy consultations",
+                        "Competitor analysis",
+                        "Custom campaign development"
                       ].map((feature, idx) => (
                         <li key={idx} className="flex items-start">
-                          <Check className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500 shrink-0 mr-2 mt-0.5" />
+                          <Check className="h-3 w-3 sm:h-4 sm:w-4 text-dts-cyan shrink-0 mr-2 mt-0.5" />
                           <span className="text-xs sm:text-sm text-foreground/80">{feature}</span>
                         </li>
                       ))}
@@ -551,16 +516,18 @@ const Pricing = () => {
                   </div>
                 </div>
                 
-                <GradientButton 
-                  className="w-full mt-6 sm:mt-8 text-sm sm:text-base" 
-                  size="lg"
-                  gradientDirection="diagonal"
-                  intensity="strong"
-                  highContrast={true}
-                >
-                  Choose Professional
-                  <ArrowRight size={14} className="sm:w-4 sm:h-4" />
-                </GradientButton>
+                <Link to="/contact">
+                  <GradientButton 
+                    className="w-full mt-6 sm:mt-8 text-sm sm:text-base" 
+                    size="lg"
+                    gradientDirection="diagonal"
+                    intensity="strong"
+                    highContrast={true}
+                  >
+                    Get Quote
+                    <ArrowRight size={14} className="sm:w-4 sm:h-4" />
+                  </GradientButton>
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -575,9 +542,9 @@ const Pricing = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Website <span className="gradient-text">Packages</span></h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Website <span className="gradient-text">Development</span></h2>
               <p className="text-base sm:text-lg text-foreground/70 max-w-3xl mx-auto px-2">
-                Choose the perfect website package for your business. All websites are built with modern technologies.
+                Professional website development services tailored to your business needs. All websites are built with modern technologies and best practices.
               </p>
             </motion.div>
 
@@ -603,7 +570,7 @@ const Pricing = () => {
                   
                   <div className="p-4 sm:p-6 lg:p-8">
                     <h3 className="text-lg sm:text-xl font-bold mb-2">{pkg.name}</h3>
-                    <div className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-dts-cyan">{pkg.price}</div>
+                    <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-6">{pkg.description}</p>
                     
                     <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                       {pkg.features.map((feature, idx) => (
@@ -614,16 +581,18 @@ const Pricing = () => {
                       ))}
                     </ul>
                     
-                    <GradientButton 
-                      className="w-full text-sm sm:text-base" 
-                      size="lg"
-                      gradientDirection={pkg.recommended ? "diagonal" : "horizontal"}
-                      intensity={pkg.recommended ? "strong" : "default"}
-                      highContrast={true}
-                    >
-                      Select Package
-                      <ArrowRight size={14} className="sm:w-4 sm:h-4" />
-                    </GradientButton>
+                    <Link to="/contact">
+                      <GradientButton 
+                        className="w-full text-sm sm:text-base" 
+                        size="lg"
+                        gradientDirection={pkg.recommended ? "diagonal" : "horizontal"}
+                        intensity={pkg.recommended ? "strong" : "default"}
+                        highContrast={true}
+                      >
+                        Get Quote
+                        <ArrowRight size={14} className="sm:w-4 sm:h-4" />
+                      </GradientButton>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -668,20 +637,21 @@ const Pricing = () => {
                       className="p-3 sm:p-5 rounded-lg bg-background/10 border border-foreground/5 hover:border-foreground/10 transition-colors"
                     >
                       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
-                        <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service.name}</h4>
+                        <h4 className="font-medium text-sm sm:text-base mb-2 sm:mb-0">{service}</h4>
                         <div className="bg-dts-blue-light p-1.5 sm:p-2 rounded-lg w-fit">
                           {serviceLevel.icon}
                         </div>
                       </div>
-                      <p className="text-dts-cyan font-semibold mb-3 sm:mb-4 text-sm sm:text-base">{service.price}</p>
-                      <GradientButton 
-                        size="sm" 
-                        gradientDirection="horizontal" 
-                        className="w-full text-xs sm:text-sm"
-                        highContrast={true}
-                      >
-                        Get Started
-                      </GradientButton>
+                      <Link to="/contact">
+                        <GradientButton 
+                          size="sm" 
+                          gradientDirection="horizontal" 
+                          className="w-full text-xs sm:text-sm"
+                          highContrast={true}
+                        >
+                          Get Quote
+                        </GradientButton>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -698,25 +668,25 @@ const Pricing = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Additional Notes</h2>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Why Choose Our Services</h2>
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start">
                 <div className="bg-dts-purple/20 p-1.5 sm:p-2 rounded-lg mr-3 sm:mr-4">
                   <Check className="h-4 w-4 sm:h-5 sm:w-5 text-dts-purple" />
                 </div>
-                <p className="text-sm sm:text-base text-foreground/80">Startups in Kakinada get 10–15% off on their first project.</p>
+                <p className="text-sm sm:text-base text-foreground/80">Professional quality guaranteed on all projects with dedicated support.</p>
               </li>
               <li className="flex items-start">
                 <div className="bg-dts-purple/20 p-1.5 sm:p-2 rounded-lg mr-3 sm:mr-4">
                   <Check className="h-4 w-4 sm:h-5 sm:w-5 text-dts-purple" />
                 </div>
-                <p className="text-sm sm:text-base text-foreground/80">GST will be added once registration is complete.</p>
+                <p className="text-sm sm:text-base text-foreground/80">Custom solutions tailored to your specific business needs and goals.</p>
               </li>
               <li className="flex items-start">
                 <div className="bg-dts-purple/20 p-1.5 sm:p-2 rounded-lg mr-3 sm:mr-4">
                   <Check className="h-4 w-4 sm:h-5 sm:w-5 text-dts-purple" />
                 </div>
-                <p className="text-sm sm:text-base text-foreground/80">Flexible quotes available for large or combined service packages.</p>
+                <p className="text-sm sm:text-base text-foreground/80">Flexible service packages available for comprehensive business solutions.</p>
               </li>
             </ul>
           </motion.div>

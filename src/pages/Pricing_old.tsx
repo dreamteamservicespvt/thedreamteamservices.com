@@ -541,7 +541,11 @@ const Pricing = () => {
                         Facebook
                       </div>
                       <div className="flex items-center">
-                        <Twitter size={10} className="mr-1 sm:w-3 sm:h-3" />
+                        <img 
+                          src="/images/image.png" 
+                          alt="Threads"
+                          className="mr-1 w-3 h-3 sm:w-3.5 sm:h-3.5 object-contain"
+                        />
                         Threads
                       </div>
                       <div className="flex items-center">

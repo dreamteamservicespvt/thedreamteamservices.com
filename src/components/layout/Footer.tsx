@@ -76,12 +76,13 @@ const Footer = () => {
               />
               <SocialIcon 
                 icon={
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5">
-                    <rect width="24" height="24" rx="12" fill="#000"/>
-                    <path d="M12.9 7.9c-1.5 0-2.7.4-3.6 1.1-.9.7-1.4 1.7-1.4 2.9v.2c0 1.2.5 2.2 1.4 2.9.9.7 2.1 1.1 3.6 1.1s2.7-.4 3.6-1.1c.9-.7 1.4-1.7 1.4-2.9v-.2c0-1.2-.5-2.2-1.4-2.9-.9-.7-2.1-1.1-3.6-1.1zm0 1.2c1.1 0 1.9.3 2.5.7.6.4.9 1 .9 1.7v.1c0 .7-.3 1.3-.9 1.7-.6.4-1.4.7-2.5.7s-1.9-.3-2.5-.7c-.6-.4-.9-1-.9-1.7v-.1c0-.7.3-1.3.9-1.7.6-.4 1.4-.7 2.5-.7z" fill="white"/>
-                    <circle cx="12.9" cy="11.9" r="1.8" stroke="#000" strokeWidth="0.8"/>
-                    <circle cx="16.3" cy="8.7" r="0.8" fill="white"/>
-                  </svg>
+                  <img 
+                    src="/images/image.png" 
+                    alt="Threads"
+                    width="18" 
+                    height="18"
+                    className="w-4 h-4 sm:w-5 sm:h-5 object-contain"
+                  />
                 } 
                 href="https://www.threads.com/@dreamteamservicespvt" 
                 ariaLabel="Follow us on Threads"
@@ -109,7 +110,7 @@ const Footer = () => {
               <FooterLink href="/about">About Us</FooterLink>
               <FooterLink href="/services">Services</FooterLink>
               <FooterLink href="/portfolio">Portfolio</FooterLink>
-              <FooterLink href="/pricing">Pricing</FooterLink>
+              <FooterLink href="/pricing">Services</FooterLink>
               <FooterLink href="/contact">Contact</FooterLink>
             </ul>
           </div>

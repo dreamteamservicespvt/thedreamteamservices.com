@@ -90,8 +90,8 @@ const Hero = () => {
   }, []);
 
   const scrollToMission = () => {
-    const approachSection = document.getElementById("approach");
-    approachSection?.scrollIntoView({ behavior: "smooth" });
+    const servicesSection = document.getElementById("services");
+    servicesSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -247,7 +247,7 @@ const Hero = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: prefersReducedMotion ? 0.3 : 0.7, delay: prefersReducedMotion ? 0.3 : 1.1 }}
         >
-          <Link to="/services">
+          <Link to="/pricing">
             <motion.div 
               whileHover={!isMobile && !prefersReducedMotion ? { scale: 1.05, boxShadow: "0 0 20px rgba(123, 31, 162, 0.5)" } : {}} 
               whileTap={{ scale: 0.98 }}

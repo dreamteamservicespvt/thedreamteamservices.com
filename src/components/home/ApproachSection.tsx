@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Target, Rocket, Lightbulb, ArrowRight } from "lucide-react";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const ApproachSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -89,13 +90,13 @@ const ApproachSection = () => {
             variants={itemVariants}
             className="flex justify-center mt-10"
           >
-            <a 
-              href="#services" 
+            <Link 
+              to="/pricing" 
               className="inline-flex items-center text-dts-cyan hover:text-dts-purple transition-colors duration-300 font-medium text-lg group"
             >
-              Explore our full service offerings
+              View Our Pricing Plans
               <ArrowRight size={18} className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
       </motion.div>
