@@ -48,26 +48,15 @@ const ServiceCard = ({
       onClick={() => !isExpanded && onToggle()}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ 
         opacity: 1, 
-        y: 0,
-        scale: isHovered && !isExpanded ? 1.02 : 1,
-        rotateX: isHovered && !isExpanded ? 2 : 0
+        y: 0
       }}
       transition={{ 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 25,
-        opacity: { duration: 0.3 },
-        y: { duration: 0.4, delay: level * 0.1 },
-        scale: { duration: 0.2 },
-        rotateX: { duration: 0.3 }
-      }}
-      style={{ 
-        transformPerspective: 1000,
-        transformStyle: "preserve-3d"
+        duration: 0.5,
+        ease: [0.4, 0.0, 0.2, 1],
+        delay: level * 0.08
       }}
       id={id}
     >
@@ -78,17 +67,16 @@ const ServiceCard = ({
           width: isExpanded ? 4 : 2,
           opacity: isHovered || isExpanded ? 1 : 0.7
         }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.5, ease: [0.4, 0.0, 0.2, 1] }}
       ></motion.div>
       
       {/* Animated background glow */}
       <motion.div
         className="absolute inset-0 opacity-0 rounded-xl"
         animate={{
-          opacity: isHovered || isExpanded ? 0.1 : 0,
-          scale: isHovered || isExpanded ? 1.02 : 1
+          opacity: isHovered || isExpanded ? 0.1 : 0
         }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        transition={{ duration: 0.5, ease: [0.4, 0.0, 0.2, 1] }}
         style={{
           background: gradient.includes('pink') ? 'linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(251, 146, 60, 0.1))' :
                      gradient.includes('cyan') ? 'linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(59, 130, 246, 0.1))' :
@@ -99,124 +87,96 @@ const ServiceCard = ({
         }}
       />
       
-      <motion.div layout className="p-3 sm:p-6 mobile-card-header">
+      <div className="p-3 sm:p-6 mobile-card-header">
         {/* Header */}
-        <motion.div layout className="flex items-start justify-between mb-2 sm:mb-3">
+        <div className="flex items-start justify-between mb-2 sm:mb-3">
           <div className="flex items-center space-x-2 sm:space-x-3 flex-1">
             <motion.div 
               className={cn("mobile-icon-container p-2 sm:p-2.5 rounded-lg shrink-0", colorClass)}
               animate={{
-                scale: isHovered || isExpanded ? 1.1 : 1,
-                rotate: isExpanded ? 360 : 0
+                scale: isExpanded ? 1.05 : 1
               }}
               transition={{ 
-                scale: { duration: 0.2 },
-                rotate: { duration: 0.6, ease: "easeInOut" }
+                duration: 0.4,
+                ease: [0.4, 0.0, 0.2, 1]
               }}
             >
               {icon}
             </motion.div>
             <div className="min-w-0 flex-1">
               <motion.span 
-                layout 
                 className="mobile-level-badge text-xs font-medium text-foreground/60 block"
                 animate={{
                   color: isExpanded ? "rgb(34 197 94)" : "rgb(156 163 175)"
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
               >
                 Level {level}
               </motion.span>
               <motion.h3 
-                layout 
                 className="service-card-title text-sm sm:text-lg font-bold leading-tight"
                 animate={{
                   color: isExpanded ? "rgb(255 255 255)" : "rgb(229 231 235)"
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
               >
                 {title}
               </motion.h3>
             </div>
           </div>
           <motion.button 
-            layout 
-            className="p-1 sm:p-1.5 rounded-full bg-foreground/5 hover:bg-foreground/20 transition-all duration-200 shrink-0 ml-1 sm:ml-2"
+            className="p-1 sm:p-1.5 rounded-full bg-foreground/5 transition-all shrink-0 ml-1 sm:ml-2"
             onClick={(e) => {
               e.stopPropagation();
               onToggle();
             }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
             animate={{
               backgroundColor: isExpanded ? "rgba(34, 197, 94, 0.2)" : "rgba(255, 255, 255, 0.05)",
               rotate: isExpanded ? 180 : 0
             }}
             transition={{ 
-              backgroundColor: { duration: 0.3 },
-              rotate: { duration: 0.4, ease: "easeInOut" }
+              duration: 0.4,
+              ease: [0.4, 0.0, 0.2, 1]
             }}
           >
-            <motion.div
-              animate={{ rotate: isExpanded ? 0 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {isExpanded ? 
-                <ChevronUp size={14} className="text-emerald-400 sm:w-4 sm:h-4" /> : 
-                <ChevronDown size={14} className="text-foreground/60 sm:w-4 sm:h-4" />
-              }
-            </motion.div>
+            {isExpanded ? 
+              <ChevronUp size={14} className="text-emerald-400 sm:w-4 sm:h-4" /> : 
+              <ChevronDown size={14} className="text-foreground/60 sm:w-4 sm:h-4" />
+            }
           </motion.button>
-        </motion.div>
+        </div>
 
         {/* Description */}
-        <motion.p layout className="service-card-description text-xs sm:text-sm text-foreground/80 mb-2 sm:mb-4 leading-relaxed">
+        <p className="service-card-description text-xs sm:text-sm text-foreground/80 mb-2 sm:mb-4 leading-relaxed">
           {description}
-        </motion.p>
+        </p>
 
         {/* Compact feature list when collapsed */}
         {!isExpanded && (
           <motion.div 
-            layout 
             className="space-y-1 sm:space-y-2 mb-2 sm:mb-4"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
           >
             <div className="flex flex-wrap gap-0.5 sm:gap-1">
               {features.slice(0, 3).map((feature, index) => (
-                <motion.span 
+                <span 
                   key={index}
-                  className="feature-tag inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-foreground/5 text-xs text-foreground/70 hover:bg-foreground/10"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ 
-                    delay: index * 0.1,
-                    duration: 0.3,
-                    ease: "easeOut"
-                  }}
-                  whileHover={{ 
-                    scale: 1.05,
-                    backgroundColor: "rgba(34, 197, 94, 0.1)"
-                  }}
+                  className="feature-tag inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-foreground/5 text-xs text-foreground/70 transition-all duration-300"
                 >
                   <Check size={10} className="mr-0.5 sm:mr-1 text-dts-cyan sm:w-3 sm:h-3" />
                   {feature}
-                </motion.span>
+                </span>
               ))}
               {features.length > 3 && (
-                <motion.span 
+                <span 
                   className="inline-flex items-center px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md bg-foreground/5 text-xs text-foreground/60"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ 
-                    delay: 0.3,
-                    duration: 0.3,
-                    ease: "easeOut"
-                  }}
                 >
                   +{features.length - 3} more
-                </motion.span>
+                </span>
               )}
             </div>
           </motion.div>
@@ -226,26 +186,18 @@ const ServiceCard = ({
         <AnimatePresence mode="wait">
           {isExpanded && (
             <motion.div
-              initial={{ opacity: 0, height: 0, y: -10 }}
+              initial={{ opacity: 0, height: 0 }}
               animate={{ 
                 opacity: 1, 
-                height: "auto", 
-                y: 0,
-                transition: {
-                  height: { duration: 0.4, ease: "easeOut" },
-                  opacity: { duration: 0.3, delay: 0.1 },
-                  y: { duration: 0.3, delay: 0.1 }
-                }
+                height: "auto"
               }}
               exit={{ 
                 opacity: 0, 
-                height: 0, 
-                y: -10,
-                transition: {
-                  height: { duration: 0.3, ease: "easeIn" },
-                  opacity: { duration: 0.2 },
-                  y: { duration: 0.2 }
-                }
+                height: 0
+              }}
+              transition={{
+                duration: 0.5,
+                ease: [0.4, 0.0, 0.2, 1]
               }}
               className="expanded-content overflow-hidden"
             >
@@ -253,69 +205,42 @@ const ServiceCard = ({
                 className="space-y-2 sm:space-y-4 mt-2 sm:mt-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
+                transition={{ delay: 0.15, duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
               >
                 {/* Features */}
-                <motion.div 
-                  className="mobile-expanded-section"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                >
+                <div className="mobile-expanded-section">
                   <h4 className="mobile-expanded-title text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-emerald-400">Key Features</h4>
                   <div className="grid grid-cols-1 gap-0.5 sm:gap-1.5">
                     {features.map((feature, index) => (
-                      <motion.div 
+                      <div 
                         key={index} 
                         className="mobile-expanded-item flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: 0.4 + (index * 0.05),
-                          duration: 0.3
-                        }}
                       >
                         <Check size={10} className="mr-1 sm:mr-2 text-dts-cyan mt-0.5 shrink-0 sm:w-3.5 sm:h-3.5" />
                         <span className="text-xs sm:text-sm text-foreground/80">{feature}</span>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Services */}
-                <motion.div 
-                  className="mobile-expanded-section"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                >
+                <div className="mobile-expanded-section">
                   <h4 className="mobile-expanded-title text-xs sm:text-sm font-semibold mb-1 sm:mb-2 text-dts-purple">Services Include</h4>
                   <div className="grid grid-cols-1 gap-0.5 sm:gap-1.5">
                     {services.map((service, index) => (
-                      <motion.div 
+                      <div 
                         key={index} 
                         className="mobile-expanded-item flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ 
-                          delay: 0.6 + (index * 0.05),
-                          duration: 0.3
-                        }}
                       >
                         <Rocket size={10} className="mr-1 sm:mr-2 text-dts-purple mt-0.5 shrink-0 sm:w-3.5 sm:h-3.5" />
                         <span className="text-xs sm:text-sm text-foreground/80">{service}</span>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
 
                 {/* CTA */}
-                <motion.div 
-                  className="pt-1 sm:pt-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.4 }}
-                >
+                <div className="pt-1 sm:pt-2">
                   <Link to={`/Services#level-${level}`}>
                     <GradientButton 
                       className="w-full text-xs sm:text-sm px-3 py-1.5 hover:shadow-lg hover:shadow-dts-cyan/20" 
@@ -327,7 +252,7 @@ const ServiceCard = ({
                       <ArrowRight size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
                     </GradientButton>
                   </Link>
-                </motion.div>
+                </div>
               </motion.div>
             </motion.div>
           )}
@@ -336,51 +261,26 @@ const ServiceCard = ({
         {/* Action button when collapsed */}
         {!isExpanded && (
           <motion.div 
-            layout 
             className="pt-1 sm:pt-2"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.3, ease: [0.4, 0.0, 0.2, 1] }}
           >
-            <motion.div
-              whileHover={{ 
-                scale: 1.02,
-                boxShadow: "0 4px 20px rgba(34, 197, 94, 0.2)"
+            <GradientButton 
+              variant="ghost" 
+              size="sm" 
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggle();
               }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
+              className="mobile-learn-more w-full flex items-center justify-center text-xs sm:text-sm px-3 py-1.5 transition-all duration-300"
             >
-              <GradientButton 
-                variant="ghost" 
-                size="sm" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggle();
-                }}
-                className="mobile-learn-more w-full flex items-center justify-center text-xs sm:text-sm px-3 py-1.5 hover:bg-dts-cyan/10 transition-all duration-300"
-              >
-                <motion.span
-                  animate={{
-                    color: isHovered ? "rgb(34, 197, 94)" : "rgb(255, 255, 255)"
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  Learn More
-                </motion.span>
-                <motion.div
-                  animate={{
-                    rotate: isHovered ? 90 : 0,
-                    x: isHovered ? 2 : 0
-                  }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <ChevronDown size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
-                </motion.div>
-              </GradientButton>
-            </motion.div>
+              <span>Learn More</span>
+              <ChevronDown size={12} className="ml-1 sm:w-3.5 sm:h-3.5" />
+            </GradientButton>
           </motion.div>
         )}
-      </motion.div>
+      </div>
     </motion.div>
   );
 };

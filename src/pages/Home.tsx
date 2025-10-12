@@ -4,10 +4,9 @@ import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
 import ServiceLevels from "@/components/home/ServiceLevels";
 import MissionVision from "@/components/home/MissionVision";
-import TeamSection from "@/components/home/TeamSection";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
-import FloatingReviewButton from "@/components/ui/FloatingReviewButton";
+import FloatingWhatsAppButton from "@/components/ui/FloatingWhatsAppButton";
 
 const Home = () => {
   useEffect(() => {
@@ -26,12 +25,11 @@ const Home = () => {
         <Hero />
         <ServiceLevels />
         <MissionVision />
-        <TeamSection />
         <Testimonials />
         <CTASection />
       </main>
       <Footer />
-      <FloatingReviewButton />
+      <FloatingWhatsAppButton />
     </div>
   );
 };

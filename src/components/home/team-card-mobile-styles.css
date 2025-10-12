@@ -1,0 +1,504 @@
+/* Mobile Team Card Styles - Clean, Professional, and Modern */
+
+.mobile-team-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 320px;
+  /* Prevent stacking context issues */
+  isolation: isolate;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.mobile-team-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(126, 34, 206, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.mobile-team-card:active::before {
+  opacity: 1;
+}
+
+.mobile-team-card:active {
+  transform: scale(0.98);
+  border-color: rgba(126, 34, 206, 0.3);
+  box-shadow: 0 8px 32px rgba(126, 34, 206, 0.15);
+}
+
+/* Image Wrapper */
+.mobile-team-card-image-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* Prevent image from being affected by modal */
+  z-index: 1;
+  isolation: isolate;
+}
+
+/* Image Container - Circular - CRITICAL: Must enforce circular shape */
+.mobile-team-card-image-container {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.2) 0%, rgba(34, 197, 94, 0.2) 100%);
+  padding: 4px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(126, 34, 206, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Multiple fallback methods for circular clipping */
+  -webkit-mask-image: radial-gradient(circle, white 100%, transparent 100%);
+  mask-image: radial-gradient(circle, white 100%, transparent 100%);
+  contain: layout style paint;
+}
+
+.mobile-team-card:active .mobile-team-card-image-container {
+  transform: scale(1.05);
+  box-shadow: 
+    0 12px 32px rgba(126, 34, 206, 0.4),
+    0 0 0 2px rgba(126, 34, 206, 0.3),
+    inset 0 0 30px rgba(126, 34, 206, 0.2);
+}
+
+/* Inner Circle Wrapper - Ensures image stays perfectly circular */
+.mobile-team-card-image-wrapper-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+
+/* Profile Image - Override OptimizedImage component styles */
+.mobile-team-card-image {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* Target the actual img tag inside OptimizedImage */
+.mobile-team-card-image > div {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.mobile-team-card-image img {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 50% !important;
+  display: block !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Decorative Ring */
+.mobile-team-card-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, 
+    rgba(126, 34, 206, 0.6) 0%, 
+    rgba(34, 197, 94, 0.6) 50%,
+    rgba(34, 197, 229, 0.6) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  animation: rotate 8s linear infinite;
+  z-index: 1;
+}
+
+.mobile-team-card:active .mobile-team-card-ring {
+  opacity: 0.7;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ensure circular clipping at all levels - CRITICAL FIX */
+.mobile-team-card-image-container,
+.mobile-team-card-image-wrapper-inner,
+.mobile-team-card-image,
+.mobile-team-card-image > div,
+.mobile-team-card-image img {
+  clip-path: circle(50% at center) !important;
+  -webkit-clip-path: circle(50% at center) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* Info Section */
+.mobile-team-card-info {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Name */
+.mobile-team-card-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+}
+
+.mobile-team-card:active .mobile-team-card-name {
+  color: rgba(126, 34, 206, 1);
+}
+
+/* Role */
+.mobile-team-card-role {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(34, 197, 94, 0.9);
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 1rem;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mobile-team-card:active .mobile-team-card-role {
+  background: rgba(126, 34, 206, 0.15);
+  border-color: rgba(126, 34, 206, 0.3);
+  color: rgba(126, 34, 206, 1);
+}
+
+/* Social Links */
+.mobile-team-card-social {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.mobile-team-card-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.mobile-team-card-social-link:hover,
+.mobile-team-card-social-link:active {
+  background: rgba(126, 34, 206, 0.2);
+  border-color: rgba(126, 34, 206, 0.4);
+  color: rgba(126, 34, 206, 1);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+}
+
+/* Tap Hint */
+.mobile-team-card-tap-hint {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.mobile-team-card:active .mobile-team-card-tap-hint {
+  color: rgba(126, 34, 206, 0.8);
+}
+
+/* Bio Overlay */
+.mobile-team-card-bio-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  cursor: pointer;
+  /* Prevent any transform or filter effects from affecting parent */
+  isolation: isolate;
+  will-change: opacity;
+}
+
+/* Bio Content */
+.mobile-team-card-bio-content {
+  position: relative;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%);
+  border: 1px solid rgba(126, 34, 206, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem 1.5rem;
+  max-width: 90%;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 40px rgba(126, 34, 206, 0.05);
+  cursor: default;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 400px) {
+  .mobile-team-card-bio-content {
+    max-width: 400px;
+    padding: 2.5rem 2rem;
+  }
+}
+
+/* Close Button */
+.mobile-team-card-bio-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.mobile-team-card-bio-close:hover,
+.mobile-team-card-bio-close:active {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: rgba(239, 68, 68, 1);
+  transform: scale(1.1) rotate(90deg);
+}
+
+/* Bio Title */
+.mobile-team-card-bio-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+/* Bio Role */
+.mobile-team-card-bio-role {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(126, 34, 206, 1);
+  margin: 0 0 1.5rem 0;
+  padding: 0.375rem 1rem;
+  background: rgba(126, 34, 206, 0.1);
+  border-radius: 1rem;
+  border: 1px solid rgba(126, 34, 206, 0.2);
+  display: inline-block;
+}
+
+/* Bio Text */
+.mobile-team-card-bio-text {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  text-align: left;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 380px) {
+  .mobile-team-card {
+    padding: 1.5rem 1rem;
+    min-height: 300px;
+  }
+  
+  .mobile-team-card-image-container {
+    width: 140px;
+    height: 140px;
+    padding: 3px;
+  }
+  
+  .mobile-team-card-name {
+    font-size: 1.125rem;
+  }
+  
+  .mobile-team-card-role {
+    font-size: 0.8125rem;
+  }
+  
+  .mobile-team-card-bio-content {
+    padding: 1.5rem 1.25rem;
+  }
+  
+  .mobile-team-card-bio-title {
+    font-size: 1.25rem;
+  }
+  
+  .mobile-team-card-bio-role {
+    font-size: 0.875rem;
+  }
+  
+  .mobile-team-card-bio-text {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 420px) {
+  .mobile-team-card {
+    padding: 2.5rem 2rem;
+  }
+  
+  .mobile-team-card-image-container {
+    width: 180px;
+    height: 180px;
+    padding: 5px;
+  }
+  
+  .mobile-team-card-name {
+    font-size: 1.375rem;
+  }
+}
+
+/* Additional safety - force everything circular */
+.mobile-team-card-image-container *,
+.mobile-team-card-image-wrapper-inner *,
+.mobile-team-card-image * {
+  border-radius: 50% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Prevent any scaling or transforms that break the circle */
+.mobile-team-card-image-container img,
+.mobile-team-card-image-wrapper-inner img {
+  transform: translate(-50%, -50%) scale(1) !important;
+  transform-origin: center center !important;
+}
+
+/* Tablet and above - hide mobile card */
+@media (min-width: 768px) {
+  .mobile-team-card {
+    display: none;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .mobile-team-card,
+  .mobile-team-card-image-container,
+  .mobile-team-card-ring,
+  .mobile-team-card-social-link,
+  .mobile-team-card-bio-close {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .mobile-team-card {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .mobile-team-card-image-container {
+    border: 2px solid rgba(126, 34, 206, 0.8);
+  }
+  
+  .mobile-team-card-social-link {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .mobile-team-card-bio-content {
+    border: 2px solid rgba(126, 34, 206, 0.8);
+  }
+}
+
+/* Focus States for Accessibility */
+.mobile-team-card:focus-visible {
+  outline: 2px solid rgba(126, 34, 206, 0.8);
+  outline-offset: 4px;
+}
+
+.mobile-team-card-social-link:focus-visible {
+  outline: 2px solid rgba(126, 34, 206, 0.8);
+  outline-offset: 2px;
+}
+
+.mobile-team-card-bio-close:focus-visible {
+  outline: 2px solid rgba(239, 68, 68, 0.8);
+  outline-offset: 2px;
+}

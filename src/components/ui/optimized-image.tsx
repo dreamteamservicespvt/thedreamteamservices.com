@@ -36,7 +36,16 @@ export function OptimizedImage({
     setFallbackAttempted(false);
 
     // Validate src before proceeding
-    if (!src) {
+    if (!src || src.trim() === '') {
+      console.warn('OptimizedImage: Empty or missing image source', { alt, src });
+      
+      // Try fallback immediately if available
+      if (fallbackSrc && fallbackSrc.trim() !== '') {
+        setFallbackAttempted(true);
+        setImgSrc(fallbackSrc);
+        return;
+      }
+      
       const error = new Error("Image source is missing or empty");
       setError(error);
       setIsLoading(false);
@@ -53,18 +62,28 @@ export function OptimizedImage({
         setImgSrc(src);
       }
     } catch (err) {
+      console.error('OptimizedImage: Failed to process image URL', { src, alt, error: err });
       const error = err instanceof Error ? err : new Error("Failed to process image URL");
       setError(error);
       setIsLoading(false);
       if (onError) onError(error);
     }
-  }, [src, onError]);
+  }, [src, fallbackSrc, alt, onError]);
 
   const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    console.error('OptimizedImage: Image load error', { 
+      src: imgSrc, 
+      alt, 
+      fallbackAttempted,
+      fallbackSrc 
+    });
+    
     // Try fallback image if available and not already attempted
-    if (fallbackSrc && !fallbackAttempted) {
+    if (fallbackSrc && !fallbackAttempted && fallbackSrc.trim() !== '') {
+      console.log('OptimizedImage: Attempting fallback image', { fallbackSrc, alt });
       setFallbackAttempted(true);
       setImgSrc(fallbackSrc);
+      setError(null); // Clear error when trying fallback
       return;
     }
 
@@ -76,6 +95,7 @@ export function OptimizedImage({
     setError(error);
     setIsLoading(false);
     
+    console.error('OptimizedImage: Final error state', { errorMessage, alt, src: imgSrc });
     if (onError) onError(error);
   };
 

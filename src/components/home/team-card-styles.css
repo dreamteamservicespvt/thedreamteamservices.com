@@ -1,0 +1,110 @@
+/* Desktop Team Card Styles - Circular Images with Proper Cropping */
+
+/* Image Container - Circular with gradient border */
+.team-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.2) 0%, rgba(34, 197, 94, 0.2) 100%);
+  padding: 6px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 0 20px rgba(126, 34, 206, 0.1);
+  overflow: hidden !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Enforce circular shape */
+  -webkit-mask-image: radial-gradient(circle, white 100%, transparent 100%);
+  mask-image: radial-gradient(circle, white 100%, transparent 100%);
+  clip-path: circle(50% at center);
+  -webkit-clip-path: circle(50% at center);
+}
+
+/* Team Image - Force proper cropping and centering */
+.team-image {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+
+/* Target OptimizedImage wrapper div */
+.team-image > div {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  clip-path: circle(50% at center) !important;
+  -webkit-clip-path: circle(50% at center) !important;
+}
+
+/* Target the actual img tag - CRITICAL for proper display */
+.team-image img {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border-radius: 50% !important;
+  display: block !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+/* Ensure all nested elements respect circular boundary */
+.team-image-container,
+.team-image,
+.team-image > div,
+.team-image img {
+  clip-path: circle(50% at center) !important;
+  -webkit-clip-path: circle(50% at center) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* Hover effect for image container */
+.group:hover .team-image-container {
+  box-shadow: 
+    0 12px 32px rgba(126, 34, 206, 0.4),
+    0 0 0 2px rgba(126, 34, 206, 0.3),
+    inset 0 0 30px rgba(126, 34, 206, 0.2);
+}
+
+/* Prevent any overflow or scaling issues */
+.team-image-container * {
+  border-radius: 50% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .team-image-container {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-image-container {
+    padding: 4px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .team-image-container,
+  .team-image {
+    transition: none;
+  }
+}
