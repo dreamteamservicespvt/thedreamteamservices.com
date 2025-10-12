@@ -19,6 +19,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     subject: "",
     message: ""
   });
@@ -74,6 +75,7 @@ const Contact = () => {
       setFormData({
         name: "",
         email: "",
+        phone: "",
         subject: "",
         message: ""
       });
@@ -186,16 +188,30 @@ const Contact = () => {
                   </div>
                 </motion.div>
                 
-                <motion.div variants={itemVariants} className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium high-contrast-mobile">Subject</label>
-                  <Input 
-                    id="subject" 
-                    placeholder="How can we help you?" 
-                    className="bg-background/10 border-foreground/10 contact-input-mobile touch-target-large-mobile focus-visible-mobile" 
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                  />
+                <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-6 contact-form-grid-mobile">
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="text-sm font-medium high-contrast-mobile">Contact Number</label>
+                    <Input 
+                      id="phone" 
+                      type="tel" 
+                      placeholder="+91 9876543210" 
+                      className="bg-background/10 border-foreground/10 w-full contact-input-mobile touch-target-large-mobile focus-visible-mobile"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="subject" className="text-sm font-medium high-contrast-mobile">Subject</label>
+                    <Input 
+                      id="subject" 
+                      placeholder="How can we help you?" 
+                      className="bg-background/10 border-foreground/10 contact-input-mobile touch-target-large-mobile focus-visible-mobile" 
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="space-y-2">

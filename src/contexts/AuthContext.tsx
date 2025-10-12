@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { 
   User, 
@@ -27,12 +28,8 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  
-  // Check if we're in development mode
-  const isDevelopment = import.meta.env.DEV;
 
   async function signIn(email: string, password: string): Promise<User> {
-    // Use Firebase authentication
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       return userCredential.user;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { 
   Check, ChevronDown, ExternalLink, Search, Mail, 
-  X, Filter, Send, Pencil, Trash2 
+  X, Filter, Send, Pencil, Trash2, Phone, MessageCircle 
 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -70,6 +70,21 @@ const getStatusBadgeVariant = (status: string) => {
   }
 };
 
+// Helper function to initiate call
+const handleCall = (phone: string) => {
+  const cleanPhone = phone.replace(/[^0-9+]/g, '');
+  window.location.href = `tel:${cleanPhone}`;
+};
+
+// Helper function to open WhatsApp with predefined message
+const handleWhatsApp = (phone: string, name: string, subject: string) => {
+  const cleanPhone = phone.replace(/[^0-9]/g, '');
+  const message = `Hello ${name},\n\nThank you for reaching out to Dream Team Services regarding "${subject}".\n\nWe received your inquiry and would like to discuss it with you.\n\nBest regards,\nDream Team Services`;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
+  window.open(whatsappUrl, '_blank');
+};
+
 const AdminInquiries = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -86,12 +101,14 @@ const AdminInquiries = () => {
   const [editFormData, setEditFormData] = useState<{
     name: string;
     email: string;
+    phone: string;
     subject: string;
     message: string;
     status: string;
   }>({
     name: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
     status: "new"
@@ -159,6 +176,7 @@ const AdminInquiries = () => {
     setEditFormData({
       name: inquiry.name,
       email: inquiry.email,
+      phone: inquiry.phone,
       subject: inquiry.subject,
       message: inquiry.message,
       status: inquiry.status
@@ -328,6 +346,7 @@ const AdminInquiries = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>From</TableHead>
+                  <TableHead>Contact</TableHead>
                   <TableHead>Subject</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Status</TableHead>
@@ -343,6 +362,37 @@ const AdminInquiries = () => {
                           <div>{inquiry.name}</div>
                           <div className="text-sm text-muted-foreground">{inquiry.email}</div>
                         </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          {inquiry.phone && (
+                            <>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleCall(inquiry.phone)}
+                                title="Call"
+                                className="h-8"
+                              >
+                                <Phone className="h-3 w-3 mr-1" />
+                                Call
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => handleWhatsApp(inquiry.phone, inquiry.name, inquiry.subject)}
+                                title="WhatsApp"
+                                className="h-8 text-green-600 hover:text-green-700 hover:border-green-600"
+                              >
+                                <MessageCircle className="h-3 w-3 mr-1" />
+                                WhatsApp
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                        {inquiry.phone && (
+                          <div className="text-xs text-muted-foreground mt-1">{inquiry.phone}</div>
+                        )}
                       </TableCell>
                       <TableCell className="max-w-[200px] truncate">{inquiry.subject}</TableCell>
                       <TableCell>{formatDate(inquiry.createdAt)}</TableCell>
@@ -422,8 +472,35 @@ const AdminInquiries = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold mb-1">Email</h4>
-                  <p>{selectedInquiry.email}</p>
+                  <p className="break-all">{selectedInquiry.email}</p>
                 </div>
+                {selectedInquiry.phone && (
+                  <div className="col-span-2">
+                    <h4 className="text-sm font-semibold mb-2">Contact Number</h4>
+                    <div className="flex gap-2 items-center">
+                      <p className="text-lg font-medium">{selectedInquiry.phone}</p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleCall(selectedInquiry.phone)}
+                        title="Call this number"
+                      >
+                        <Phone className="h-4 w-4 mr-2" />
+                        Call
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleWhatsApp(selectedInquiry.phone, selectedInquiry.name, selectedInquiry.subject)}
+                        title="Send WhatsApp message"
+                        className="text-green-600 hover:text-green-700 hover:border-green-600"
+                      >
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        WhatsApp
+                      </Button>
+                    </div>
+                  </div>
+                )}
                 <div className="col-span-2">
                   <h4 className="text-sm font-semibold mb-1">Subject</h4>
                   <p>{selectedInquiry.subject}</p>
@@ -450,7 +527,7 @@ const AdminInquiries = () => {
                 }}
               >
                 <Mail className="mr-2 h-4 w-4" />
-                Reply
+                Reply via Email
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -489,6 +566,17 @@ const AdminInquiries = () => {
                       onChange={handleEditFormChange}
                     />
                   </div>
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="phone" className="text-sm font-medium">Contact Number</label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={editFormData.phone}
+                    onChange={handleEditFormChange}
+                    placeholder="+91 9876543210"
+                  />
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="subject" className="text-sm font-medium">Subject</label>

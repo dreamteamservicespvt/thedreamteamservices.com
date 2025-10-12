@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Lock, Info } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -15,9 +14,6 @@ const AdminLogin = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
-  // Check if we're in development mode
-  const isDevelopment = import.meta.env.DEV;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,9 +31,7 @@ const AdminLogin = () => {
       toast({
         variant: "destructive",
         title: "Authentication Failed",
-        description: isDevelopment 
-          ? "In development mode, use admin@example.com and password" 
-          : "Invalid email or password",
+        description: "Invalid email or password. Please try again.",
       });
     } finally {
       setIsLoading(false);
@@ -62,15 +56,6 @@ const AdminLogin = () => {
           <h1 className="text-2xl font-bold">Admin Login</h1>
           <p className="text-foreground/70 mt-2">Sign in to access the admin dashboard</p>
         </div>
-        
-        {isDevelopment && (
-          <Alert className="mb-6 bg-blue-500/10 border-blue-500/20">
-            <Info className="h-4 w-4 text-blue-500" />
-            <AlertDescription className="text-sm">
-              <strong>Development Mode:</strong> Use email: <code>admin@example.com</code> and password: <code>password</code>
-            </AlertDescription>
-          </Alert>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -80,7 +65,7 @@ const AdminLogin = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@example.com"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -92,7 +77,7 @@ const AdminLogin = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="Enter your password"
               required
             />
           </div>
