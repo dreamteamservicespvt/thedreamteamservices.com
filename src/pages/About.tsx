@@ -13,6 +13,8 @@ import GradientButton from "@/components/ui/GradientButton";
 import { Link } from "react-router-dom";
 import Logo from "@/components/ui/Logo";
 import SectionHeading from "@/components/ui/section-heading";
+import SEO from "@/components/SEO";
+import { organizationSchema, breadcrumbSchema } from "@/lib/schema";
 
 const About = () => {
   useEffect(() => {
@@ -23,6 +25,21 @@ const About = () => {
       document.body.classList.remove("bg-grid-pattern");
     };
   }, []);
+
+  // Breadcrumb schema for About page
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", url: "https://dreamteamservices.com" },
+    { name: "About Us", url: "https://dreamteamservices.com/about" }
+  ]);
+
+  // Combined schema
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationSchema,
+      breadcrumb
+    ]
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -141,6 +158,13 @@ const About = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="About Us | Dream Team Services - Leading Digital Solutions Provider in Kakinada"
+        description="Learn about Dream Team Services, a leading digital solutions provider in Kakinada, Andhra Pradesh. We specialize in AI commercial ads, digital marketing, social media management, website development, and custom software solutions. Meet our expert team and discover our mission to transform businesses through technology."
+        keywords="about Dream Team Services, digital agency Kakinada, tech company Andhra Pradesh, AI solutions provider, software development company, digital transformation experts, web development team, marketing agency India"
+        url="/about"
+        schema={combinedSchema}
+      />
       <Navbar />
       <main className="flex-grow pt-20 sm:pt-24 md:pt-32">
         {/* Hero Section */}

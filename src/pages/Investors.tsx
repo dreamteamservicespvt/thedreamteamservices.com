@@ -8,6 +8,8 @@ import { Download, TrendingUp, Users, DollarSign, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import GradientButton from "@/components/ui/GradientButton";
+import SEO from "@/components/SEO";
+import { organizationSchema, breadcrumbSchema } from "@/lib/schema";
 
 const Investors = () => {
   useEffect(() => {
@@ -18,6 +20,21 @@ const Investors = () => {
       document.body.classList.remove("bg-grid-pattern");
     };
   }, []);
+
+  // Breadcrumb schema for Investors page
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", url: "https://dreamteamservices.com" },
+    { name: "Investors", url: "https://dreamteamservices.com/investors" }
+  ]);
+
+  // Combined schema
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationSchema,
+      breadcrumb
+    ]
+  };
 
   // Sample data for charts
   const revenueData = [
@@ -63,6 +80,13 @@ const Investors = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Investor Relations | Dream Team Services Growth & Performance"
+        description="Discover Dream Team Services' financial performance, growth metrics, and investment opportunities. We're building the future of digital solutions in India with AI commercial ads, digital marketing, and software development services."
+        keywords="investor relations, Dream Team Services investment, startup funding, tech company growth, financial performance, business metrics, investment opportunity, digital solutions investment"
+        url="/investors"
+        schema={combinedSchema}
+      />
       <Navbar />
       <main className="flex-grow pt-32">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

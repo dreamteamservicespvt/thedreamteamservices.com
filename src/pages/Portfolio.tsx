@@ -12,6 +12,8 @@ import GradientButton from "@/components/ui/GradientButton";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useErrorHandler } from "@/hooks/use-error-handler";
 import { ErrorDisplay } from "@/components/ui/error-display";
+import SEO from "@/components/SEO";
+import { breadcrumbSchema } from "@/lib/schema";
 
 const Portfolio = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -19,6 +21,12 @@ const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { hasError, message, details, handleError, clearError } = useErrorHandler();
+
+  // Breadcrumb schema for Portfolio page
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", url: "https://dreamteamservices.com" },
+    { name: "Portfolio", url: "https://dreamteamservices.com/portfolio" }
+  ]);
 
   useEffect(() => {
     // Add grid pattern to body
@@ -57,6 +65,13 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Portfolio | Our Projects & Client Success Stories - Dream Team Services"
+        description="Browse our portfolio of successful AI commercial ads, digital marketing campaigns, website development projects, and custom software solutions. See how Dream Team Services has helped businesses in Kakinada and across India achieve digital transformation."
+        keywords="portfolio, client projects, case studies, web development portfolio, software projects, digital marketing campaigns, AI ad examples, success stories, Kakinada projects, website examples"
+        url="/portfolio"
+        schema={breadcrumb}
+      />
       <Navbar />
       <main className="flex-grow pt-24 lg:pt-32">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">

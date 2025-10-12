@@ -11,6 +11,8 @@ import FloatingAnimation from "@/components/ui/FloatingAnimation";
 import ReviewSubmissionForm from "@/components/ui/ReviewSubmissionForm";
 import { createInquiry } from "@/services/inquiryService";
 import { useToast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
+import { localBusinessSchema, breadcrumbSchema } from "@/lib/schema";
 import "./contact-mobile-optimizations.css";
 
 const Contact = () => {
@@ -23,6 +25,21 @@ const Contact = () => {
     subject: "",
     message: ""
   });
+
+  // Breadcrumb schema for Contact page
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", url: "https://dreamteamservices.com" },
+    { name: "Contact", url: "https://dreamteamservices.com/contact" }
+  ]);
+
+  // Combined schema
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      localBusinessSchema,
+      breadcrumb
+    ]
+  };
 
   useEffect(() => {
     // Add grid pattern to body
@@ -135,6 +152,13 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Contact Us | Get in Touch with Dream Team Services in Kakinada"
+        description="Contact Dream Team Services in Kakinada, Andhra Pradesh for AI commercial ads, digital marketing, social media management, website development, and software solutions. Get a free consultation today. Located at 50-6-23, Vishnalayam Street, Jagannaickpur, Kakinada 533002."
+        keywords="contact Dream Team Services, digital agency Kakinada contact, web development inquiry, software development quote, digital marketing consultation, Kakinada tech company, get in touch, free consultation, project inquiry"
+        url="/contact"
+        schema={combinedSchema}
+      />
       <Navbar />
       <main className="flex-grow pt-32">
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 contact-mobile-container contact-tablet-container">

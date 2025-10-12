@@ -11,6 +11,8 @@ import {
 import GradientButton from "@/components/ui/GradientButton";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
+import { servicesSchema, breadcrumbSchema } from "@/lib/schema";
  
 const Services = () => {
   useEffect(() => {
@@ -21,6 +23,21 @@ const Services = () => {
       document.body.classList.remove("bg-grid-pattern");
     };
   }, []);
+
+  // Breadcrumb schema for Services page
+  const breadcrumb = breadcrumbSchema([
+    { name: "Home", url: "https://dreamteamservices.com" },
+    { name: "Services", url: "https://dreamteamservices.com/services" }
+  ]);
+
+  // Combined schema
+  const combinedSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      ...servicesSchema,
+      breadcrumb
+    ]
+  };
  
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -163,6 +180,13 @@ const Services = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO
+        title="Our Services | AI Commercial Ads, Digital Marketing & Software Development - Dream Team Services"
+        description="Explore our comprehensive digital services: AI-powered commercial ads, strategic digital marketing, social media management, custom website development, and enterprise software solutions. Get world-class services in Kakinada, India."
+        keywords="AI commercial advertising, video ad production, digital marketing strategy, social media management services, Instagram marketing, Facebook ads, LinkedIn marketing, website development services, custom software development, mobile app development, e-commerce solutions, SEO optimization, content marketing, brand strategy, Kakinada digital services"
+        url="/services"
+        schema={combinedSchema}
+      />
       <Navbar />
       <main className="flex-grow pt-32">
         {/* Page Header */}
