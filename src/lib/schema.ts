@@ -6,7 +6,7 @@ export const organizationSchema = {
   "name": "Dream Team Services",
   "alternateName": "DTS",
   "url": "https://thedreamteamservices.com",
-  "logo": "https://thedreamteamservices.com/images/Untitled%20design%20(26).png",
+  "logo": "https://thedreamteamservices.com/images/image.png",
   "description": "Dream Team Services provides world-class AI commercial ads, digital marketing, social media management, website development, and software development services.",
   "foundingDate": "2020",
   "address": {
@@ -42,7 +42,7 @@ export const localBusinessSchema = {
   "@type": "LocalBusiness",
   "@id": "https://thedreamteamservices.com",
   "name": "Dream Team Services",
-  "image": "https://thedreamteamservices.com/images/Untitled%20design%20(26).png",
+  "image": "https://thedreamteamservices.com/images/image.png",
   "url": "https://thedreamteamservices.com",
   "telephone": "+91-XXX-XXX-XXXX",
   "priceRange": "₹₹",
@@ -200,7 +200,7 @@ export const websiteSchema = {
     "name": "Dream Team Services",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://thedreamteamservices.com/images/Untitled%20design%20(26).png"
+      "url": "https://thedreamteamservices.com/images/image.png"
     }
   },
   "potentialAction": {
