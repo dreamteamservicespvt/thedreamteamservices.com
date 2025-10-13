@@ -20,13 +20,14 @@ const Logo: React.FC<LogoProps> = ({
 
   return (
     <img 
-      src="/images/Untitled design (26).png" 
+      src="/logo.jpg" 
       alt={alt}
       className={cn(
         "w-auto object-contain transition-all duration-300",
         sizeClasses[size],
         className
       )}
+      loading="eager"
     />
   );
 };
