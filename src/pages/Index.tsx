@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
-import ServiceLevels from "@/components/home/ServiceLevels";
+import HighDemandServices from "@/components/home/HighDemandServices";
 import Testimonials from "@/components/home/Testimonials";
 import CTASection from "@/components/home/CTASection";
 import Footer from "@/components/layout/Footer";
@@ -23,7 +23,7 @@ const Index = () => {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <ServiceLevels />
+        <HighDemandServices />
         <Testimonials />
         <CTASection />
       </main>
