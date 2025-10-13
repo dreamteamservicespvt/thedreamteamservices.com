@@ -40,6 +40,7 @@ const SEO = ({
       <link rel="canonical" href={fullUrl} />
 
       {/* Open Graph / Facebook / WhatsApp */}
+      <meta property="fb:app_id" content="YOUR_FACEBOOK_APP_ID" />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
       <meta property="og:title" content={title} />
