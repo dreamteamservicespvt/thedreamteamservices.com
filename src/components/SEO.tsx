@@ -17,15 +17,15 @@ const SEO = ({
   title = "Dream Team Services | AI Commercial Ads, Digital Marketing, Web & Software Development in Kakinada",
   description = "Dream Team Services provides world-class AI commercial ads, digital marketing, social media management, website development, and software development services in Kakinada, Andhra Pradesh. Transform your business with cutting-edge digital solutions.",
   keywords = "AI commercial ads, digital marketing services, social media management, website development, software development, Kakinada, Andhra Pradesh, web design, mobile app development, SEO services, digital transformation, brand strategy, custom software",
-  image = "https://dreamteamservices.com/og-image.jpg",
-  url = "https://dreamteamservices.com",
+  image = "https://thedreamteamservices.com/og-image.jpg",
+  url = "https://thedreamteamservices.com",
   type = "website",
   author = "Dream Team Services",
   publishedTime,
   modifiedTime,
   schema
 }: SEOProps) => {
-  const siteUrl = "https://dreamteamservices.com";
+  const siteUrl = "https://thedreamteamservices.com";
   const fullUrl = url.startsWith('http') ? url : `${siteUrl}${url}`;
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
 

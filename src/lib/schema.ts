@@ -5,8 +5,8 @@ export const organizationSchema = {
   "@type": "Organization",
   "name": "Dream Team Services",
   "alternateName": "DTS",
-  "url": "https://dreamteamservices.com",
-  "logo": "https://dreamteamservices.com/dts-logo.jpg",
+  "url": "https://thedreamteamservices.com",
+  "logo": "https://thedreamteamservices.com/og-image.jpg",
   "description": "Dream Team Services provides world-class AI commercial ads, digital marketing, social media management, website development, and software development services.",
   "foundingDate": "2020",
   "address": {
@@ -40,10 +40,10 @@ export const organizationSchema = {
 export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "@id": "https://dreamteamservices.com",
+  "@id": "https://thedreamteamservices.com",
   "name": "Dream Team Services",
-  "image": "https://dreamteamservices.com/dts-logo.jpg",
-  "url": "https://dreamteamservices.com",
+  "image": "https://thedreamteamservices.com/og-image.jpg",
+  "url": "https://thedreamteamservices.com",
   "telephone": "+91-XXX-XXX-XXXX",
   "priceRange": "₹₹",
   "address": {
@@ -88,7 +88,7 @@ export const servicesSchema = [
     "provider": {
       "@type": "Organization",
       "name": "Dream Team Services",
-      "url": "https://dreamteamservices.com"
+      "url": "https://thedreamteamservices.com"
     },
     "description": "Professional AI-powered commercial ad creation services including video production, script writing, and digital advertising campaigns.",
     "areaServed": {
@@ -97,7 +97,7 @@ export const servicesSchema = [
     },
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://dreamteamservices.com/services"
+      "serviceUrl": "https://thedreamteamservices.com/services"
     }
   },
   {
@@ -107,7 +107,7 @@ export const servicesSchema = [
     "provider": {
       "@type": "Organization",
       "name": "Dream Team Services",
-      "url": "https://dreamteamservices.com"
+      "url": "https://thedreamteamservices.com"
     },
     "description": "Comprehensive digital marketing services including SEO, PPC, content marketing, email marketing, and analytics to grow your online presence.",
     "areaServed": {
@@ -116,7 +116,7 @@ export const servicesSchema = [
     },
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://dreamteamservices.com/services"
+      "serviceUrl": "https://thedreamteamservices.com/services"
     }
   },
   {
@@ -126,7 +126,7 @@ export const servicesSchema = [
     "provider": {
       "@type": "Organization",
       "name": "Dream Team Services",
-      "url": "https://dreamteamservices.com"
+      "url": "https://thedreamteamservices.com"
     },
     "description": "Complete social media management across Instagram, Facebook, LinkedIn, Twitter, and YouTube including content creation, posting, and engagement.",
     "areaServed": {
@@ -135,7 +135,7 @@ export const servicesSchema = [
     },
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://dreamteamservices.com/services"
+      "serviceUrl": "https://thedreamteamservices.com/services"
     }
   },
   {
@@ -145,7 +145,7 @@ export const servicesSchema = [
     "provider": {
       "@type": "Organization",
       "name": "Dream Team Services",
-      "url": "https://dreamteamservices.com"
+      "url": "https://thedreamteamservices.com"
     },
     "description": "Custom website development services including responsive design, e-commerce solutions, CMS integration, and progressive web applications.",
     "areaServed": {
@@ -154,7 +154,7 @@ export const servicesSchema = [
     },
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://dreamteamservices.com/services"
+      "serviceUrl": "https://thedreamteamservices.com/services"
     }
   },
   {
@@ -164,7 +164,7 @@ export const servicesSchema = [
     "provider": {
       "@type": "Organization",
       "name": "Dream Team Services",
-      "url": "https://dreamteamservices.com"
+      "url": "https://thedreamteamservices.com"
     },
     "description": "Professional software development services including custom applications, mobile apps, API development, and enterprise solutions.",
     "areaServed": {
@@ -173,7 +173,7 @@ export const servicesSchema = [
     },
     "availableChannel": {
       "@type": "ServiceChannel",
-      "serviceUrl": "https://dreamteamservices.com/services"
+      "serviceUrl": "https://thedreamteamservices.com/services"
     }
   }
 ];
@@ -193,19 +193,19 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Dream Team Services",
-  "url": "https://dreamteamservices.com",
+  "url": "https://thedreamteamservices.com",
   "description": "Professional AI commercial ads, digital marketing, social media management, website development, and software development services in Kakinada, India.",
   "publisher": {
     "@type": "Organization",
     "name": "Dream Team Services",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://dreamteamservices.com/dts-logo.jpg"
+      "url": "https://thedreamteamservices.com/og-image.jpg"
     }
   },
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://dreamteamservices.com/search?q={search_term_string}",
+    "target": "https://thedreamteamservices.com/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 };
