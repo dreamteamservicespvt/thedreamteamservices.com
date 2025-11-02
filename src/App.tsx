@@ -19,6 +19,7 @@ import AdminSettings from "./pages/admin/Settings";
 import AdminTeam from "@/pages/admin/Team";
 import AdminReviews from "@/pages/admin/Reviews";
 import Services from "@/pages/Services";
+import AIRobotics from "@/pages/AIRobotics";
 
 // ScrollToTop component to ensure pages load at the top
 const ScrollToTop = () => {
@@ -50,6 +51,7 @@ const App = () => (
               <Route path="/contact" element={<Contact />} />
               <Route path="/Services" element={<Services />} />
               <Route path="/services" element={<Services />} /> {/* Redirect services to Services page */}
+              <Route path="/ai-robotics" element={<AIRobotics />} />
               
               {/* Admin routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

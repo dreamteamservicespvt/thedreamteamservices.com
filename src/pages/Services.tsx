@@ -6,7 +6,7 @@ import {
   Palette, Globe, Code, Database, Cpu, Check, 
   ArrowRight, Phone, Mail, MapPin, Users, 
   Instagram, Youtube, Facebook, Linkedin, 
-  Twitter, Video, Image, Play
+  Twitter, Video, Image, Play, Bot, Sparkles, Rocket
 } from "lucide-react";
 import GradientButton from "@/components/ui/GradientButton";
 import { cn } from "@/lib/utils";
@@ -681,6 +681,100 @@ const Services = () => {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+        </section>
+
+        {/* AI & Robotics Feature Section */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-600/20 via-cyan-600/20 to-purple-600/20 border border-violet-500/30 p-8 sm:p-12"
+          >
+            {/* Background Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+            
+            <div className="relative z-10">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-violet-500/20 to-cyan-500/20 border border-violet-500/30">
+                <Sparkles className="w-4 h-4 text-violet-400" />
+                <span className="text-sm font-medium text-violet-300">New Service</span>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                    <span className="gradient-text">AI & Robotics</span> Solutions
+                  </h2>
+                  <p className="text-lg sm:text-xl text-foreground/80 mb-6 leading-relaxed">
+                    Custom software for your robots from training to deployment. 
+                    <span className="block mt-2 font-semibold text-violet-400">Sit back, relax — we handle everything!</span>
+                  </p>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-violet-500/20">
+                        <Bot className="w-5 h-5 text-violet-400" />
+                      </div>
+                      <span className="text-foreground/90">AI Agents for Business</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-cyan-500/20">
+                        <Cpu className="w-5 h-5 text-cyan-400" />
+                      </div>
+                      <span className="text-foreground/90">AI Automation Solutions</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-purple-500/20">
+                        <Rocket className="w-5 h-5 text-purple-400" />
+                      </div>
+                      <span className="text-foreground/90">Custom Robotics & Drones</span>
+                    </div>
+                  </div>
+
+                  <Link to="/ai-robotics">
+                    <GradientButton
+                      size="lg"
+                      className="text-base sm:text-lg"
+                      gradientDirection="horizontal"
+                      highContrast={true}
+                    >
+                      Explore AI & Robotics <ArrowRight className="ml-2 w-5 h-5" />
+                    </GradientButton>
+                  </Link>
+                </div>
+
+                <div className="hidden lg:block">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <div className="p-6 rounded-xl bg-dts-blue-dark/60 border border-violet-500/20">
+                        <Bot className="w-8 h-8 text-violet-400 mb-3" />
+                        <h4 className="font-bold mb-2">AI Agents</h4>
+                        <p className="text-sm text-foreground/70">Intelligent assistants for your business</p>
+                      </div>
+                      <div className="p-6 rounded-xl bg-dts-blue-dark/60 border border-cyan-500/20">
+                        <Cpu className="w-8 h-8 text-cyan-400 mb-3" />
+                        <h4 className="font-bold mb-2">Automation</h4>
+                        <p className="text-sm text-foreground/70">Smart process optimization</p>
+                      </div>
+                    </div>
+                    <div className="space-y-4 mt-8">
+                      <div className="p-6 rounded-xl bg-dts-blue-dark/60 border border-orange-500/20">
+                        <Rocket className="w-8 h-8 text-orange-400 mb-3" />
+                        <h4 className="font-bold mb-2">Robotics</h4>
+                        <p className="text-sm text-foreground/70">Custom robot solutions</p>
+                      </div>
+                      <div className="p-6 rounded-xl bg-dts-blue-dark/60 border border-purple-500/20">
+                        <Sparkles className="w-8 h-8 text-purple-400 mb-3" />
+                        <h4 className="font-bold mb-2">Drones</h4>
+                        <p className="text-sm text-foreground/70">Autonomous flight systems</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </section>
 
